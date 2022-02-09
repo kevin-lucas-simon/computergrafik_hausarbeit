@@ -18,10 +18,6 @@
 #include <glfw/glfw3.h>
 #endif
 #include "model/lineplanemodel.h"
-#include "model/triangleplanemodel.h"
-#include "model/trianglespheremodel.h"
-#include "model/lineboxmodel.h"
-#include "model/triangleboxmodel.h"
 #include "model/model.h"
 #include "shader/terrainshader.h"
 
@@ -51,17 +47,17 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain Shader
-    pTerrain = new Terrain();
-    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
-    pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass.bmp"));
-    pTerrain->shader(pTerrainShader, true);
-    pTerrain->width(150);
-    pTerrain->depth(150);
-    pTerrain->height(15);
-    pTerrain->textureScale(150);
-    pTerrain->load(ASSET_DIRECTORY "heightmap.bmp", ASSET_DIRECTORY"grass.bmp", ASSET_DIRECTORY"rock.bmp",
-                   ASSET_DIRECTORY"sand.png", ASSET_DIRECTORY"snow.jpg");
-    Models.push_back(pTerrain);
+//    pTerrain = new Terrain();
+//    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
+//    pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass.bmp"));
+//    pTerrain->shader(pTerrainShader, true);
+//    pTerrain->width(150);
+//    pTerrain->depth(150);
+//    pTerrain->height(15);
+//    pTerrain->textureScale(150);
+//    pTerrain->load(ASSET_DIRECTORY "heightmap.bmp", ASSET_DIRECTORY"grass.bmp", ASSET_DIRECTORY"rock.bmp",
+//                   ASSET_DIRECTORY"sand.png", ASSET_DIRECTORY"snow.jpg");
+//    Models.push_back(pTerrain);
 }
 void Application::start()
 {
@@ -75,17 +71,6 @@ void Application::start()
 
 void Application::update(float dtime)
 {
-    // Nutzereingabe "s" ermöglicht Skalierung des Geländes
-    if(glfwGetKey(pWindow, GLFW_KEY_S)) {
-        // Mausposition ermitteln
-        double mouseX, mouseY;
-        glfwGetCursorPos(pWindow, &mouseX, &mouseY);
-        // Skalierung-Matrix anwenden
-        Matrix matScale;
-        matScale.scale(1, mouseY / 256, 1);
-        pTerrain->transform(matScale);
-    }
-
     Cam.update();
 }
 

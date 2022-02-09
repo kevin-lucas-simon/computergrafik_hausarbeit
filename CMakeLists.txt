@@ -16,7 +16,6 @@ target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/object/Tank.cpp
         src/shader/ConstantShader.cpp
         src/buffer/IndexBuffer.cpp
-        src/model/LineBoxModel.cpp
         src/model/LinePlaneModel.cpp
         src/main.cpp
         src/util/Matrix.cpp
@@ -24,9 +23,6 @@ target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/shader/PhongShader.cpp
         src/texture/rgbimage.cpp
         src/texture/Texture.cpp
-        src/model/TriangleBoxModel.cpp
-        src/model/TrianglePlaneModel.cpp
-        src/model/TriangleSphereModel.cpp
         src/util/vector.cpp
         src/buffer/VertexBuffer.cpp
 )
