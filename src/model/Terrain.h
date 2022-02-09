@@ -29,8 +29,8 @@ protected:
     Texture DetailTex[1];
 
     float minX, maxX, gap;
-    const float minZ = -2;
-    const float maxZ = 6;
+    const float minZ = -1;
+    const float maxZ = 5;
 };
 
 
