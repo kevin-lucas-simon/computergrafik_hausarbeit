@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <list>
-#include <model/ProzeduralTerrain.h>
+#include <model/Terrain.h>
 #include "camera/camera.h"
 #include "shader/phongshader.h"
 #include "shader/constantshader.h"
@@ -33,7 +33,7 @@ protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
-    ProzeduralTerrain* pTerrain;
+    Terrain* pTerrain;
 };
 
 #endif /* Application_hpp */

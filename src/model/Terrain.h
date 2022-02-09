@@ -1,5 +1,5 @@
-#ifndef COMPUTERGRAFIK_PRAKTIKUM_PROZEDURALTERRAIN_H
-#define COMPUTERGRAFIK_PRAKTIKUM_PROZEDURALTERRAIN_H
+#ifndef COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H
+#define COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H
 
 #include <stdio.h>
 #include "basemodel.h"
@@ -7,11 +7,11 @@
 #include "buffer/vertexbuffer.h"
 #include "buffer/indexbuffer.h"
 
-class ProzeduralTerrain : public BaseModel
+class Terrain : public BaseModel
 {
 public:
-    ProzeduralTerrain(const char* DetailMap1, float minX, float maxX, float gap);
-    virtual ~ProzeduralTerrain();
+    Terrain(const char* DetailMap1, float minX, float maxX, float gap);
+    virtual ~Terrain();
     bool load(const char* DetailMap1);
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
@@ -34,4 +34,4 @@ protected:
 };
 
 
-#endif //COMPUTERGRAFIK_PRAKTIKUM_PROZEDURALTERRAIN_H
+#endif //COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H

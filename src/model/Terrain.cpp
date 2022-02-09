@@ -3,9 +3,9 @@
 //
 
 #include <shader/TerrainShader.h>
-#include "ProzeduralTerrain.h"
+#include "Terrain.h"
 
-ProzeduralTerrain::ProzeduralTerrain(const char* DetailMap1, float minX, float maxX, float gap)
+Terrain::Terrain(const char* DetailMap1, float minX, float maxX, float gap)
 {
     this->minX = minX;
     this->maxX = maxX;
@@ -19,13 +19,13 @@ ProzeduralTerrain::ProzeduralTerrain(const char* DetailMap1, float minX, float m
     }
 }
 
-ProzeduralTerrain::~ProzeduralTerrain()
+Terrain::~Terrain()
 {
 
 }
 
 // Erstellt die Geometrie des Terrains
-bool ProzeduralTerrain::load( const char* DetailMap1)
+bool Terrain::load( const char* DetailMap1)
 {
     // Texturen laden
     if( !DetailTex[0].load(DetailMap1) )
@@ -75,13 +75,13 @@ bool ProzeduralTerrain::load( const char* DetailMap1)
 }
 
 // Initialisierung des Shaders
-void ProzeduralTerrain::shader( BaseShader* shader, bool deleteOnDestruction )
+void Terrain::shader( BaseShader* shader, bool deleteOnDestruction )
 {
     BaseModel::shader(shader, deleteOnDestruction);
 }
 
 // Wird in jedem Frame aufgerufen, um das Model zu zecihnen
-void ProzeduralTerrain::draw(const BaseCamera& Cam)
+void Terrain::draw(const BaseCamera& Cam)
 {
     applyShaderParameter();
     BaseModel::draw(Cam);
@@ -97,7 +97,7 @@ void ProzeduralTerrain::draw(const BaseCamera& Cam)
 }
 
 // Wendet die Shader Parameter an
-void ProzeduralTerrain::applyShaderParameter()
+void Terrain::applyShaderParameter()
 {
     TerrainShader* Shader = dynamic_cast<TerrainShader*>(BaseModel::shader());
     if(!Shader)
@@ -108,23 +108,23 @@ void ProzeduralTerrain::applyShaderParameter()
 }
 
 // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-float ProzeduralTerrain::heightFunction(float valueX) {
+float Terrain::heightFunction(float valueX) {
     valueX += 16;
     return 0.025 * sin(valueX) * valueX;
 }
 
 // Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-float ProzeduralTerrain::heightFunctionDerivation(float valueX) {
+float Terrain::heightFunctionDerivation(float valueX) {
     valueX += 16;
     return 0.025 * cos(valueX) * valueX + 0.025 * sin(valueX);
 }
 
 // Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-float ProzeduralTerrain::depthFunction(float valueZ) {
+float Terrain::depthFunction(float valueZ) {
     return -0.5 * valueZ * valueZ;
 }
 
 // Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-float ProzeduralTerrain::depthFunctionDerivation(float valueZ) {
+float Terrain::depthFunctionDerivation(float valueZ) {
     return -1 * valueZ;
 }
