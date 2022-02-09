@@ -47,17 +47,11 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain Shader
-//    pTerrain = new Terrain();
-//    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
-//    pTerrainShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "grass.bmp"));
-//    pTerrain->shader(pTerrainShader, true);
-//    pTerrain->width(150);
-//    pTerrain->depth(150);
-//    pTerrain->height(15);
-//    pTerrain->textureScale(150);
-//    pTerrain->load(ASSET_DIRECTORY "heightmap.bmp", ASSET_DIRECTORY"grass.bmp", ASSET_DIRECTORY"rock.bmp",
-//                   ASSET_DIRECTORY"sand.png", ASSET_DIRECTORY"snow.jpg");
-//    Models.push_back(pTerrain);
+    pTerrain = new ProzeduralTerrain();
+    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
+    pTerrain->shader(pTerrainShader, true);
+    pTerrain->load(ASSET_DIRECTORY"grass.bmp");
+    Models.push_back(pTerrain);
 }
 void Application::start()
 {

@@ -1,8 +1,7 @@
 #include "TerrainShader.h"
 #include <string>
 
-TerrainShader::TerrainShader(const std::string& AssetDirectory) : PhongShader(false),
-        Scaling(1,1,1), MixTex(NULL), TextureScale(1)
+TerrainShader::TerrainShader(const std::string& AssetDirectory) : PhongShader(false), Scaling(1,1,1)
 {
     std::string VSFile = AssetDirectory + "vsterrain.glsl";
     std::string FSFile = AssetDirectory + "fsterrain.glsl";
@@ -11,9 +10,7 @@ TerrainShader::TerrainShader(const std::string& AssetDirectory) : PhongShader(fa
     PhongShader::assignLocations();
     specularColor(Color(0,0,0));
 
-    MixTexLoc = getParameterID( "MixTex");
     ScalingLoc = getParameterID( "Scaling");
-    TextureScaleLoc = getParameterID( "TextureScale");
 
     for(int i=0; i<DETAILTEX_COUNT; i++)
     {
@@ -30,13 +27,11 @@ void TerrainShader::activate(const BaseCamera& Cam) const
     PhongShader::activate(Cam);
 
     int slot=0;
-    activateTex(MixTex, MixTexLoc, slot++);
 
     for(int i=0; i<DETAILTEX_COUNT; i++)
         activateTex(DetailTex[i], DetailTexLoc[i], slot++);
 
     setParameter(ScalingLoc, Scaling);
-    setParameter(TextureScaleLoc, TextureScale);
 }
 
 void TerrainShader::deactivate() const
@@ -44,7 +39,6 @@ void TerrainShader::deactivate() const
     PhongShader::deactivate();
     for(int i=DETAILTEX_COUNT-1; i>=0; i--)
         if(DetailTex[i]&&DetailTexLoc[i]>=0) DetailTex[i]->deactivate();
-    if(MixTex) MixTex->deactivate();
 }
 
 void TerrainShader::activateTex(const Texture* pTex, GLint Loc, int slot) const

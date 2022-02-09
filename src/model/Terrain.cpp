@@ -118,7 +118,6 @@ void Terrain::applyShaderParameter()
     if(!Shader)
         return;
 
-    Shader->mixTex(&MixTex);
     for(int i=0; i<4; i++)
         Shader->detailTex(i,&DetailTex[i]);
     Shader->scaling(Size);
