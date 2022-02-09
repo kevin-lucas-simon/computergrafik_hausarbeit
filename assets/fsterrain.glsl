@@ -7,10 +7,8 @@ uniform vec3 SpecularColor;
 uniform vec3 AmbientColor;
 uniform float SpecularExp;
 
-uniform sampler2D MixTex; // for exercise 3
-uniform sampler2D DetailTex[4]; // for exercise 3
+uniform sampler2D DetailTex[1];
 uniform vec3 Scaling;
-uniform float TextureScale;
 
 in vec3 Position;
 in vec3 Normal;
@@ -31,32 +29,9 @@ void main()
     float Dist  = length(D);
     vec3 E      = D/Dist;
     vec3 R      = reflect(-L,N);
-    
+
     vec3 DiffuseComponent = LightColor * DiffuseColor * sat(dot(N,L));
     vec3 SpecularComponent = LightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
 
-    // Slope Texture Blending
-    vec4 TextureTerrain = mix(texture(DetailTex[0], Texcoord*TextureScale), texture(DetailTex[1], Texcoord*TextureScale),
-            texture(MixTex, Texcoord));
-
-    // Height Texture Blending
-    float beginSandY = 0.5f;
-    float endSandY = 1.5f;
-    float beginSnowY = 8.0f;
-    float endSnowY = 10.5f;
-    float interpolationSand = clamp(((Position.y-endSandY)/(beginSandY-endSandY)), 0, 1);
-    TextureTerrain = mix(TextureTerrain, texture(DetailTex[2], Texcoord*TextureScale), interpolationSand);
-    float interpolationSnow = clamp(((Position.y-endSnowY)/(beginSnowY-endSnowY)), 0, 1);
-    TextureTerrain = mix(texture(DetailTex[3], Texcoord*TextureScale), TextureTerrain, interpolationSnow);
-
-    // Fog Rendering
-    vec4 fogColor = vec4(1.0, 1.0, 1.0, 1.0);
-    float d = length(Position - EyePos);
-    float dmax = 30;
-    float dmin = 15;
-    float fogFactor = clamp(((d-dmax)/(dmax-dmin)), 0, 1);
-
-    // Final Output
-    FragColor = (vec4(((DiffuseComponent + AmbientColor) + SpecularComponent),1) * TextureTerrain) * (1-fogFactor)
-            + fogFactor*fogColor;
+    FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * texture(DetailTex[0], Texcoord);
 }

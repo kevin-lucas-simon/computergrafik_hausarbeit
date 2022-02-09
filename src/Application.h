@@ -11,13 +11,13 @@
 
 #include <stdio.h>
 #include <list>
+#include <model/Terrain.h>
 #include "camera/camera.h"
 #include "shader/phongshader.h"
 #include "shader/constantshader.h"
 #include "buffer/vertexbuffer.h"
 #include "buffer/indexbuffer.h"
 #include "model/basemodel.h"
-#include "model/terrain.h"
 
 class Application
 {

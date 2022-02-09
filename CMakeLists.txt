@@ -3,7 +3,7 @@ project(computergrafik_praktikum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/model/Terrain.cpp src/model/Terrain.h src/shader/TerrainShader.cpp src/shader/TerrainShader.h)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/model/Terrain.cpp src/model/Terrain.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/util/Aabb.cpp
@@ -16,17 +16,14 @@ target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/object/Tank.cpp
         src/shader/ConstantShader.cpp
         src/buffer/IndexBuffer.cpp
-        src/model/LineBoxModel.cpp
         src/model/LinePlaneModel.cpp
+        src/model/Terrain.cpp
         src/main.cpp
         src/util/Matrix.cpp
         src/model/Model.cpp
         src/shader/PhongShader.cpp
         src/texture/rgbimage.cpp
         src/texture/Texture.cpp
-        src/model/TriangleBoxModel.cpp
-        src/model/TrianglePlaneModel.cpp
-        src/model/TriangleSphereModel.cpp
         src/util/vector.cpp
         src/buffer/VertexBuffer.cpp
 )
