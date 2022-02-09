@@ -47,10 +47,9 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain Shader
-    pTerrain = new ProzeduralTerrain();
+    pTerrain = new ProzeduralTerrain(ASSET_DIRECTORY"colorchess.bmp", -16, 128, 0.25);
     TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
     pTerrain->shader(pTerrainShader, true);
-    pTerrain->load(ASSET_DIRECTORY"grass.bmp");
     Models.push_back(pTerrain);
 }
 void Application::start()

@@ -3,7 +3,7 @@ project(computergrafik_praktikum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/model/Terrain.cpp src/model/Terrain.h src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/model/ProzeduralTerrain.cpp src/model/ProzeduralTerrain.h)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/model/ProzeduralTerrain.cpp src/model/ProzeduralTerrain.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/util/Aabb.cpp

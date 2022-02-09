@@ -10,30 +10,27 @@
 class ProzeduralTerrain : public BaseModel
 {
 public:
-    ProzeduralTerrain(const char* DetailMap1=NULL);
+    ProzeduralTerrain(const char* DetailMap1, float minX, float maxX, float gap);
     virtual ~ProzeduralTerrain();
     bool load(const char* DetailMap1);
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual void draw(const BaseCamera& Cam);
 
-    float width() const { return Size.X; }
-    float height() const { return Size.Y; }
-    float depth() const { return Size.Z; }
-
-    void width(float v) { Size.X = v; }
-    void height(float v) { Size.Y = v; }
-    void depth(float v) { Size.Z = v; }
-
-    const Vector& size() const { return Size; }
-    void size(const Vector& s) { Size = s; }
 protected:
     void applyShaderParameter();
+    float heightFunction(float valueX);
+    float heightFunctionDerivation(float valueX);
+    float depthFunction(float valueZ);
+    float depthFunctionDerivation(float valueZ);
 
     VertexBuffer VB;
     IndexBuffer IB;
     Texture DetailTex[1];
-    Vector Size;
+
+    float minX, maxX, gap;
+    const float minZ = -2;
+    const float maxZ = 6;
 };
 
 

@@ -18,7 +18,6 @@
 #include "buffer/vertexbuffer.h"
 #include "buffer/indexbuffer.h"
 #include "model/basemodel.h"
-#include "model/terrain.h"
 
 class Application
 {
