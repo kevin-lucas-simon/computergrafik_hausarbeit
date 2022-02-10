@@ -13,28 +13,31 @@
 #include "SinusGraph.h"
 #include "Terrain.h"
 
-class TerrainManager: virtual public TerrainControlService
+class TerrainManager: public BaseModel, virtual public TerrainControlService
 {
 public:
-    TerrainManager(const char* DetailMap1, float vertexGapSize, int chunkSize);
+    TerrainManager(char* DetailMap1, float vertexGapSize, int chunkSize);
     virtual ~TerrainManager();
 
     void shader( BaseShader* shader, bool deleteOnDestruction=false );
     void draw(const BaseCamera& Cam);
-    void pushToModelList(std::list<BaseModel*>& ModelList);
-
 
     virtual float getHeight(float value_x);
     virtual float getDerivation(float value_x);
-    virtual void setWorldCenter(float value_x);
+    virtual void changeWorldCenter(float addedValue);
 
 protected:
-    Texture DetailTex[1];
-    GraphService* graphService = new SinusGraph();
-    Terrain* terrain1;
-    Terrain* terrain2;
+    void createChunks();
+    void deleteChunks();
 
-    float gapSize;
+    typedef std::list<Terrain*> TerrainList;
+    TerrainList terrainList;
+    GraphService* graphService;
+
+    char *DetailMap1;
+    float vertexGapSize;
+    float worldCenter = 0.0;
+    int chunkSize;
 };
 
 

@@ -34,8 +34,6 @@ protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
-    Terrain* pTerrain;
-
     TerrainManager* pTerrainManager;
 };
 

@@ -9,6 +9,8 @@
 class GraphService
 {
 public:
+    virtual ~GraphService() = 0 {};
+
     // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
     virtual float heightFunction(float valueX) = 0;
 

@@ -50,7 +50,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     pTerrainManager = new TerrainManager(ASSET_DIRECTORY"colorchess.bmp", 0.25, 32);
     TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
     pTerrainManager->shader(pTerrainShader, true);
-    pTerrainManager->pushToModelList(Models);
+    Models.push_back(pTerrainManager);
 }
 void Application::start()
 {
@@ -64,6 +64,13 @@ void Application::start()
 
 void Application::update(float dtime)
 {
+    if(glfwGetKey(pWindow, GLFW_KEY_RIGHT)) {
+        pTerrainManager->changeWorldCenter(4);
+    }
+    if(glfwGetKey(pWindow, GLFW_KEY_LEFT)) {
+        pTerrainManager->changeWorldCenter(-4);
+    }
+
     Cam.update();
 }
 
