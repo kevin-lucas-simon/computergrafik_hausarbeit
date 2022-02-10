@@ -36,7 +36,7 @@ protected:
 
     char *DetailMap1;
     float vertexGapSize;
-    float worldCenter = 0.0;
+    float worldCenter;
     int chunkSize;
 };
 
