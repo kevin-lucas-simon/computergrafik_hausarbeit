@@ -3,7 +3,7 @@ project(computergrafik_praktikum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/model/Terrain.cpp src/model/Terrain.h)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/game/world/Terrain.cpp src/game/world/Terrain.h src/game/PlayerCar.cpp src/game/PlayerCar.h src/game/world/TerrainControlService.h src/game/world/TerrainChunk.cpp src/game/world/TerrainChunk.h src/game/world/GraphService.h src/game/world/SinusGraph.cpp src/game/world/SinusGraph.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/util/Aabb.cpp
@@ -17,7 +17,7 @@ target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/shader/ConstantShader.cpp
         src/buffer/IndexBuffer.cpp
         src/model/LinePlaneModel.cpp
-        src/model/Terrain.cpp
+        src/game/world/Terrain.cpp
         src/main.cpp
         src/util/Matrix.cpp
         src/model/Model.cpp

@@ -19,10 +19,7 @@ Terrain::Terrain(const char* DetailMap1, float minX, float maxX, float gap)
     }
 }
 
-Terrain::~Terrain()
-{
-
-}
+Terrain::~Terrain() {}
 
 // Erstellt die Geometrie des Terrains
 bool Terrain::load( const char* DetailMap1)
@@ -56,8 +53,8 @@ bool Terrain::load( const char* DetailMap1)
             }
 
             // Normalenberechnung mit Kreuzprodukt von f'(x) und g'(x)
-            Vector fDerivate = Vector(1, heightFunctionDerivation(iPos), 0);
-            Vector gDerivate = Vector(0, depthFunctionDerivation(jPos), 1);
+            Vector fDerivate = Vector(1, graphService->heightFunctionDerivation(iPos), 0);
+            Vector gDerivate = Vector(0, graphService->depthFunctionDerivation(jPos), 1);
             Vector normal = -fDerivate.cross(gDerivate).normalize();
             VB.addNormal(normal);
 
@@ -65,12 +62,11 @@ bool Terrain::load( const char* DetailMap1)
             VB.addTexcoord0(iPos, jPos / normal.dot(Vector(0, 1, 0)));
 
             // Setze Vertex mit Höhe-Funktionen zusammen
-            VB.addVertex(iPos, heightFunction(iPos) + depthFunction(jPos), jPos);
+            VB.addVertex(iPos, graphService->heightFunction(iPos) + graphService->depthFunction(jPos), jPos);
         }
     }
     IB.end();
     VB.end();
-
     return true;
 }
 
@@ -107,24 +103,13 @@ void Terrain::applyShaderParameter()
         Shader->detailTex(i,&DetailTex[i]);
 }
 
-// Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-float Terrain::heightFunction(float valueX) {
-    valueX += 16;
-    return 0.025 * sin(valueX) * valueX;
+float Terrain::getHeight(float value_x) {
+    return 0;
 }
 
-// Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-float Terrain::heightFunctionDerivation(float valueX) {
-    valueX += 16;
-    return 0.025 * cos(valueX) * valueX + 0.025 * sin(valueX);
+float Terrain::getDerivation(float value_x) {
+    return 0;
 }
 
-// Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-float Terrain::depthFunction(float valueZ) {
-    return -0.5 * valueZ * valueZ;
-}
-
-// Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-float Terrain::depthFunctionDerivation(float valueZ) {
-    return -1 * valueZ;
+void Terrain::setWorldCenter(float value_x) {
 }

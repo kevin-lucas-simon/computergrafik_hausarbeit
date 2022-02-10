@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <list>
-#include <model/Terrain.h>
+#include <game/world/Terrain.h>
 #include "camera/camera.h"
 #include "shader/phongshader.h"
 #include "shader/constantshader.h"
