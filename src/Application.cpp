@@ -47,7 +47,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain Shader
-    pTerrainManager = new TerrainManager(ASSET_DIRECTORY"colorchess.bmp", 0.25, 8);
+    pTerrainManager = new TerrainManager(ASSET_DIRECTORY"colorchess.bmp", 0.25, 24);
     TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
     pTerrainManager->shader(pTerrainShader, true);
     Models.push_back(pTerrainManager);

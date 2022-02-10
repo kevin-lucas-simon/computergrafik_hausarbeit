@@ -45,12 +45,14 @@ void TerrainManager::createChunks() {
             graphService, xPosChunkStart, xPosChunkStart + chunkSize, vertexGapSize, DetailMap1));
 
     // Neben-Chunk, es wird die angrenzende Haupt-Chunk-Seite gewählt, die näher an dem Spieler ist
-    if (fmod(worldCenter, chunkSize) < chunkSize / 2)
+    if (fmod(worldCenter, chunkSize) < chunkSize / 2) {
         terrainList.push_back(new Terrain(
                 graphService, xPosChunkStart - chunkSize, xPosChunkStart, vertexGapSize, DetailMap1));
-    else
+    }
+    else {
         terrainList.push_back(new Terrain(
-                graphService, xPosChunkStart + chunkSize, xPosChunkStart + 2*chunkSize, vertexGapSize, DetailMap1));
+                graphService, xPosChunkStart + chunkSize, xPosChunkStart + 2 * chunkSize, vertexGapSize, DetailMap1));
+    }
 
     // Shader auf Chunks übergeben
     for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
@@ -60,10 +62,10 @@ void TerrainManager::createChunks() {
 
 // Löscht aktuell bestehende Chunks
 void TerrainManager::deleteChunks() {
-    for (int i = 0; i < terrainList.size(); ++i) {
-        delete terrainList.front();
-        terrainList.pop_front();
+    for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+        delete *it;
     }
+    terrainList.clear();
 }
 
 // Schnittstelle zur Höhe f(x) einer x-Position
@@ -89,6 +91,13 @@ void TerrainManager::changeWorldCenter(float addedValue) {
             this->createChunks();
         } else {
             this->worldCenter = worldCenter + addedValue;
+        }
+
+        // Welt-Verschiebung-Matrix erstellen und anwenden
+        Matrix worldPosition;
+        worldPosition.translation(Vector(-worldCenter, 0, 0));
+        for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+            (*it)->transform(worldPosition);
         }
     }
 }
