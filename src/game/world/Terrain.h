@@ -1,35 +1,44 @@
+//
+// Created by kevin on 10.02.2022.
+//
+
 #ifndef COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H
 #define COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H
 
-#include <stdio.h>
-#include <game/world/TerrainControlService.h>
-#include "model/BaseModel.h"
-#include "texture/Texture.h"
-#include "buffer/VertexBuffer.h"
-#include "buffer/IndexBuffer.h"
-#include "GraphService.h"
 
-class Terrain : public BaseModel
+#include <shader/BaseShader.h>
+#include <texture/Texture.h>
+#include <list>
+#include "GraphService.h"
+#include "SinusGraph.h"
+#include "TerrainChunk.h"
+
+class Terrain: public BaseModel, virtual public TerrainControlService
 {
 public:
-    Terrain(GraphService* graphService, float minX, float maxX, float vertexGapSize, const char* DetailMap1);
+    Terrain(char* DetailMap1, float vertexGapSize, int chunkSize);
     virtual ~Terrain();
-    bool load(const char* DetailMap1);
 
-    virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
-    virtual void draw(const BaseCamera& Cam);
+    void shader( BaseShader* shader, bool deleteOnDestruction=false );
+    void draw(const BaseCamera& Cam);
+
+    virtual float getHeight(float value_x);
+    virtual float getDerivation(float value_x);
+    virtual void changeWorldCenter(float addedValue);
+
 protected:
-    void applyShaderParameter();
+    void createChunks();
+    void deleteChunks();
 
-    VertexBuffer VB;
-    IndexBuffer IB;
-    Texture DetailTex[1];
-
+    typedef std::list<TerrainChunk*> TerrainList;
+    TerrainList terrainList;
     GraphService* graphService;
 
-    float minX, maxX, gap;
-    const float minZ = -1;
-    const float maxZ = 5;
+    char *DetailMap1;
+    float vertexGapSize;
+    float worldCenter;
+    int chunkSize;
 };
+
 
 #endif //COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H

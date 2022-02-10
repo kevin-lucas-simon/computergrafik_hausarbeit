@@ -1,105 +1,103 @@
 //
-// Created by kevin on 09.02.2022.
+// Created by kevin on 10.02.2022.
 //
 
-#include <shader/TerrainShader.h>
 #include "Terrain.h"
 
-Terrain::Terrain(GraphService* graphService, float minX, float maxX, float gap, const char* DetailMap1)
-{
-    this->graphService = graphService;
-    this->minX = minX;
-    this->maxX = maxX;
-    this->gap = gap;
+Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
+    // Variablen übergeben
+    graphService = new SinusGraph();
+    this->vertexGapSize = vertexGapSize;
+    this->chunkSize = chunkSize;
+    this->worldCenter = 0.0;
+    this->DetailMap1 = DetailMap1;
 
-    if(DetailMap1)
-    {
-        bool loaded = load( DetailMap1);
-        if(!loaded)
-            throw std::exception();
+    // Ladevorgang starten
+    this->createChunks();
+}
+
+Terrain::~Terrain() {
+    this->deleteChunks();
+    terrainList.clear();
+    delete graphService;
+}
+
+// Speichert den Shader und übergibt diese den Chunks
+void Terrain::shader(BaseShader *shader, bool deleteOnDestruction) {
+    pShader = shader;
+    for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+        (*it)->shader(shader, false);
     }
 }
 
-Terrain::~Terrain() {}
+// Zeichnet alle Chunks
+void Terrain::draw(const BaseCamera &Cam) {
+    for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+        (*it)->draw(Cam);
+    }
+}
 
-// Erstellt die Geometrie des Terrains
-bool Terrain::load( const char* DetailMap1)
-{
-    // Texturen laden
-    if( !DetailTex[0].load(DetailMap1) )
-        return false;
+// Erstellt die Chunks anhand der Spielerposition
+void Terrain::createChunks() {
+    // Haupt-Chunk, wo sich der Spieler befindet
+    int xPosChunkStart = worldCenter - fmod(worldCenter, chunkSize);
+    terrainList.push_back(new TerrainChunk(
+            graphService, xPosChunkStart, xPosChunkStart + chunkSize, vertexGapSize, DetailMap1));
 
-    // Hilfsvariable: Anzahl Punkte im Chunk
-    int iCount = (abs(maxX - minX)/gap)+1;
-    int jCount = (abs(maxZ - minZ)/gap)+1;
+    // Neben-Chunk, es wird die angrenzende Haupt-Chunk-Seite gewählt, die näher an dem Spieler ist
+    if (fmod(worldCenter, chunkSize) < chunkSize / 2) {
+        terrainList.push_back(new TerrainChunk(
+                graphService, xPosChunkStart - chunkSize, xPosChunkStart, vertexGapSize, DetailMap1));
+    }
+    else {
+        terrainList.push_back(new TerrainChunk(
+                graphService, xPosChunkStart + chunkSize, xPosChunkStart + 2 * chunkSize, vertexGapSize, DetailMap1));
+    }
 
-    // iteriere durch alle Punkte im Chunk
-    VB.begin();
-    IB.begin();
-    for (int i = 0; i < iCount; ++i) {
-        for (int j = 0; j < jCount; ++j) {
-            // Koordinatenpunkte ermitteln
-            float iPos = i * gap + minX;
-            float jPos = j * gap + minZ;
+    // Shader auf Chunks übergeben
+    for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+        (*it)->shader(pShader, false);
+    }
+}
 
-            // Index-Bufferberechnung mit Nachbar-Vertex aus der vorherigen Reihe
-            if (i > 0 && j > 0) {
-                IB.addIndex(jCount * i + j);
-                IB.addIndex(jCount * i + j-1);
-                IB.addIndex(jCount * (i-1) + j);
+// Löscht aktuell bestehende Chunks
+void Terrain::deleteChunks() {
+    for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+        delete *it;
+    }
+    terrainList.clear();
+}
 
-                IB.addIndex(jCount * (i-1) + j-1);
-                IB.addIndex(jCount * (i-1) + j);
-                IB.addIndex(jCount * i + j-1);
-            }
+// Schnittstelle zur Höhe f(x) einer x-Position
+float Terrain::getHeight(float value_x) {
+    return graphService->heightFunction(value_x);
+}
 
-            // Normalenberechnung mit Kreuzprodukt von f'(x) und g'(x)
-            Vector fDerivate = Vector(1, graphService->heightFunctionDerivation(iPos), 0);
-            Vector gDerivate = Vector(0, graphService->depthFunctionDerivation(jPos), 1);
-            Vector normal = -fDerivate.cross(gDerivate).normalize();
-            VB.addNormal(normal);
+// Schnittstelle zur Steigung f'(x) einer x-Position
+float Terrain::getDerivation(float value_x) {
+    return graphService->heightFunctionDerivation(value_x);
+}
 
-            // Texturkoordinaten
-            VB.addTexcoord0(iPos, jPos / normal.dot(Vector(0, 1, 0)));
+// Schnittstelle zur Änderung des Weltmittelpunktes, auf dessen Wert sich das Chunk Rendering stützt
+void Terrain::changeWorldCenter(float addedValue) {
+    // Grenze nach links erreicht?
+    if (worldCenter + addedValue < 0.0)
+        worldCenter = 0.0;
+    else {
+        // Prüfen, ob die Chunks neu berechnet werden müssen
+        if (!((fmod(worldCenter, chunkSize) < chunkSize/2) ^ (fmod(worldCenter + addedValue, chunkSize) >= chunkSize / 2))) {
+            this->worldCenter = worldCenter + addedValue;
+            this->deleteChunks();
+            this->createChunks();
+        } else {
+            this->worldCenter = worldCenter + addedValue;
+        }
 
-            // Setze Vertex mit Höhe-Funktionen zusammen
-            VB.addVertex(iPos, graphService->heightFunction(iPos) + graphService->depthFunction(jPos), jPos);
+        // Welt-Verschiebung-Matrix erstellen und anwenden
+        Matrix worldPosition;
+        worldPosition.translation(Vector(-worldCenter, 0, 0));
+        for ( TerrainList::iterator it = terrainList.begin(); it != terrainList.end(); ++it) {
+            (*it)->transform(worldPosition);
         }
     }
-    IB.end();
-    VB.end();
-    return true;
-}
-
-// Initialisierung des Shaders
-void Terrain::shader( BaseShader* shader, bool deleteOnDestruction )
-{
-    BaseModel::shader(shader, deleteOnDestruction);
-}
-
-// Wird in jedem Frame aufgerufen, um das Model zu zecihnen
-void Terrain::draw(const BaseCamera& Cam)
-{
-    applyShaderParameter();
-    BaseModel::draw(Cam);
-
-    // Zeichne alle Vertex anhand des Index-Buffers ein
-    VB.activate();
-    IB.activate();
-
-    glDrawElements(GL_TRIANGLES, IB.indexCount(), IB.indexFormat(), 0);
-
-    IB.deactivate();
-    VB.deactivate();
-}
-
-// Wendet die Shader Parameter an
-void Terrain::applyShaderParameter()
-{
-    TerrainShader* Shader = dynamic_cast<TerrainShader*>(BaseModel::shader());
-    if(!Shader)
-        return;
-
-    for(int i=0; i<1; i++)
-        Shader->detailTex(i,&DetailTex[i]);
 }

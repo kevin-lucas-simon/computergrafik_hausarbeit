@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <list>
+#include <game/world/TerrainChunk.h>
 #include <game/world/Terrain.h>
-#include <game/world/TerrainManager.h>
 #include "camera/camera.h"
 #include "shader/phongshader.h"
 #include "shader/constantshader.h"
@@ -34,7 +34,7 @@ protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
-    TerrainManager* pTerrainManager;
+    Terrain* pTerrainManager;
 };
 
 #endif /* Application_hpp */
