@@ -5,8 +5,9 @@
 #include <shader/TerrainShader.h>
 #include "Terrain.h"
 
-Terrain::Terrain(const char* DetailMap1, float minX, float maxX, float gap)
+Terrain::Terrain(GraphService* graphService, float minX, float maxX, float gap, const char* DetailMap1)
 {
+    this->graphService = graphService;
     this->minX = minX;
     this->maxX = maxX;
     this->gap = gap;
@@ -29,8 +30,8 @@ bool Terrain::load( const char* DetailMap1)
         return false;
 
     // Hilfsvariable: Anzahl Punkte im Chunk
-    int iCount = (abs(minX)+abs(maxX))/gap;
-    int jCount = (abs(minZ)+abs(maxZ))/gap;
+    int iCount = (abs(maxX - minX)/gap)+1;
+    int jCount = (abs(maxZ - minZ)/gap)+1;
 
     // iteriere durch alle Punkte im Chunk
     VB.begin();
@@ -101,15 +102,4 @@ void Terrain::applyShaderParameter()
 
     for(int i=0; i<1; i++)
         Shader->detailTex(i,&DetailTex[i]);
-}
-
-float Terrain::getHeight(float value_x) {
-    return 0;
-}
-
-float Terrain::getDerivation(float value_x) {
-    return 0;
-}
-
-void Terrain::setWorldCenter(float value_x) {
 }

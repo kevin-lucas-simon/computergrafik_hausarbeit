@@ -8,21 +8,16 @@
 #include "buffer/VertexBuffer.h"
 #include "buffer/IndexBuffer.h"
 #include "GraphService.h"
-#include "SinusGraph.h"
 
-class Terrain : public BaseModel, virtual public TerrainControlService
+class Terrain : public BaseModel
 {
 public:
-    Terrain(const char* DetailMap1, float minX, float maxX, float gap);
+    Terrain(GraphService* graphService, float minX, float maxX, float vertexGapSize, const char* DetailMap1);
     virtual ~Terrain();
     bool load(const char* DetailMap1);
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual void draw(const BaseCamera& Cam);
-
-    virtual float getHeight(float value_x);
-    virtual float getDerivation(float value_x);
-    virtual void setWorldCenter(float value_x);
 protected:
     void applyShaderParameter();
 
@@ -30,7 +25,7 @@ protected:
     IndexBuffer IB;
     Texture DetailTex[1];
 
-    GraphService* graphService = new SinusGraph();
+    GraphService* graphService;
 
     float minX, maxX, gap;
     const float minZ = -1;
