@@ -3,10 +3,11 @@
 //
 
 #include <shader/TerrainShader.h>
-#include "Terrain.h"
+#include "TerrainChunk.h"
 
-Terrain::Terrain(const char* DetailMap1, float minX, float maxX, float gap)
+TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* DetailMap1)
 {
+    this->graphService = graphService;
     this->minX = minX;
     this->maxX = maxX;
     this->gap = gap;
@@ -19,21 +20,18 @@ Terrain::Terrain(const char* DetailMap1, float minX, float maxX, float gap)
     }
 }
 
-Terrain::~Terrain()
-{
-
-}
+TerrainChunk::~TerrainChunk() {}
 
 // Erstellt die Geometrie des Terrains
-bool Terrain::load( const char* DetailMap1)
+bool TerrainChunk::load( const char* DetailMap1)
 {
     // Texturen laden
     if( !DetailTex[0].load(DetailMap1) )
         return false;
 
     // Hilfsvariable: Anzahl Punkte im Chunk
-    int iCount = (abs(minX)+abs(maxX))/gap;
-    int jCount = (abs(minZ)+abs(maxZ))/gap;
+    int iCount = (abs(maxX - minX)/gap)+1;
+    int jCount = (abs(maxZ - minZ)/gap)+1;
 
     // iteriere durch alle Punkte im Chunk
     VB.begin();
@@ -56,8 +54,8 @@ bool Terrain::load( const char* DetailMap1)
             }
 
             // Normalenberechnung mit Kreuzprodukt von f'(x) und g'(x)
-            Vector fDerivate = Vector(1, heightFunctionDerivation(iPos), 0);
-            Vector gDerivate = Vector(0, depthFunctionDerivation(jPos), 1);
+            Vector fDerivate = Vector(1, graphService->heightFunctionDerivation(iPos), 0);
+            Vector gDerivate = Vector(0, graphService->depthFunctionDerivation(jPos), 1);
             Vector normal = -fDerivate.cross(gDerivate).normalize();
             VB.addNormal(normal);
 
@@ -65,23 +63,22 @@ bool Terrain::load( const char* DetailMap1)
             VB.addTexcoord0(iPos, jPos / normal.dot(Vector(0, 1, 0)));
 
             // Setze Vertex mit Höhe-Funktionen zusammen
-            VB.addVertex(iPos, heightFunction(iPos) + depthFunction(jPos), jPos);
+            VB.addVertex(iPos, graphService->heightFunction(iPos) + graphService->depthFunction(jPos), jPos);
         }
     }
     IB.end();
     VB.end();
-
     return true;
 }
 
 // Initialisierung des Shaders
-void Terrain::shader( BaseShader* shader, bool deleteOnDestruction )
+void TerrainChunk::shader( BaseShader* shader, bool deleteOnDestruction )
 {
     BaseModel::shader(shader, deleteOnDestruction);
 }
 
 // Wird in jedem Frame aufgerufen, um das Model zu zecihnen
-void Terrain::draw(const BaseCamera& Cam)
+void TerrainChunk::draw(const BaseCamera& Cam)
 {
     applyShaderParameter();
     BaseModel::draw(Cam);
@@ -97,7 +94,7 @@ void Terrain::draw(const BaseCamera& Cam)
 }
 
 // Wendet die Shader Parameter an
-void Terrain::applyShaderParameter()
+void TerrainChunk::applyShaderParameter()
 {
     TerrainShader* Shader = dynamic_cast<TerrainShader*>(BaseModel::shader());
     if(!Shader)
@@ -105,26 +102,4 @@ void Terrain::applyShaderParameter()
 
     for(int i=0; i<1; i++)
         Shader->detailTex(i,&DetailTex[i]);
-}
-
-// Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-float Terrain::heightFunction(float valueX) {
-    valueX += 16;
-    return 0.025 * sin(valueX) * valueX;
-}
-
-// Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-float Terrain::heightFunctionDerivation(float valueX) {
-    valueX += 16;
-    return 0.025 * cos(valueX) * valueX + 0.025 * sin(valueX);
-}
-
-// Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-float Terrain::depthFunction(float valueZ) {
-    return -0.5 * valueZ * valueZ;
-}
-
-// Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-float Terrain::depthFunctionDerivation(float valueZ) {
-    return -1 * valueZ;
 }

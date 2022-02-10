@@ -1,0 +1,14 @@
+//
+// Created by kevin on 10.02.2022.
+//
+
+#ifndef COMPUTERGRAFIK_PRAKTIKUM_PLAYERCAR_H
+#define COMPUTERGRAFIK_PRAKTIKUM_PLAYERCAR_H
+
+
+class PlayerCar {
+
+};
+
+
+#endif //COMPUTERGRAFIK_PRAKTIKUM_PLAYERCAR_H
