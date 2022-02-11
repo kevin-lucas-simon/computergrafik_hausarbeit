@@ -30,8 +30,8 @@ protected:
     void createChunks();
     void deleteChunks();
 
-    typedef std::list<TerrainChunk*> TerrainList;
-    TerrainList terrainList;
+    typedef std::list<TerrainChunk*> TerrainChunkList;
+    TerrainChunkList chunks;
     GraphService* graphService;
 
     char *DetailMap1;
