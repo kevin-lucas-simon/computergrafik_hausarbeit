@@ -75,24 +75,19 @@ float Terrain::getDerivation(float value_x) {
 }
 
 // Schnittstelle zur Änderung des Weltmittelpunktes, auf dessen Wert sich das Chunk Rendering stützt
-void Terrain::updateWorldCenter(float addedValue) {
-    // Grenze nach links erreicht?
-    if (worldCenter + addedValue < 0.0)
-        worldCenter = 0.0;
-    else {
-        // Prüfen, ob die Chunks neu berechnet werden müssen
-        if (!((fmod(worldCenter, chunkSize) < chunkSize/2) ^ (fmod(worldCenter + addedValue, chunkSize) >= chunkSize / 2))) {
-            this->worldCenter = worldCenter + addedValue;
-            this->deleteChunks();
-            this->createChunks();
-        } else {
-            this->worldCenter = worldCenter + addedValue;
-        }
-
-        // Welt-Verschiebung-Matrix erstellen und anwenden
-        Matrix worldPosition;
-        worldPosition.translation(Vector(-worldCenter, 0, 0));
-        for (const auto &chunk : chunks)
-            chunk->transform(worldPosition);
+void Terrain::updateWorldCenter(float newWorldCenter) {
+    // Prüfen, ob die Chunks neu berechnet werden müssen
+    if (!((fmod(worldCenter, chunkSize) < chunkSize/2) ^ (fmod(newWorldCenter, chunkSize) >= chunkSize / 2))) {
+        this->worldCenter = newWorldCenter;
+        this->deleteChunks();
+        this->createChunks();
+    } else {
+        this->worldCenter = newWorldCenter;
     }
+
+    // Welt-Verschiebung-Matrix erstellen und anwenden
+    Matrix worldPosition;
+    worldPosition.translation(-worldCenter, 0, 0);
+    for (const auto &chunk : chunks)
+        chunk->transform(worldPosition);
 }

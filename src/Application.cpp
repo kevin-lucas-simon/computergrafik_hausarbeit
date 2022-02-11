@@ -33,29 +33,20 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
     BaseModel* pModel;
 
-    // create LineGrid model with constant color shader
-    pModel = new LinePlaneModel(10, 10, 10, 10);
-    ConstantShader* pConstShader = new ConstantShader();
-    pConstShader->color( Color(1,0,0));
-    pModel->shader(pConstShader, true);
-    // add to render list
-    Models.push_back( pModel );
-
     // Skybox
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
     pModel->shader(new PhongShader(), true);
     Models.push_back(pModel);
 
-    // TerrainChunk Shader
-    pTerrain = new Terrain(ASSET_DIRECTORY"colorchess.bmp", 0.5, 12);
-    TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
-    pTerrain->shader(pTerrainShader, true);
+    // Terrain
+    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 12);
+    pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 
     // Player Car
     pTank = new Tank();
-    PhongShader* phongShader = new PhongShader(ASSET_DIRECTORY);
-    pTank->shader(phongShader, true);
+    pTank->bindToTerrain(pTerrain);
+    pTank->shader(new PhongShader(ASSET_DIRECTORY), true);
     pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
     Models.push_back(pTank);
 }
@@ -69,16 +60,19 @@ void Application::start()
 //    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Application::update(float dtime)
+void Application::update(float dTime)
 {
-    if(glfwGetKey(pWindow, GLFW_KEY_RIGHT)) {
-        pTerrain->updateWorldCenter(dtime * 2);
+    // User Input Variablen
+    int keyFrontBack = 0;
+
+    // User Inputs einlesen
+    if(glfwGetKey(pWindow, GLFW_KEY_D) != 0|| glfwGetKey(pWindow, GLFW_KEY_A) != 0) {
+        keyFrontBack = glfwGetKey(pWindow, GLFW_KEY_D) - glfwGetKey(pWindow, GLFW_KEY_A);
     }
-    if(glfwGetKey(pWindow, GLFW_KEY_LEFT)) {
-        pTerrain->updateWorldCenter(dtime * 2);
-    }
-    
+
+    // Alle Objekte aktualisieren
     Cam.update();
+    pTank->update(dTime, keyFrontBack);
 }
 
 void Application::draw()
@@ -87,10 +81,8 @@ void Application::draw()
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 2. setup shaders and draw models
-    for( ModelList::iterator it = Models.begin(); it != Models.end(); ++it )
-    {
-        (*it)->draw(Cam);
-    }
+    for (const auto &model : Models)
+        model->draw(Cam);
 
     // 3. check once per frame for opengl errors
     GLenum Error = glGetError();
