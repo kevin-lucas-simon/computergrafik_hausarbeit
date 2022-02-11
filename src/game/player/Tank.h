@@ -22,7 +22,8 @@ protected:
     Model* modelChassis;
     TerrainControlService* terrainControl;
 
-    float worldPosition = 0.0;
+    Vector position;
+    Vector velocity;
 };
 
 #endif /* Tank_hpp */
