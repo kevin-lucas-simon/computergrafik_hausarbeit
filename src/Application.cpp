@@ -51,6 +51,13 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     TerrainShader* pTerrainShader = new TerrainShader(ASSET_DIRECTORY);
     pTerrain->shader(pTerrainShader, true);
     Models.push_back(pTerrain);
+
+    // Player Car
+    pTank = new Tank();
+    PhongShader* phongShader = new PhongShader(ASSET_DIRECTORY);
+    pTank->shader(phongShader, true);
+    pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
+    Models.push_back(pTank);
 }
 void Application::start()
 {
@@ -65,11 +72,12 @@ void Application::start()
 void Application::update(float dtime)
 {
     if(glfwGetKey(pWindow, GLFW_KEY_RIGHT)) {
-        pTerrain->changeWorldCenter(dtime * 2);
+        pTerrain->updateWorldCenter(dtime * 2);
     }
     if(glfwGetKey(pWindow, GLFW_KEY_LEFT)) {
-        pTerrain->changeWorldCenter(dtime * 2);
+        pTerrain->updateWorldCenter(dtime * 2);
     }
+    
     Cam.update();
 }
 

@@ -75,7 +75,7 @@ float Terrain::getDerivation(float value_x) {
 }
 
 // Schnittstelle zur Änderung des Weltmittelpunktes, auf dessen Wert sich das Chunk Rendering stützt
-void Terrain::changeWorldCenter(float addedValue) {
+void Terrain::updateWorldCenter(float addedValue) {
     // Grenze nach links erreicht?
     if (worldCenter + addedValue < 0.0)
         worldCenter = 0.0;

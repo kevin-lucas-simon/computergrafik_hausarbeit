@@ -24,7 +24,7 @@ public:
 
     virtual float getHeight(float value_x);
     virtual float getDerivation(float value_x);
-    virtual void changeWorldCenter(float addedValue);
+    virtual void updateWorldCenter(float addedValue);
 
 protected:
     void createChunks();
