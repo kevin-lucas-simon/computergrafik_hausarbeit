@@ -39,7 +39,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain
-    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 12);
+    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 24);
     pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 

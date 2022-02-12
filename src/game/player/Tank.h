@@ -19,6 +19,9 @@ public:
     void update(float dTime, int keyFrontBack);
     virtual void draw(const BaseCamera& Cam);
 protected:
+    void calculatePhysics(float dTime, int keyFrontBack);
+    void calculateTransformation();
+
     Model* modelChassis;
     TerrainControlService* terrainControl;
 
