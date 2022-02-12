@@ -29,11 +29,12 @@ protected:
     Vector velocity;
 
     // Definition Physikalischer Konstanten
-    const float GRAVITY_FORCE = 1.0;    // Positiver Wert, entspricht nicht der reale Konstante
+    const float GRAVITY_FORCE = 0.6;    // Positiver Wert, entspricht nicht der reale Konstante
     const float USER_FORCE = 1.0;       // Positiver Wert
     const float SLOPE_FORCE = 1.0;      // Positiver Wert
-    const float DRAG_FACTOR = 0.99;     // Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
-    const float LIFT_HEIGHT = 0.05;     // Positiver Wert
+    const float GENERAL_DRAG = 0.99;    // Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
+    const float IMPACT_DRAG = 0.4;      // Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
+    const float LIFT_HEIGHT = 0.02;     // Positiver Wert
     const float STOPPING_SPEED = 0.003; // Positiver Wert
 };
 

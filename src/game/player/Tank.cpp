@@ -51,21 +51,23 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
         // Auf dem Boden der Tatsachen bringen
         position.Y = terrainHeight;
 
-        // Steigung der Oberfläche ermitteln
-        Vector slope = Vector(1, terrainDerivation, 0);
+        // Neigungsrichtung der Oberfläche ermitteln, die die Geschwindigkeit anhand des Einfallwinkels abbremst
+        Vector slope = Vector(1, terrainDerivation, 0).normalize();
+        velocity = velocity * (fabs(Vector(velocity).normalize().dot(slope)) * (1 - IMPACT_DRAG) + IMPACT_DRAG);
 
         // Geschwindigkeitsberechnung mit Fallunterscheidung der x-Richtung
         if(velocity.dot(Vector(1,0,0)) > 0.0) // x ist positiv
-            velocity = slope.normalize() * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE);
+            velocity = slope * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE);
         else // x ist negativ
-            velocity = -slope.normalize() * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE);
+            velocity = -slope * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE);
 
         // Reibung simulieren
-        velocity = velocity * DRAG_FACTOR;
+        velocity = velocity * GENERAL_DRAG;
     } else {
-        // Gravitation auf fallendes Object anwenden
+        // Gravitation auf fallendes Object anwenden samt Einwirkung des Spielers
         Vector gravity = Vector(0, -1, 0) * dTime * GRAVITY_FORCE;
-        velocity = (velocity + gravity);
+        Vector userForce = Vector(0, -1, 0) * dTime * fabs(keyFrontBack) * USER_FORCE;
+        velocity = (velocity + gravity + userForce);
     }
 
     // Stoppen, wenn die Geschwindigkeit zu langsam ist
