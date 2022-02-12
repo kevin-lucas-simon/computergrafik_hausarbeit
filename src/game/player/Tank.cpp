@@ -57,16 +57,16 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
 
         // Geschwindigkeitsberechnung mit Fallunterscheidung der x-Richtung
         if(velocity.dot(Vector(1,0,0)) > 0.0) // x ist positiv
-            velocity = slope * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE);
+            velocity = slope * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE_DRIVING);
         else // x ist negativ
-            velocity = -slope * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE);
+            velocity = -slope * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE_DRIVING);
 
         // Reibung simulieren
         velocity = velocity * GENERAL_DRAG;
     } else {
         // Gravitation auf fallendes Object anwenden samt Einwirkung des Spielers
         Vector gravity = Vector(0, -1, 0) * dTime * GRAVITY_FORCE;
-        Vector userForce = Vector(0, -1, 0) * dTime * fabs(keyFrontBack) * USER_FORCE;
+        Vector userForce = Vector(0, -1, 0) * dTime * fabs(keyFrontBack) * USER_FORCE_FALLING;
         velocity = (velocity + gravity + userForce);
     }
 

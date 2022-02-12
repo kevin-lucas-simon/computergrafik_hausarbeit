@@ -28,14 +28,22 @@ protected:
     Vector position;
     Vector velocity;
 
-    // Definition Physikalischer Konstanten
-    const float GRAVITY_FORCE = 0.6;    // Positiver Wert, entspricht nicht der reale Konstante
-    const float USER_FORCE = 1.0;       // Positiver Wert
-    const float SLOPE_FORCE = 1.0;      // Positiver Wert
-    const float GENERAL_DRAG = 0.99;    // Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
-    const float IMPACT_DRAG = 0.4;      // Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
-    const float LIFT_HEIGHT = 0.02;     // Positiver Wert
-    const float STOPPING_SPEED = 0.003; // Positiver Wert
+    // Beschleunigungsrate des Nutzers beim Fahren, positiver Wert
+    const float USER_FORCE_DRIVING = 1.0;
+    // Beschleunigungsrate des Nutzers beim Fallen, positiver Wert
+    const float USER_FORCE_FALLING = 1.0;
+    // Gravitation, positiver Wert, entspricht nicht der reale Konstante
+    const float GRAVITY_FORCE = 0.6;
+    // Abbremsungs- und Beschleunigungsrate eines Gefälles beim Fahren, positiver Wert
+    const float SLOPE_FORCE = 1.0;
+    // Benötigte Höhe zum Abheben des Fahrzeugs, positiver Wert
+    const float LIFT_HEIGHT = 0.02;
+    // Rate der Abbremsung generell beim Fahren, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
+    const float GENERAL_DRAG = 0.99;
+    // Rate der Abbremsung, wenn der Nutzer auf ein Berg knallt, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
+    const float IMPACT_DRAG = 0.4;
+    // Minimalgeschwindigkeit, darunter hält das Fahrzeug an, positiver Wert
+    const float STOPPING_SPEED = 0.003;
 };
 
 #endif /* Tank_hpp */

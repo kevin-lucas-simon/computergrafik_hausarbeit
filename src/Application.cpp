@@ -32,6 +32,7 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
 {
     BaseModel* pModel;
+    keyManager = new KeyManager(pWindow);
 
     // Skybox
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
@@ -39,7 +40,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain
-    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 24);
+    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 32);
     pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 
@@ -62,17 +63,12 @@ void Application::start()
 
 void Application::update(float dTime)
 {
-    // User Input Variablen
-    int keyFrontBack = 0;
-
-    // User Inputs einlesen
-    if(glfwGetKey(pWindow, GLFW_KEY_D) != 0|| glfwGetKey(pWindow, GLFW_KEY_A) != 0) {
-        keyFrontBack = glfwGetKey(pWindow, GLFW_KEY_D) - glfwGetKey(pWindow, GLFW_KEY_A);
-    }
+    // User Input einlesen
+    keyManager->readUserInput();
 
     // Alle Objekte aktualisieren
     Cam.update();
-    pTank->update(dTime, keyFrontBack);
+    pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
 }
 
 void Application::draw()
