@@ -13,6 +13,8 @@
 #include <list>
 #include <game/world/TerrainChunk.h>
 #include <game/world/Terrain.h>
+#include <game/player/Tank.h>
+#include <game/KeyManager.h>
 #include "camera/camera.h"
 #include "shader/phongshader.h"
 #include "shader/constantshader.h"
@@ -34,7 +36,10 @@ protected:
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
+    KeyManager* keyManager;
+
     Terrain* pTerrain;
+    Tank* pTank;
 };
 
 #endif /* Application_hpp */

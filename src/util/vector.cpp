@@ -67,6 +67,8 @@ Vector& Vector::operator+=(const Vector& v)
 Vector& Vector::normalize()
 {
     float length = this->length();
+    if(length == 0)
+        return *this;
     X = X/length;
     Y = Y/length;
     Z = Z/length;
