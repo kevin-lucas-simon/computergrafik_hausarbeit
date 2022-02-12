@@ -35,15 +35,19 @@ void Tank::draw(const BaseCamera& Cam) {
 }
 
 void Tank::calculatePhysics(float dTime, int keyFrontBack) {
-    // Position aktualisieren
+    // Position aktualisieren, mit Beachtung des Weltlimits
     position += velocity;
+    if(position.X < 0) {
+        position.X = 0;
+        velocity.X = 0;
+    }
 
     // Hilfsvariablen
     float terrainDerivation = terrainControl->getDerivation(position.X);
     float terrainHeight = terrainControl->getHeight(position.X);
 
     // Fallunterscheidung Bodenkontakt
-    if (position.Y < terrainHeight + 0.05) {
+    if (position.Y < terrainHeight + LIFT_HEIGHT) {
         // Auf dem Boden der Tatsachen bringen
         position.Y = terrainHeight;
 
@@ -52,28 +56,42 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
 
         // Geschwindigkeitsberechnung mit Fallunterscheidung der x-Richtung
         if(velocity.dot(Vector(1,0,0)) > 0.0) // x ist positiv
-            velocity = slope.normalize() * (velocity.length() - terrainDerivation * dTime + keyFrontBack * dTime );
+            velocity = slope.normalize() * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE);
         else // x ist negativ
-            velocity = -slope.normalize() * (velocity.length() + terrainDerivation * dTime - keyFrontBack * dTime);
+            velocity = -slope.normalize() * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE);
+
+        // Reibung simulieren
+        velocity = velocity * DRAG_FACTOR;
     } else {
         // Gravitation auf fallendes Object anwenden
-        Vector gravity = Vector(0, -1, 0) * dTime;
+        Vector gravity = Vector(0, -1, 0) * dTime * GRAVITY_FORCE;
         velocity = (velocity + gravity);
     }
+
+    // Stoppen, wenn die Geschwindigkeit zu langsam ist
+    if(velocity.length() < STOPPING_SPEED)
+        velocity = Vector(0,0,0);
 
     // Welt-Center Variable aktualisieren
     terrainControl->updateWorldCenter(position.X);
 }
 
 void Tank::calculateTransformation() {
-    // Nach aktueller Geschwindigkeitsrichtung ausrichten
+    // Nach aktueller Geschwindigkeitsrichtung ausrichten, bei keiner Geschwindigkeit wird nach der Welt ausgerichtet
     Matrix objectRotation;
-    float angle = acos(velocity.dot(Vector(1,0,0))*(1/velocity.length()));
-    if(velocity.Y < 0)
-        angle *= -1;
-    if(velocity.X < 0)
-        angle -= AI_MATH_PI;
-    objectRotation.rotationZ(angle);
+    if (velocity.length() != 0) {
+        float angle = acos(velocity.dot(Vector(1,0,0))*(1/velocity.length()));
+        if(velocity.Y < 0)
+            angle *= -1;
+        if(velocity.X < 0)
+            angle -= AI_MATH_PI;
+        if(velocity.length() != 0)
+            objectRotation.rotationZ(angle);
+        else
+            objectRotation.scale(1);
+    } else {
+        objectRotation.rotationZ(atan(terrainControl->getDerivation(position.X)));
+    }
 
     // In verkehrter Richtung drehen beim Rückwärts fahren
     Matrix objectDirection;
