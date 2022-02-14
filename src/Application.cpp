@@ -66,6 +66,13 @@ void Application::update(float dTime)
     // User Input einlesen
     keyManager->readUserInput();
 
+    // TODO entfernen!
+    if(glfwGetKey(pWindow, GLFW_KEY_K) || glfwGetKey(pWindow, GLFW_KEY_L)) {
+        worldSizeTest += (glfwGetKey(pWindow, GLFW_KEY_K) - glfwGetKey(pWindow, GLFW_KEY_L));
+        pTerrain->setWorldSize(worldSizeTest);
+        std::cout << "WorldSize: " << worldSizeTest << std::endl;
+    }
+
     // Alle Objekte aktualisieren
     Cam.update();
     pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());

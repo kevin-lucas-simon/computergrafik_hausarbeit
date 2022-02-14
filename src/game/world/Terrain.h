@@ -32,7 +32,7 @@ public:
 protected:
     void createChunks();
     void shiftChunks();
-    void deleteChunks();
+    void distantChunks();
 
     typedef std::list<TerrainChunk*> TerrainChunkList;
     TerrainChunkList chunks;
@@ -42,9 +42,10 @@ protected:
     float vertexGapSize;
     int chunkSize;
 
-    float worldSize;
     float actualWorldCenter;
     float oldWorldCenter;
+    float actualWorldSize = 0.0;
+    float oldWorldSize = 0.0;
 };
 
 
