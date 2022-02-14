@@ -30,7 +30,6 @@ public:
     virtual void setWorldSize(float newWorldCenter);
 
 protected:
-    void createChunks();
     void shiftChunks();
     void distantChunks();
 
@@ -44,8 +43,8 @@ protected:
 
     float actualWorldCenter;
     float oldWorldCenter;
-    float actualWorldSize = 0.0;
-    float oldWorldSize = 0.0;
+    float actualWorldSize;
+    float oldWorldSize;
 };
 
 

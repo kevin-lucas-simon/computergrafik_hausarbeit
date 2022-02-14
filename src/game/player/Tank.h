@@ -29,15 +29,15 @@ protected:
     Vector velocity;
 
     // Beschleunigungsrate des Nutzers beim Fahren, positiver Wert
-    const float USER_FORCE_DRIVING = 1.0;
+    const float USER_FORCE_DRIVING = 2.0;
     // Beschleunigungsrate des Nutzers beim Fallen, positiver Wert
     const float USER_FORCE_FALLING = 1.0;
     // Gravitation, positiver Wert, entspricht nicht der reale Konstante
-    const float GRAVITY_FORCE = 0.6;
+    const float GRAVITY_FORCE = 0.2;
     // Abbremsungs- und Beschleunigungsrate eines Gefälles beim Fahren, positiver Wert
-    const float SLOPE_FORCE = 1.0;
+    const float SLOPE_FORCE = 0.6;
     // Benötigte Höhe zum Abheben des Fahrzeugs, positiver Wert
-    const float LIFT_HEIGHT = 0.02;
+    const float LIFT_HEIGHT = 0.01;
     // Rate der Abbremsung generell beim Fahren, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
     const float GENERAL_DRAG = 0.99;
     // Rate der Abbremsung, wenn der Nutzer auf ein Berg knallt, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)

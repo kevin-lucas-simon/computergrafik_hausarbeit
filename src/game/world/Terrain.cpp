@@ -10,10 +10,13 @@ Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
     this->actualWorldCenter = 0.0;
+    this->actualWorldSize = chunkSize;
     this->DetailMap1 = DetailMap1;
 
-    // Ladevorgang starten
-    this->createChunks();
+    // Haupt-Chunk generieren und anschließend alle anderen
+    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, DetailMap1));
+    chunks.front()->shader(pShader, false);
+    this->distantChunks();
 }
 
 Terrain::~Terrain() {
@@ -38,6 +41,7 @@ void Terrain::draw(const BaseCamera &Cam) {
 
 // Wird in jedem Frame aufgerufen
 void Terrain::update() {
+    // Chunks aktualisieren
     this->shiftChunks();
     this->distantChunks();
 
@@ -45,13 +49,6 @@ void Terrain::update() {
     Matrix worldPosition = Matrix().translation(-actualWorldCenter, 0, 0);
     for (const auto &chunk : chunks)
         chunk->transform(worldPosition);
-}
-
-// Erstellt die Chunks anhand der Spielerposition
-void Terrain::createChunks() {
-    // Haupt-Chunk
-    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, DetailMap1));
-    chunks.front()->shader(pShader, false);
 }
 
 // Erstellt Chunk an einer Seite, löscht ein Chunk an anderer Seite, wenn ein neuer Chunk betreten wurde
@@ -106,7 +103,6 @@ void Terrain::distantChunks() {
                 chunks.pop_back();
             }
         }
-        std::cout << "Chunks: " << chunks.size() << std::endl;
         // Alte Weltgröße mit aktuellem Wert besetzen, da die Weltgröße nicht in jedem Frame angepasst wird
         oldWorldSize = actualWorldSize;
     }
@@ -131,8 +127,7 @@ void Terrain::setWorldCenter(float newWorldCenter) {
 // Schnittstelle zur Änderung der gerenderten Weltgröße, auf dessen Wert sich das Chunk Rendering stützt
 void Terrain::setWorldSize(float newWorldSize) {
     oldWorldSize = actualWorldSize;
-    // Minimalwert der Weltgröße
-    if(newWorldSize < chunkSize)
+    if(newWorldSize < chunkSize) // Minimalwert der Weltgröße
         actualWorldSize = chunkSize;
     else
         actualWorldSize = newWorldSize;
