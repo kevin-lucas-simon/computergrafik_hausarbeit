@@ -18,6 +18,9 @@ public:
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual void draw(const BaseCamera& Cam);
+
+    float getMinX();
+    float getMaxX();
 protected:
     void applyShaderParameter();
 

@@ -75,7 +75,7 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
         velocity = Vector(0,0,0);
 
     // Welt-Center Variable aktualisieren
-    terrainControl->updateWorldCenter(position.X);
+    terrainControl->setWorldCenter(position.X);
 }
 
 void Tank::calculateTransformation() {

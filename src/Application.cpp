@@ -40,7 +40,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     Models.push_back(pModel);
 
     // Terrain
-    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 32);
+    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 8);
     pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 
@@ -69,6 +69,7 @@ void Application::update(float dTime)
     // Alle Objekte aktualisieren
     Cam.update();
     pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
+    pTerrain->update();
 }
 
 void Application::draw()

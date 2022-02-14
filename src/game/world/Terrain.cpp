@@ -3,13 +3,14 @@
 //
 
 #include "Terrain.h"
+#include "FlatGraph.h"
 
 Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
     // Variablen übergeben
-    graphService = new SinusGraph();
+    graphService = new FlatGraph();
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
-    this->worldCenter = 0.0;
+    this->actualWorldCenter = 0.0;
     this->DetailMap1 = DetailMap1;
 
     // Ladevorgang starten
@@ -35,26 +36,53 @@ void Terrain::draw(const BaseCamera &Cam) {
         chunk->draw(Cam);
 }
 
+// Wird in jedem Frame aufgerufen
+void Terrain::update() {
+    // Prüfen, ob in der Zwischenzeit ein anderer Chunk betreten wurde
+    if ((int) oldWorldCenter / chunkSize != (int) actualWorldCenter / chunkSize)
+        this->shiftChunks();
+
+    // Welt-Verschiebung-Matrix erstellen und anwenden
+    Matrix worldPosition = Matrix().translation(-actualWorldCenter, 0, 0);
+    for (const auto &chunk : chunks)
+        chunk->transform(worldPosition);
+}
+
 // Erstellt die Chunks anhand der Spielerposition
 void Terrain::createChunks() {
-    // Haupt-Chunk, wo sich der Spieler befindet
-    int xPosChunkStart = worldCenter - fmod(worldCenter, chunkSize);
+    // Haupt-Chunk
+    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, DetailMap1));
+    // Neben-Chunks
+    chunks.push_front(new TerrainChunk(
+            graphService, chunks.front()->getMinX()-chunkSize, chunks.front()->getMinX(), vertexGapSize, DetailMap1));
     chunks.push_back(new TerrainChunk(
-            graphService, xPosChunkStart, xPosChunkStart + chunkSize, vertexGapSize, DetailMap1));
-
-    // Neben-Chunk, es wird die angrenzende Haupt-Chunk-Seite gewählt, die näher an dem Spieler ist
-    if (fmod(worldCenter, chunkSize) < chunkSize / 2) {
-        chunks.push_back(new TerrainChunk(
-                graphService, xPosChunkStart - chunkSize, xPosChunkStart, vertexGapSize, DetailMap1));
-    }
-    else {
-        chunks.push_back(new TerrainChunk(
-                graphService, xPosChunkStart + chunkSize, xPosChunkStart + 2 * chunkSize, vertexGapSize, DetailMap1));
-    }
+            graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize, vertexGapSize, DetailMap1));
 
     // Shader auf Chunks übergeben
     for (const auto &chunk : chunks)
         chunk->shader(pShader, false);
+}
+
+// Erstellt Chunk an einer Seite, löscht ein Chunk an anderer Seite, wenn ein neuer Chunk betreten wurde
+void Terrain::shiftChunks() {
+    // Rechter Chunk wurde betreten
+    if (actualWorldCenter - chunks.front()->getMinX() > chunks.back()->getMaxX() - actualWorldCenter) {
+        chunks.push_back(new TerrainChunk(
+                graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
+                vertexGapSize, DetailMap1));
+        chunks.back()->shader(pShader, false);
+        delete chunks.front();
+        chunks.pop_front();
+    }
+    // Linker Chunk wurde betreten
+    else {
+        chunks.push_front(new TerrainChunk(
+                graphService, chunks.front()->getMinX() - chunkSize, chunks.front()->getMinX(),
+                vertexGapSize, DetailMap1));
+        chunks.front()->shader(pShader, false);
+        delete chunks.back();
+        chunks.pop_back();
+    }
 }
 
 // Löscht aktuell bestehende Chunks
@@ -75,19 +103,12 @@ float Terrain::getDerivation(float value_x) {
 }
 
 // Schnittstelle zur Änderung des Weltmittelpunktes, auf dessen Wert sich das Chunk Rendering stützt
-void Terrain::updateWorldCenter(float newWorldCenter) {
-    // Prüfen, ob die Chunks neu berechnet werden müssen
-    if (!((fmod(worldCenter, chunkSize) < chunkSize/2) ^ (fmod(newWorldCenter, chunkSize) >= chunkSize / 2))) {
-        this->worldCenter = newWorldCenter;
-        this->deleteChunks();
-        this->createChunks();
-    } else {
-        this->worldCenter = newWorldCenter;
-    }
+void Terrain::setWorldCenter(float newWorldCenter) {
+    oldWorldCenter = actualWorldCenter;
+    actualWorldCenter = newWorldCenter;
+}
 
-    // Welt-Verschiebung-Matrix erstellen und anwenden
-    Matrix worldPosition;
-    worldPosition.translation(-worldCenter, 0, 0);
-    for (const auto &chunk : chunks)
-        chunk->transform(worldPosition);
+// Schnittstelle zur Änderung der gerenderten Weltgröße, auf dessen Wert sich das Chunk Rendering stützt
+void Terrain::setWorldSize(float newWorldSize) {
+    worldSize = newWorldSize;
 }

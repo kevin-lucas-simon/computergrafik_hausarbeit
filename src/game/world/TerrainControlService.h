@@ -11,7 +11,8 @@ class TerrainControlService
 public:
     virtual float getHeight(float value_x) = 0;
     virtual float getDerivation(float value_x) = 0;
-    virtual void updateWorldCenter(float newWorldCenter) = 0;
+    virtual void setWorldCenter(float newWorldCenter) = 0;
+    virtual void setWorldSize(float newWorldSize) = 0;
 };
 
 
