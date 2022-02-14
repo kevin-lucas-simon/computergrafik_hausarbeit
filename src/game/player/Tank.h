@@ -8,8 +8,9 @@
 #include <stdio.h>
 #include <game/world/TerrainControlService.h>
 #include "model/Model.h"
+#include "PlayerPositionService.h"
 
-class Tank : public BaseModel
+class Tank : public BaseModel, virtual public PlayerPositionService
 {
 public:
     Tank();
@@ -18,6 +19,9 @@ public:
     void bindToTerrain(TerrainControlService* terrainControl);
     void update(float dTime, int keyFrontBack);
     virtual void draw(const BaseCamera& Cam);
+
+    virtual float getHeight();
+    virtual float getSpeed();
 protected:
     void calculatePhysics(float dTime, int keyFrontBack);
     void calculateTransformation();

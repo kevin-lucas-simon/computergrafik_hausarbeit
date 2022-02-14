@@ -12,6 +12,8 @@
 #include <glfw/glfw3.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <game/GameCamera.h>
+
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
@@ -31,11 +33,8 @@
 
 Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
-    BaseModel* pModel;
-    Cam = new Camera(pWin);
-    keyManager = new KeyManager(pWindow);
-
     // Skybox
+    BaseModel* pModel;
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
     pModel->shader(new PhongShader(), true);
     Models.push_back(pModel);
@@ -51,6 +50,10 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     pTank->shader(new PhongShader(ASSET_DIRECTORY), true);
     pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
     Models.push_back(pTank);
+
+    // Kamera und KeyManager
+    keyManager = new KeyManager(pWindow);
+    Cam = new GameCamera(pWin, pTank);
 }
 void Application::start()
 {

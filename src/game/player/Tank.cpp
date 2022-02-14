@@ -109,3 +109,13 @@ void Tank::calculateTransformation() {
     // Transformation anwenden
     modelChassis->transform(objectTranslation * objectRotation * objectDirection);
 }
+
+// Schnittstelle zur Höhe des Spielers
+float Tank::getHeight() {
+    return position.Y;
+}
+
+// Schnittstelle zur Geschwindigkeit des Spielers
+float Tank::getSpeed() {
+    return velocity.length();
+}
