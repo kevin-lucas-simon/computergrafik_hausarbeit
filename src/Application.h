@@ -33,7 +33,7 @@ public:
     void end();
 
 protected:
-    Camera Cam;
+    BaseCamera* Cam;
     ModelList Models;
     GLFWwindow* pWindow;
     KeyManager* keyManager;

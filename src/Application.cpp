@@ -29,9 +29,10 @@
 #endif
 
 
-Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
+Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
     BaseModel* pModel;
+    Cam = new Camera(pWin);
     keyManager = new KeyManager(pWindow);
 
     // Skybox
@@ -74,7 +75,7 @@ void Application::update(float dTime)
     }
 
     // Alle Objekte aktualisieren
-    Cam.update();
+    Cam->update();
     pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
     pTerrain->update();
 }
@@ -86,7 +87,7 @@ void Application::draw()
 
     // 2. setup shaders and draw models
     for (const auto &model : Models)
-        model->draw(Cam);
+        model->draw(*Cam);
 
     // 3. check once per frame for opengl errors
     GLenum Error = glGetError();
