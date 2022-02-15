@@ -12,6 +12,8 @@
 #include <glfw/glfw3.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <game/GameCamera.h>
+
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
@@ -29,18 +31,16 @@
 #endif
 
 
-Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
+Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
-    BaseModel* pModel;
-    keyManager = new KeyManager(pWindow);
-
     // Skybox
+    BaseModel* pModel;
     pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
     pModel->shader(new PhongShader(), true);
     Models.push_back(pModel);
 
     // Terrain
-    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 32);
+    pTerrain = new Terrain(ASSET_DIRECTORY"grass.bmp", 0.5, 4);
     pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 
@@ -50,6 +50,10 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin)
     pTank->shader(new PhongShader(ASSET_DIRECTORY), true);
     pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
     Models.push_back(pTank);
+
+    // Kamera und KeyManager
+    keyManager = new KeyManager(pWindow);
+    Cam = new GameCamera(pWin, pTank, pTerrain);
 }
 void Application::start()
 {
@@ -66,9 +70,14 @@ void Application::update(float dTime)
     // User Input einlesen
     keyManager->readUserInput();
 
+    // Debug Modus Wechsel
+    if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
+    if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
+
     // Alle Objekte aktualisieren
-    Cam.update();
+    Cam->update();
     pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
+    pTerrain->update();
 }
 
 void Application::draw()
@@ -78,7 +87,7 @@ void Application::draw()
 
     // 2. setup shaders and draw models
     for (const auto &model : Models)
-        model->draw(Cam);
+        model->draw(*Cam);
 
     // 3. check once per frame for opengl errors
     GLenum Error = glGetError();

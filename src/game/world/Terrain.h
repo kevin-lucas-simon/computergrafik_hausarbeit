@@ -22,13 +22,16 @@ public:
     void shader( BaseShader* shader, bool deleteOnDestruction=false );
     void draw(const BaseCamera& Cam);
 
+    void update();
+
     virtual float getHeight(float value_x);
     virtual float getDerivation(float value_x);
-    virtual void updateWorldCenter(float newWorldCenter);
+    virtual void setWorldCenter(float newWorldCenter);
+    virtual void setWorldSize(float newWorldCenter);
 
 protected:
-    void createChunks();
-    void deleteChunks();
+    void shiftChunks();
+    void distantChunks();
 
     typedef std::list<TerrainChunk*> TerrainChunkList;
     TerrainChunkList chunks;
@@ -36,8 +39,12 @@ protected:
 
     char *DetailMap1;
     float vertexGapSize;
-    float worldCenter;
     int chunkSize;
+
+    float actualWorldCenter;
+    float oldWorldCenter;
+    float actualWorldSize;
+    float oldWorldSize;
 };
 
 

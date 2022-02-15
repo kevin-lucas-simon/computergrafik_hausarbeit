@@ -18,6 +18,9 @@ public:
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual void draw(const BaseCamera& Cam);
+
+    float getMinX();
+    float getMaxX();
 protected:
     void applyShaderParameter();
 
@@ -29,7 +32,7 @@ protected:
 
     float minX, maxX, gap;
     const float minZ = -1;
-    const float maxZ = 5;
+    const float maxZ = 9;
 };
 
 #endif //COMPUTERGRAFIK_PRAKTIKUM_TERRAINCHUNK_H

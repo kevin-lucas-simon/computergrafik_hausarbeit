@@ -18,6 +18,10 @@ KeyManager::KeyManager(GLFWwindow* pWindow) {
     backwardKeys.push_back(GLFW_KEY_S);
     backwardKeys.push_back(GLFW_KEY_LEFT);
     backwardKeys.push_back(GLFW_KEY_DOWN);
+
+    // Tasten für Debug Camera
+    debugStartKeys.push_back(GLFW_KEY_F3);
+    debugEndKeys.push_back(GLFW_KEY_F1);
 }
 
 KeyManager::~KeyManager() {}
@@ -34,6 +38,18 @@ void KeyManager::readUserInput() {
     for (const auto &key : backwardKeys)
         if(glfwGetKey(pWindow, key) != 0)
             backwardValue = glfwGetKey(pWindow, key);
+
+    // Tasten für Debug Modus starten
+    debugStartValue = 0;
+    for (const auto &key : debugStartKeys)
+        if(glfwGetKey(pWindow, key) != 0)
+            debugStartValue = glfwGetKey(pWindow, key);
+
+    // Tasten für Debug Modus beenden
+    debugEndValue = 0;
+    for (const auto &key : debugEndKeys)
+        if(glfwGetKey(pWindow, key) != 0)
+            debugEndValue = glfwGetKey(pWindow, key);
 }
 
 float KeyManager::getForwardKey() {
@@ -42,4 +58,12 @@ float KeyManager::getForwardKey() {
 
 float KeyManager::getBackwardKey() {
     return backwardValue;
+}
+
+float KeyManager::getDebugStartKey() {
+    return debugStartValue;
+}
+
+float KeyManager::getDebugEndKey() {
+    return debugEndValue;
 }

@@ -26,6 +26,8 @@ public:
     void readUserInput();
     float getForwardKey();
     float getBackwardKey();
+    float getDebugStartKey();
+    float getDebugEndKey();
 
 protected:
     GLFWwindow* pWindow;
@@ -35,6 +37,12 @@ protected:
 
     std::list<int> backwardKeys;
     float backwardValue = 0.0;
+
+    std::list<int> debugStartKeys;
+    float debugStartValue = 0.0;
+
+    std::list<int> debugEndKeys;
+    float debugEndValue = 0.0;
 };
 
 

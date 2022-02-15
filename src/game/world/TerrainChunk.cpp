@@ -103,3 +103,13 @@ void TerrainChunk::applyShaderParameter()
     for(int i=0; i<1; i++)
         Shader->detailTex(i,&DetailTex[i]);
 }
+
+// Gibt die minX-Variable zurück
+float TerrainChunk::getMinX() {
+    return minX;
+}
+
+// Gibt die maxX-Variable zurück
+float TerrainChunk::getMaxX() {
+    return maxX;
+}

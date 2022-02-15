@@ -3,21 +3,26 @@
 //
 
 #include "Terrain.h"
+#include "FlatGraph.h"
 
 Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
     // Variablen übergeben
     graphService = new SinusGraph();
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
-    this->worldCenter = 0.0;
+    this->actualWorldCenter = 0.0;
+    this->actualWorldSize = chunkSize;
     this->DetailMap1 = DetailMap1;
 
-    // Ladevorgang starten
-    this->createChunks();
+    // Haupt-Chunk generieren und anschließend alle anderen
+    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, DetailMap1));
+    chunks.front()->shader(pShader, false);
+    this->distantChunks();
 }
 
 Terrain::~Terrain() {
-    this->deleteChunks();
+    for (auto chunk : chunks)
+        delete chunk;
     chunks.clear();
     delete graphService;
 }
@@ -35,33 +40,73 @@ void Terrain::draw(const BaseCamera &Cam) {
         chunk->draw(Cam);
 }
 
-// Erstellt die Chunks anhand der Spielerposition
-void Terrain::createChunks() {
-    // Haupt-Chunk, wo sich der Spieler befindet
-    int xPosChunkStart = worldCenter - fmod(worldCenter, chunkSize);
-    chunks.push_back(new TerrainChunk(
-            graphService, xPosChunkStart, xPosChunkStart + chunkSize, vertexGapSize, DetailMap1));
+// Wird in jedem Frame aufgerufen
+void Terrain::update() {
+    // Chunks aktualisieren
+    this->shiftChunks();
+    this->distantChunks();
 
-    // Neben-Chunk, es wird die angrenzende Haupt-Chunk-Seite gewählt, die näher an dem Spieler ist
-    if (fmod(worldCenter, chunkSize) < chunkSize / 2) {
-        chunks.push_back(new TerrainChunk(
-                graphService, xPosChunkStart - chunkSize, xPosChunkStart, vertexGapSize, DetailMap1));
-    }
-    else {
-        chunks.push_back(new TerrainChunk(
-                graphService, xPosChunkStart + chunkSize, xPosChunkStart + 2 * chunkSize, vertexGapSize, DetailMap1));
-    }
-
-    // Shader auf Chunks übergeben
+    // Welt-Verschiebung-Matrix erstellen und anwenden
+    Matrix worldPosition = Matrix().translation(-actualWorldCenter, 0, 0);
     for (const auto &chunk : chunks)
-        chunk->shader(pShader, false);
+        chunk->transform(worldPosition);
 }
 
-// Löscht aktuell bestehende Chunks
-void Terrain::deleteChunks() {
-    for (auto chunk : chunks)
-        delete chunk;
-    chunks.clear();
+// Erstellt Chunk an einer Seite, löscht ein Chunk an anderer Seite, wenn ein neuer Chunk betreten wurde
+void Terrain::shiftChunks() {
+    // Prüfen, ob in der Zwischenzeit ein anderer Chunk betreten wurde
+    if ((int) oldWorldCenter / chunkSize != (int) actualWorldCenter / chunkSize) {
+        // Rechter Chunk wurde betreten
+        if (actualWorldCenter - chunks.front()->getMinX() > chunks.back()->getMaxX() - actualWorldCenter) {
+            chunks.push_back(new TerrainChunk(
+                    graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
+                    vertexGapSize, DetailMap1));
+            chunks.back()->shader(pShader, false);
+            delete chunks.front();
+            chunks.pop_front();
+        }
+        // Linker Chunk wurde betreten
+        else {
+            chunks.push_front(new TerrainChunk(
+                    graphService, chunks.front()->getMinX() - chunkSize, chunks.front()->getMinX(),
+                    vertexGapSize, DetailMap1));
+            chunks.front()->shader(pShader, false);
+            delete chunks.back();
+            chunks.pop_back();
+        }
+    }
+}
+
+// Erstellt bzw. löscht Chunks am Rand, wenn sich der Chunkrendering-Bereich ändert
+void Terrain::distantChunks() {
+    // Prüfen, ob sich der Chunkrendering-Bereich geändert hat
+    int chunkDifference = ((int) actualWorldSize / chunkSize - (int) oldWorldSize / chunkSize);
+    if (chunkDifference != 0) {
+        // Chunks hinzufügen, wenn der Chunkrendering-Bereich größer wird
+        if(chunkDifference > 0) {
+            while (chunks.size() < (int) actualWorldSize / chunkSize + 1) {
+                chunks.push_front(new TerrainChunk(
+                        graphService, chunks.front()->getMinX()-chunkSize, chunks.front()->getMinX(),
+                        vertexGapSize, DetailMap1));
+                chunks.push_back(new TerrainChunk(
+                        graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
+                        vertexGapSize, DetailMap1));
+                chunks.front()->shader(pShader, false);
+                chunks.back()->shader(pShader, false);
+            }
+        }
+        // Chunks entfernen, wenn der Chunkrendering-Bereich kleiner wird
+        else {
+            while (chunks.size() > (int) actualWorldSize / chunkSize + 2) {
+                delete chunks.front();
+                delete chunks.back();
+                chunks.pop_front();
+                chunks.pop_back();
+            }
+        }
+        // Alte Weltgröße mit aktuellem Wert besetzen, da die Weltgröße nicht in jedem Frame angepasst wird
+        oldWorldSize = actualWorldSize;
+    }
 }
 
 // Schnittstelle zur Höhe f(x) einer x-Position
@@ -75,19 +120,16 @@ float Terrain::getDerivation(float value_x) {
 }
 
 // Schnittstelle zur Änderung des Weltmittelpunktes, auf dessen Wert sich das Chunk Rendering stützt
-void Terrain::updateWorldCenter(float newWorldCenter) {
-    // Prüfen, ob die Chunks neu berechnet werden müssen
-    if (!((fmod(worldCenter, chunkSize) < chunkSize/2) ^ (fmod(newWorldCenter, chunkSize) >= chunkSize / 2))) {
-        this->worldCenter = newWorldCenter;
-        this->deleteChunks();
-        this->createChunks();
-    } else {
-        this->worldCenter = newWorldCenter;
-    }
+void Terrain::setWorldCenter(float newWorldCenter) {
+    oldWorldCenter = actualWorldCenter;
+    actualWorldCenter = newWorldCenter;
+}
 
-    // Welt-Verschiebung-Matrix erstellen und anwenden
-    Matrix worldPosition;
-    worldPosition.translation(-worldCenter, 0, 0);
-    for (const auto &chunk : chunks)
-        chunk->transform(worldPosition);
+// Schnittstelle zur Änderung der gerenderten Weltgröße, auf dessen Wert sich das Chunk Rendering stützt
+void Terrain::setWorldSize(float newWorldSize) {
+    oldWorldSize = actualWorldSize;
+    if(newWorldSize < chunkSize) // Minimalwert der Weltgröße
+        actualWorldSize = chunkSize;
+    else
+        actualWorldSize = newWorldSize;
 }

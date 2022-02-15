@@ -33,10 +33,13 @@ public:
     void end();
 
 protected:
-    Camera Cam;
+    BaseCamera* Cam;
     ModelList Models;
     GLFWwindow* pWindow;
     KeyManager* keyManager;
+
+    // TODO entfernen!
+    float worldSizeTest = 32.0;
 
     Terrain* pTerrain;
     Tank* pTank;

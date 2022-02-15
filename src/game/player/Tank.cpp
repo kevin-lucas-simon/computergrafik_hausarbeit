@@ -57,9 +57,15 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
 
         // Geschwindigkeitsberechnung mit Fallunterscheidung der x-Richtung
         if(velocity.dot(Vector(1,0,0)) > 0.0) // x ist positiv
-            velocity = slope * (velocity.length() - terrainDerivation * dTime * SLOPE_FORCE + keyFrontBack * dTime * USER_FORCE_DRIVING);
+            velocity = slope * (velocity.length()
+                    - std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
+                    - std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
+                    + keyFrontBack * dTime * USER_FORCE_DRIVING);
         else // x ist negativ
-            velocity = -slope * (velocity.length() + terrainDerivation * dTime * SLOPE_FORCE - keyFrontBack * dTime * USER_FORCE_DRIVING);
+            velocity = -slope * (velocity.length()
+                    + std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
+                    + std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
+                    - keyFrontBack * dTime * USER_FORCE_DRIVING);
 
         // Reibung simulieren
         velocity = velocity * GENERAL_DRAG;
@@ -75,7 +81,7 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
         velocity = Vector(0,0,0);
 
     // Welt-Center Variable aktualisieren
-    terrainControl->updateWorldCenter(position.X);
+    terrainControl->setWorldCenter(position.X);
 }
 
 void Tank::calculateTransformation() {
@@ -108,4 +114,19 @@ void Tank::calculateTransformation() {
 
     // Transformation anwenden
     modelChassis->transform(objectTranslation * objectRotation * objectDirection);
+}
+
+// Schnittstelle zur Höhe des Spielers
+float Tank::getHeight() {
+    return position.Y;
+}
+
+// Schnittstelle zur Position des Spielers
+float Tank::getPosition() {
+    return position.X;
+}
+
+// Schnittstelle zur Geschwindigkeit des Spielers
+float Tank::getSpeed() {
+    return velocity.length();
 }
