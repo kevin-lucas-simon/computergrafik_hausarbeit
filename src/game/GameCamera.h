@@ -63,6 +63,7 @@ protected:
     const float CAM_ANGLE_ON_WORLD = M_PI*65.0f/180.0f;
 
     // Zoomanpassungsgeschwindigkeit der Kamera im Zusammenhang mit dem Spieler
+    const float MIN_PLAYER_SPEED = 0.15;
     const float PLAYER_SPEED_FACTOR = 30.0;
     const float CAM_ZOOM_SPEED_IN = 0.05;
     const float CAM_ZOOM_SPEED_OUT = CAM_ZOOM_SPEED_IN * 2.5;

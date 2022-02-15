@@ -7,7 +7,7 @@
 
 Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
     // Variablen übergeben
-    graphService = new FlatGraph();
+    graphService = new SinusGraph();
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
     this->actualWorldCenter = 0.0;

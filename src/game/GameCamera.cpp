@@ -49,7 +49,7 @@ const Matrix& GameCamera::getProjectionMatrix() const
 void GameCamera::update()
 {
     // Langsames Anpassen des Kamerazooms
-    if(cameraZoom < MIN_CAM_DEPTH + player->getSpeed() * PLAYER_SPEED_FACTOR)
+    if(cameraZoom < MIN_CAM_DEPTH + player->getSpeed() * PLAYER_SPEED_FACTOR && player->getSpeed() > MIN_PLAYER_SPEED)
         cameraZoom += CAM_ZOOM_SPEED_OUT;
     else
         cameraZoom -= CAM_ZOOM_SPEED_IN;
