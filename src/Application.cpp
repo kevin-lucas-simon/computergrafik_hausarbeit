@@ -70,12 +70,9 @@ void Application::update(float dTime)
     // User Input einlesen
     keyManager->readUserInput();
 
-    // TODO entfernen!
-    if(glfwGetKey(pWindow, GLFW_KEY_K) || glfwGetKey(pWindow, GLFW_KEY_L)) {
-        worldSizeTest += (glfwGetKey(pWindow, GLFW_KEY_K) - glfwGetKey(pWindow, GLFW_KEY_L));
-        pTerrain->setWorldSize(worldSizeTest);
-        std::cout << "WorldSize: " << worldSizeTest << std::endl;
-    }
+    // Debug Modus Wechsel
+    if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
+    if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
     // Alle Objekte aktualisieren
     Cam->update();
