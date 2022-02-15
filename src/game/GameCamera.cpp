@@ -49,21 +49,25 @@ const Matrix& GameCamera::getProjectionMatrix() const
 void GameCamera::update()
 {
     // Langsames Anpassen des Kamerazooms
-    if(cameraZoom < MIN_CAM_DEPTH + player->getSpeed() * CAM_SPEED_FACTOR)
-        cameraZoom += CAM_ZOOM_SPEED;
+    if(cameraZoom < MIN_CAM_DEPTH + player->getSpeed() * PLAYER_SPEED_FACTOR)
+        cameraZoom += CAM_ZOOM_SPEED_OUT;
     else
-        cameraZoom -= CAM_ZOOM_SPEED;
+        cameraZoom -= CAM_ZOOM_SPEED_IN;
 
     // Grenzen des Kamerazooms beachten
     if(cameraZoom > MAX_CAM_DEPTH) cameraZoom = MAX_CAM_DEPTH;
     if(cameraZoom < MIN_CAM_DEPTH) cameraZoom = MIN_CAM_DEPTH;
 
 
-    // Kameraposition übergeben und Spieler Fahrzeug als Ziel angeben
-    setPosition(Vector(0,player->getHeight(),0) + (Vector(0, sin(CAM_ANGLE), cos(CAM_ANGLE)) * cameraZoom));
-    setTarget(Vector(0,player->getHeight(),0));
+    // Spieler als Kameraziel angeben unter Beachtung der maximalen Kamerahöhe
+    Vector camHeight = Vector(0, player->getHeight(), 0);
+    if(camHeight.Y > MAX_CAM_HEIGHT) camHeight.Y = MAX_CAM_HEIGHT;
+    setTarget(camHeight);
 
+    // Kamerawinkel mit Geschwindigkeitszoom berechnen
+    setPosition(camHeight + (Vector(0, sin(CAM_ANGLE), cos(CAM_ANGLE)) * cameraZoom));
 
+    // Kamerawerte berechnen
     Vector Pos = position(); //m_Position
     Vector Target = target(); //m_Target
     m_ViewMatrix.lookAt(Target, m_Up, Pos);

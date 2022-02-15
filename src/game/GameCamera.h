@@ -45,20 +45,26 @@ protected:
     Vector m_Up;
     int WindowWidth;
     int WindowHeight;
+    float cameraZoom = MIN_CAM_DEPTH;
 
     GLFWwindow* pWindow;
     PlayerPositionService* player;
     TerrainControlService* terrain;
 
-    float cameraZoom = MIN_CAM_DEPTH;
-
+    // Höhe ab wann die Kamera nicht mit dem Spieler mitgeht
     const float MAX_CAM_HEIGHT = 8;
-    const float MAX_CAM_DEPTH = 50.0;
-    const float MIN_CAM_DEPTH = 5.0;
-    const float CAM_ANGLE = M_PI/8;
-    const float CAM_SPEED_FACTOR = 30.0;
-    const float CAM_ZOOM_SPEED = 0.05;
-};
 
+    // Zoombereich der Kamera bei Geschwindigkeitsänderungen
+    const float MIN_CAM_DEPTH = 5.0;
+    const float MAX_CAM_DEPTH = 50.0;
+
+    // Winkel der Kamera auf dem Spieler
+    const float CAM_ANGLE = M_PI/8;
+
+    // Zoomanpassungsgeschwindigkeit der Kamera im Zusammenhang mit dem Spieler
+    const float PLAYER_SPEED_FACTOR = 30.0;
+    const float CAM_ZOOM_SPEED_IN = 0.05;
+    const float CAM_ZOOM_SPEED_OUT = CAM_ZOOM_SPEED_IN * 2.5;
+};
 
 #endif //COMPUTERGRAFIK_PRAKTIKUM_GAMECAMERA_H
