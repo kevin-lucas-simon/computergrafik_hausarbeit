@@ -10,6 +10,7 @@ class PlayerPositionService {
 public:
     virtual float getHeight() = 0;
     virtual float getSpeed() = 0;
+    virtual float getPosition() = 0;
 };
 
 

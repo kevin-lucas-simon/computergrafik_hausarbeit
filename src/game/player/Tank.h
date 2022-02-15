@@ -22,6 +22,7 @@ public:
 
     virtual float getHeight();
     virtual float getSpeed();
+    virtual float getPosition();
 protected:
     void calculatePhysics(float dTime, int keyFrontBack);
     void calculateTransformation();

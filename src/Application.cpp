@@ -53,7 +53,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 
     // Kamera und KeyManager
     keyManager = new KeyManager(pWindow);
-    Cam = new GameCamera(pWin, pTank);
+    Cam = new GameCamera(pWin, pTank, pTerrain);
 }
 void Application::start()
 {

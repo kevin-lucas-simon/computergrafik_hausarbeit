@@ -115,6 +115,11 @@ float Tank::getHeight() {
     return position.Y;
 }
 
+// Schnittstelle zur Position des Spielers
+float Tank::getPosition() {
+    return position.X;
+}
+
 // Schnittstelle zur Geschwindigkeit des Spielers
 float Tank::getSpeed() {
     return velocity.length();

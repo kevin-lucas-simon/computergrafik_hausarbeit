@@ -11,6 +11,7 @@
 #include <GLFW/glfw3.h>
 #include <camera/Camera.h>
 #include <game/player/PlayerPositionService.h>
+#include <game/world/TerrainControlService.h>
 
 #else
 #define GLFW_INCLUDE_GLCOREARB
@@ -24,7 +25,7 @@
 
 class GameCamera: public BaseCamera {
 public:
-    GameCamera(GLFWwindow* pWin, PlayerPositionService* playerPositionService);
+    GameCamera(GLFWwindow* pWin, PlayerPositionService* player, TerrainControlService* terrain);
     virtual ~GameCamera() {};
 
     virtual Vector position() const;
@@ -37,7 +38,6 @@ public:
     virtual const Matrix& getViewMatrix() const;
     virtual const Matrix& getProjectionMatrix() const;
 protected:
-
     Matrix m_ViewMatrix;
     Matrix m_ProjMatrix;
     Vector m_Position;
@@ -45,12 +45,14 @@ protected:
     Vector m_Up;
     int WindowWidth;
     int WindowHeight;
+
     GLFWwindow* pWindow;
     PlayerPositionService* player;
+    TerrainControlService* terrain;
 
     float cameraZoom = MIN_CAM_DEPTH;
 
-    const float MAX_CAM_HEIGHT = 16;
+    const float MAX_CAM_HEIGHT = 8;
     const float MAX_CAM_DEPTH = 50.0;
     const float MIN_CAM_DEPTH = 5.0;
     const float CAM_ANGLE = M_PI/8;
