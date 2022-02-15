@@ -59,12 +59,16 @@ protected:
     const float MAX_CAM_DEPTH = 50.0;
 
     // Winkel der Kamera auf dem Spieler
-    const float CAM_ANGLE = M_PI/8;
+    const float CAM_ANGLE_ON_PLAYER = M_PI*22.5f/180.0f;
+    const float CAM_ANGLE_ON_WORLD = M_PI*65.0f/180.0f;
 
     // Zoomanpassungsgeschwindigkeit der Kamera im Zusammenhang mit dem Spieler
     const float PLAYER_SPEED_FACTOR = 30.0;
     const float CAM_ZOOM_SPEED_IN = 0.05;
     const float CAM_ZOOM_SPEED_OUT = CAM_ZOOM_SPEED_IN * 2.5;
+
+    // Weltgrößenfaktor, um mögliche Ladedarstellungen zu vermeiden
+    const float WORLD_SIZE_FACTOR = 1.2;
 };
 
 #endif //COMPUTERGRAFIK_PRAKTIKUM_GAMECAMERA_H

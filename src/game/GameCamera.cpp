@@ -10,7 +10,7 @@ GameCamera::GameCamera(GLFWwindow* pWin, PlayerPositionService* player, TerrainC
         glfwGetWindowSize(pWindow, &WindowWidth, &WindowHeight);
 
     m_ViewMatrix.identity();
-    m_ProjMatrix.perspective((float)M_PI*65.0f/180.0f, (float)WindowWidth/(float)WindowHeight, 0.045f, 1000.0f);
+    m_ProjMatrix.perspective(CAM_ANGLE_ON_WORLD, (float)WindowWidth/(float)WindowHeight, 0.045f, 1000.0f);
 
     this->player = player;
     this->terrain = terrain;
@@ -65,7 +65,10 @@ void GameCamera::update()
     setTarget(camHeight);
 
     // Kamerawinkel mit Geschwindigkeitszoom berechnen
-    setPosition(camHeight + (Vector(0, sin(CAM_ANGLE), cos(CAM_ANGLE)) * cameraZoom));
+    setPosition(camHeight + (Vector(0, sin(CAM_ANGLE_ON_PLAYER), cos(CAM_ANGLE_ON_PLAYER)) * cameraZoom));
+
+    // Weltgröße aktualisieren, sodass nur Chunks geladen werden, die tatsächlich sichtbar sind
+    terrain->setWorldSize(tan(CAM_ANGLE_ON_WORLD) * cameraZoom * WORLD_SIZE_FACTOR);
 
     // Kamerawerte berechnen
     Vector Pos = position(); //m_Position
