@@ -7,7 +7,8 @@ uniform vec3 SpecularColor;
 uniform vec3 AmbientColor;
 uniform float SpecularExp;
 
-uniform sampler2D DetailTex[1];
+uniform sampler2D MixTex;
+uniform sampler2D DetailTex[2];
 uniform vec3 Scaling;
 
 in vec3 Position;
@@ -30,8 +31,10 @@ void main()
     vec3 E      = D/Dist;
     vec3 R      = reflect(-L,N);
 
+    // Slope Texture Blending
+
     vec3 DiffuseComponent = LightColor * DiffuseColor * sat(dot(N,L));
     vec3 SpecularComponent = LightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
 
-    FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * texture(DetailTex[0], Texcoord);
+    FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * texture(DetailTex[1], Texcoord);
 }

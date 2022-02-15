@@ -11,7 +11,8 @@ class TerrainShader : public PhongShader
 public:
     enum {
         DETAILTEX0=0,
-        DETAILTEX_COUNT=1
+        DETAILTEX1=1,
+        DETAILTEX_COUNT=2
     };
 
     TerrainShader(const std::string& AssetDirectory);
@@ -22,6 +23,7 @@ public:
     const Texture* detailTex(unsigned int idx) const { assert(idx<DETAILTEX_COUNT); return DetailTex[idx]; }
 
     void detailTex(unsigned int idx, const Texture* pTex) { assert(idx<DETAILTEX_COUNT); DetailTex[idx] = pTex; }
+    void mixTex(const Texture* pTex) { MixTex = pTex; }
     void textureScale(float textureScale) { TextureScale = textureScale; }
 
     void scaling(const Vector& s) { Scaling = s; }
@@ -30,6 +32,7 @@ public:
 private:
     void activateTex(const Texture* pTex, GLint Loc, int slot) const;
 
+    const Texture* MixTex;
     const Texture* DetailTex[DETAILTEX_COUNT];
     Vector Scaling;
     float TextureScale;
