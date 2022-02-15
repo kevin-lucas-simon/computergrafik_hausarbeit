@@ -40,7 +40,8 @@ protected:
     // Gravitation, positiver Wert, entspricht nicht der reale Konstante
     const float GRAVITY_FORCE = 0.2;
     // Abbremsungs- und Beschleunigungsrate eines Gefälles beim Fahren, positiver Wert
-    const float SLOPE_FORCE = 0.6;
+    const float SLOPE_FORCE_UPWARD = 0.4;
+    const float SLOPE_FORCE_DOWNWARD = 0.6;
     // Benötigte Höhe zum Abheben des Fahrzeugs, positiver Wert
     const float LIFT_HEIGHT = 0.01;
     // Rate der Abbremsung generell beim Fahren, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
