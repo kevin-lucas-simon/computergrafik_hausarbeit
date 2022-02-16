@@ -12,11 +12,12 @@
 #include "GraphService.h"
 #include "SinusGraph.h"
 #include "TerrainChunk.h"
+#include "texture/rgbimage.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
 public:
-    Terrain(char* DetailMap1, float vertexGapSize, int chunkSize);
+    Terrain(char* assetDirectory, float vertexGapSize, int chunkSize);
     virtual ~Terrain();
 
     void shader( BaseShader* shader, bool deleteOnDestruction=false );
@@ -37,7 +38,7 @@ protected:
     TerrainChunkList chunks;
     GraphService* graphService;
 
-    char *DetailMap1;
+    const char* assetDirectory;
     float vertexGapSize;
     int chunkSize;
 

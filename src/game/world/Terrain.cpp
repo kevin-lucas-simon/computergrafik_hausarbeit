@@ -5,17 +5,17 @@
 #include "Terrain.h"
 #include "FlatGraph.h"
 
-Terrain::Terrain(char *DetailMap1, float vertexGapSize, int chunkSize) {
+Terrain::Terrain(char *assetDirectory, float vertexGapSize, int chunkSize) {
     // Variablen übergeben
     graphService = new SinusGraph();
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
     this->actualWorldCenter = 0.0;
     this->actualWorldSize = chunkSize;
-    this->DetailMap1 = DetailMap1;
+    this->assetDirectory = assetDirectory;
 
     // Haupt-Chunk generieren und anschließend alle anderen
-    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, DetailMap1));
+    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, this->assetDirectory));
     chunks.front()->shader(pShader, false);
     this->distantChunks();
 }
@@ -60,7 +60,7 @@ void Terrain::shiftChunks() {
         if (actualWorldCenter - chunks.front()->getMinX() > chunks.back()->getMaxX() - actualWorldCenter) {
             chunks.push_back(new TerrainChunk(
                     graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
-                    vertexGapSize, DetailMap1));
+                    vertexGapSize, this->assetDirectory));
             chunks.back()->shader(pShader, false);
             delete chunks.front();
             chunks.pop_front();
@@ -69,7 +69,7 @@ void Terrain::shiftChunks() {
         else {
             chunks.push_front(new TerrainChunk(
                     graphService, chunks.front()->getMinX() - chunkSize, chunks.front()->getMinX(),
-                    vertexGapSize, DetailMap1));
+                    vertexGapSize, this->assetDirectory));
             chunks.front()->shader(pShader, false);
             delete chunks.back();
             chunks.pop_back();
@@ -87,10 +87,10 @@ void Terrain::distantChunks() {
             while (chunks.size() < (int) actualWorldSize / chunkSize + 1) {
                 chunks.push_front(new TerrainChunk(
                         graphService, chunks.front()->getMinX()-chunkSize, chunks.front()->getMinX(),
-                        vertexGapSize, DetailMap1));
+                        vertexGapSize, this->assetDirectory));
                 chunks.push_back(new TerrainChunk(
                         graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
-                        vertexGapSize, DetailMap1));
+                        vertexGapSize, this->assetDirectory));
                 chunks.front()->shader(pShader, false);
                 chunks.back()->shader(pShader, false);
             }

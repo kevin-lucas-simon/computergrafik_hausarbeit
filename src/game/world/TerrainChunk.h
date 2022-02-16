@@ -14,7 +14,7 @@ class TerrainChunk : public BaseModel
 public:
     TerrainChunk(GraphService* graphService, float minX, float maxX, float vertexGapSize, const char* DetailMap1);
     virtual ~TerrainChunk();
-    bool load(const char* DetailMap1);
+    bool load();
 
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual void draw(const BaseCamera& Cam);
@@ -26,7 +26,11 @@ protected:
 
     VertexBuffer VB;
     IndexBuffer IB;
-    Texture DetailTex[1];
+
+    const char* assetDirectory;
+    const char* detailTex0 = "grass.bmp";
+    const char* detailTex1 = "rock.bmp";
+    Texture DetailTex[2];
 
     GraphService* graphService;
 

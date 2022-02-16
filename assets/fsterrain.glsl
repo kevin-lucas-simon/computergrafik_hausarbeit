@@ -7,7 +7,7 @@ uniform vec3 SpecularColor;
 uniform vec3 AmbientColor;
 uniform float SpecularExp;
 
-uniform sampler2D DetailTex[1];
+uniform sampler2D DetailTex[2];
 uniform vec3 Scaling;
 
 in vec3 Position;
@@ -30,8 +30,25 @@ void main()
     vec3 E      = D/Dist;
     vec3 R      = reflect(-L,N);
 
+    // Diffuse and Specular
     vec3 DiffuseComponent = LightColor * DiffuseColor * sat(dot(N,L));
     vec3 SpecularComponent = LightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
 
-    FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * texture(DetailTex[0], Texcoord);
+    // Slope Texture Blending
+    float GRASS_END = 0.45;
+    float STONE_START = 0.25;
+    float derivation = abs(dot(N, vec3(0.0, 1.0, 0.0)));
+    derivation = clamp((derivation-STONE_START)/(GRASS_END-STONE_START), 0.0, 1.0);
+    vec4 TextureTerrain = mix(texture(DetailTex[1], Texcoord), texture(DetailTex[0], Texcoord), derivation);
+
+    // Fog Rendering
+    float FOG_START = 20;
+    float FOG_END = 50;
+    vec4 FOG_COLOR = vec4(1.0, 1.0, 1.0, 1.0);
+    float d = length(Position - EyePos);
+    float fogFactor = clamp(((d-FOG_END)/(FOG_END-FOG_START)), 0, 1);
+
+    // Final Output
+    FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * TextureTerrain * (1-fogFactor)
+            + fogFactor * FOG_COLOR;
 }

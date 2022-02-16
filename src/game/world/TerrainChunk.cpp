@@ -3,30 +3,31 @@
 //
 
 #include <shader/TerrainShader.h>
+#include <texture/rgbimage.h>
 #include "TerrainChunk.h"
 
-TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* DetailMap1)
+TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* assetDirectory)
 {
     this->graphService = graphService;
     this->minX = minX;
     this->maxX = maxX;
     this->gap = gap;
+    this->assetDirectory = assetDirectory;
 
-    if(DetailMap1)
-    {
-        bool loaded = load( DetailMap1);
-        if(!loaded)
-            throw std::exception();
-    }
+    bool loaded = load();
+    if(!loaded)
+        throw std::exception();
 }
 
 TerrainChunk::~TerrainChunk() {}
 
 // Erstellt die Geometrie des Terrains
-bool TerrainChunk::load( const char* DetailMap1)
+bool TerrainChunk::load()
 {
     // Texturen laden
-    if( !DetailTex[0].load(DetailMap1) )
+    if( !DetailTex[0].load(std::string().append(assetDirectory).append(detailTex0).data()) )
+        return false;
+    if( !DetailTex[1].load(std::string().append(assetDirectory).append(detailTex1).data()) )
         return false;
 
     // Hilfsvariable: Anzahl Punkte im Chunk
@@ -61,6 +62,7 @@ bool TerrainChunk::load( const char* DetailMap1)
 
             // Texturkoordinaten
             VB.addTexcoord0(iPos, jPos / normal.dot(Vector(0, 1, 0)));
+            VB.addTexcoord1(iPos, jPos / normal.dot(Vector(0, 1, 0)));
 
             // Setze Vertex mit Höhe-Funktionen zusammen
             VB.addVertex(iPos, graphService->heightFunction(iPos) + graphService->depthFunction(jPos), jPos);
@@ -100,7 +102,7 @@ void TerrainChunk::applyShaderParameter()
     if(!Shader)
         return;
 
-    for(int i=0; i<1; i++)
+    for(int i=0; i<2; i++)
         Shader->detailTex(i,&DetailTex[i]);
 }
 
