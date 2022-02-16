@@ -40,7 +40,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     Models.push_back(pModel);
 
     // Terrain
-    pTerrain = new Terrain(ASSET_DIRECTORY, 0.5, 4);
+    pTerrain = new Terrain(ASSET_DIRECTORY, 0.5, 8);
     pTerrain->shader(new TerrainShader(ASSET_DIRECTORY), true);
     Models.push_back(pTerrain);
 
