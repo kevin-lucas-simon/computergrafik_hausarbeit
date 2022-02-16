@@ -3,11 +3,9 @@
 //
 
 #include "Terrain.h"
-#include "FlatGraph.h"
 
 Terrain::Terrain(char *assetDirectory, float vertexGapSize, int chunkSize) {
     // Variablen übergeben
-    graphService = new SinusGraph();
     this->vertexGapSize = vertexGapSize;
     this->chunkSize = chunkSize;
     this->actualWorldCenter = 0.0;

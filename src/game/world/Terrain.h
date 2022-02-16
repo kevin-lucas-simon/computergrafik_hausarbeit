@@ -13,6 +13,7 @@
 #include "SinusGraph.h"
 #include "TerrainChunk.h"
 #include "texture/rgbimage.h"
+#include "PerlinGraph.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
@@ -36,7 +37,7 @@ protected:
 
     typedef std::list<TerrainChunk*> TerrainChunkList;
     TerrainChunkList chunks;
-    GraphService* graphService;
+    GraphService* graphService = new PerlinGraph();
 
     const char* assetDirectory;
     float vertexGapSize;
