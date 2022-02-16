@@ -38,7 +38,7 @@ protected:
     // Beschleunigungsrate des Nutzers beim Fallen, positiver Wert
     const float USER_FORCE_FALLING = 1.0;
     // Gravitation, positiver Wert, entspricht nicht der reale Konstante
-    const float GRAVITY_FORCE = 0.2;
+    const float GRAVITY_FORCE = 0.4;
     // Abbremsungs- und Beschleunigungsrate eines Gefälles beim Fahren, positiver Wert
     const float SLOPE_FORCE_UPWARD = 0.4;
     const float SLOPE_FORCE_DOWNWARD = 0.6;

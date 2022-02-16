@@ -31,7 +31,6 @@ protected:
     const char* detailTex0 = "grass.bmp";
     const char* detailTex1 = "rock.bmp";
     Texture DetailTex[2];
-    Texture MixTex;
 
     GraphService* graphService;
 

@@ -23,8 +23,6 @@ public:
     const Texture* detailTex(unsigned int idx) const { assert(idx<DETAILTEX_COUNT); return DetailTex[idx]; }
 
     void detailTex(unsigned int idx, const Texture* pTex) { assert(idx<DETAILTEX_COUNT); DetailTex[idx] = pTex; }
-    void mixTex(const Texture* pTex) { MixTex = pTex; }
-    void textureScale(float textureScale) { TextureScale = textureScale; }
 
     void scaling(const Vector& s) { Scaling = s; }
     const Vector& scaling() const { return Scaling; }
@@ -35,12 +33,9 @@ private:
     const Texture* MixTex;
     const Texture* DetailTex[DETAILTEX_COUNT];
     Vector Scaling;
-    float TextureScale;
     // shader locations
-    GLint MixTexLoc;
     GLint DetailTexLoc[DETAILTEX_COUNT];
     GLint ScalingLoc;
-    GLint TextureScaleLoc;
 };
 
 #endif /* TerrainShader_hpp */

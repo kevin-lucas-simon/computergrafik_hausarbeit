@@ -3,6 +3,7 @@
 //
 
 #include <shader/TerrainShader.h>
+#include <texture/rgbimage.h>
 #include "TerrainChunk.h"
 
 TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* assetDirectory)
@@ -28,8 +29,6 @@ bool TerrainChunk::load()
         return false;
     if( !DetailTex[1].load(std::string().append(assetDirectory).append(detailTex1).data()) )
         return false;
-    // Height-Map erstellen
-    RGBImage heightMap = new RGBImage();
 
     // Hilfsvariable: Anzahl Punkte im Chunk
     int iCount = (abs(maxX - minX)/gap)+1;
@@ -103,7 +102,6 @@ void TerrainChunk::applyShaderParameter()
     if(!Shader)
         return;
 
-    Shader->mixTex(&MixTex);
     for(int i=0; i<2; i++)
         Shader->detailTex(i,&DetailTex[i]);
 }
