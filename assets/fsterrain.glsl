@@ -42,13 +42,13 @@ void main()
     vec4 TextureTerrain = mix(texture(DetailTex[1], Texcoord), texture(DetailTex[0], Texcoord), derivation);
 
     // Fog Rendering
-    vec4 fogColor = vec4(1.0, 1.0, 1.0, 1.0);
+    float FOG_START = 20;
+    float FOG_END = 50;
+    vec4 FOG_COLOR = vec4(1.0, 1.0, 1.0, 1.0);
     float d = length(Position - EyePos);
-    float dmax = 50;
-    float dmin = 20;
-    float fogFactor = clamp(((d-dmax)/(dmax-dmin)), 0, 1);
+    float fogFactor = clamp(((d-FOG_END)/(FOG_END-FOG_START)), 0, 1);
 
     // Final Output
     FragColor = vec4(((DiffuseComponent + AmbientColor) + SpecularComponent), 1) * TextureTerrain * (1-fogFactor)
-            + fogFactor * fogColor;
+            + fogFactor * FOG_COLOR;
 }
