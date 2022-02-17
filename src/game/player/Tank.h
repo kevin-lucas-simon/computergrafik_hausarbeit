@@ -47,7 +47,7 @@ protected:
     // Rate der Abbremsung generell beim Fahren, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
     const float GENERAL_DRAG = 0.99;
     // Rate der Abbremsung, wenn der Nutzer auf ein Berg knallt, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
-    const float IMPACT_DRAG = 0.4;
+    const float IMPACT_DRAG = 0.05;
     // Minimalgeschwindigkeit, darunter hält das Fahrzeug an, positiver Wert
     const float STOPPING_SPEED = 0.003;
 };

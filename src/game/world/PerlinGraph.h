@@ -25,9 +25,14 @@ protected:
     float lerp(float a, float b, float x);
     float smoothstep(float x);
     float fFunction(float x, int n);
+    float perlinOctave(float valueX, unsigned int octave);
 
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
+
+    const int OCTAVE_COUNT = 5;
+    const int MIN_OCTAVE_WIDTH = 4;
+    const int MIN_OCTAVE_HEIGHT = 4;
 };
 
 
