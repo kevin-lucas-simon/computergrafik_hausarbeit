@@ -25,8 +25,12 @@ float PerlinGraph::smoothstep(float x) {
     return 3 * x * x - 2 * x * x * x;
 }
 
-// f(x)
+// Erzeugt eine zufällige Tangente an einem Punkt n
 float PerlinGraph::fFunction(float x, int n) {
+    // Sonderfall bei x=0 für eine besser aussehende Start-Location (keine Steigung
+    if(n == 0)  return 0;
+
+    // Zufälligen Wert aus dem Hash generieren
     float hash = hash_seed(seed + n);
     float angle = hash/std::numeric_limits<unsigned int>::max();
     return angle * (x - n);

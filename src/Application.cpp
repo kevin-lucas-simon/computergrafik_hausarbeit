@@ -76,7 +76,7 @@ void Application::update(float dTime)
 
     // Alle Objekte aktualisieren
     Cam->update();
-    pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
+    pTank->update(dTime, keyManager->getForwardKey(), keyManager->getBackwardKey());
     pTerrain->update();
 }
 

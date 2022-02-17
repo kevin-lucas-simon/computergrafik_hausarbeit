@@ -17,14 +17,14 @@ public:
     virtual ~Tank();
     bool loadModels(const char* ChassisFile, const char* CannonFile);
     void bindToTerrain(TerrainControlService* terrainControl);
-    void update(float dTime, int keyFrontBack);
+    void update(float dTime, int keyForward, int keyBackward);
     virtual void draw(const BaseCamera& Cam);
 
     virtual float getHeight();
     virtual float getSpeed();
     virtual float getPosition();
 protected:
-    void calculatePhysics(float dTime, int keyFrontBack);
+    void calculatePhysics(float dTime, int keyForward, int keyBackward);
     void calculateTransformation();
 
     Model* modelChassis;
