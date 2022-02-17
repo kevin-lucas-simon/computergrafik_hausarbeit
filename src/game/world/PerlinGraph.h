@@ -24,6 +24,7 @@ public:
 protected:
     float lerp(float a, float b, float x);
     float smoothstep(float x);
+    float fFunction(float x, int n);
 
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
