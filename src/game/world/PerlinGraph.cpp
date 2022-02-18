@@ -19,17 +19,17 @@ PerlinGraph::PerlinGraph(unsigned int seed) {
 PerlinGraph::~PerlinGraph() = default;
 
 // Lineare Interpolation
-float PerlinGraph::lerp(float left, float right, float valueX) {
+double PerlinGraph::lerp(float left, float right, float valueX) {
     return left * (1 - valueX) + right * valueX;
 }
 
 // Kubische Interpolation
-float PerlinGraph::smoothstep(float x) {
+double PerlinGraph::smoothstep(float x) {
     return 3 * pow(x, 2) - 2 * pow(x, 3);
 }
 
 // Erzeugt eine zufällige Tangente an einem Punkt n
-float PerlinGraph::tangent(float x, int n) {
+double PerlinGraph::tangent(float x, int n) {
     // Sonderfall bei x=0 für eine besser aussehende Start-Location (keine Steigung)
     if(n == 0)  return 0;
 
@@ -40,7 +40,7 @@ float PerlinGraph::tangent(float x, int n) {
 }
 
 // Rekursive Oktave-Funktion des Perlin-Noise-Verfahrens, Variable octave definiert die Anzahl der Durchführungen
-float PerlinGraph::perlinNoise(float valueX, unsigned int octave) {
+double PerlinGraph::perlinNoise(float valueX, unsigned int octave) {
     // Ende der Rekursion
     if(octave <= 0) return 0;
 
@@ -61,7 +61,7 @@ float PerlinGraph::perlinNoise(float valueX, unsigned int octave) {
 }
 
 // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-float PerlinGraph::heightFunction(float valueX) {
+double PerlinGraph::heightFunction(float valueX) {
     // Ermittlung des Schwierigkeitsfaktors
     float difficultyFactor = (valueX - DIFFICULTY_INTERVAL) * DIFFICULTY_FACTOR / DIFFICULTY_INTERVAL + 1;
     if(valueX < DIFFICULTY_INTERVAL) difficultyFactor = 1;
@@ -71,16 +71,16 @@ float PerlinGraph::heightFunction(float valueX) {
 }
 
 // Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-float PerlinGraph::heightFunctionDerivation(float valueX) {
+double PerlinGraph::heightFunctionDerivation(float valueX) {
     return (heightFunction(valueX + EPSILON) - heightFunction(valueX - EPSILON)) / (2 * EPSILON);
 }
 
 // Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-float PerlinGraph::depthFunction(float valueZ) {
+double PerlinGraph::depthFunction(float valueZ) {
     return -0.5 * valueZ * valueZ;
 }
 
 // Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-float PerlinGraph::depthFunctionDerivation(float valueZ) {
+double PerlinGraph::depthFunctionDerivation(float valueZ) {
     return -1 * valueZ;
 }

@@ -16,16 +16,16 @@ public:
     virtual ~PerlinGraph();
 
     // Implementation vom GraphService Interface
-    virtual float heightFunction(float valueX);
-    virtual float heightFunctionDerivation(float valueX);
-    virtual float depthFunction(float valueZ);
-    virtual float depthFunctionDerivation(float valueZ);
+    virtual double heightFunction(float valueX);
+    virtual double heightFunctionDerivation(float valueX);
+    virtual double depthFunction(float valueZ);
+    virtual double depthFunctionDerivation(float valueZ);
 
 protected:
-    static float lerp(float left, float right, float valueX);
-    static float smoothstep(float x);
-    float tangent(float x, int n);
-    float perlinNoise(float valueX, unsigned int octave);
+    static double lerp(float left, float right, float valueX);
+    static double smoothstep(float x);
+    double tangent(float x, int n);
+    double perlinNoise(float valueX, unsigned int octave);
 
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
@@ -37,10 +37,10 @@ protected:
 
     // Intervallbreite, in der die Schwierigkeit um den eingestellten Faktor sich erhöht (steilere Hänge usw.)
     const unsigned int DIFFICULTY_INTERVAL = 500;
-    const float DIFFICULTY_FACTOR = 0.1;
+    const double DIFFICULTY_FACTOR = 0.1;
 
     // Abstandsbreite zur Ermittlung der Ableitung
-    const float EPSILON = 0.001;
+    const double EPSILON = 0.001;
 };
 
 

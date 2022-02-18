@@ -14,6 +14,7 @@
 #include "TerrainChunk.h"
 #include "texture/rgbimage.h"
 #include "PerlinGraph.h"
+#include "FlatGraph.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
