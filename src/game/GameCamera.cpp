@@ -59,9 +59,8 @@ void GameCamera::update()
     if(cameraZoom < MIN_CAM_DEPTH) cameraZoom = MIN_CAM_DEPTH;
 
 
-    // Spieler als Kameraziel angeben unter Beachtung der maximalen Kamerahöhe
+    // Spieler als Kameraziel angeben
     Vector camHeight = Vector(0, player->getHeight(), 0);
-    if(camHeight.Y > MAX_CAM_HEIGHT) camHeight.Y = MAX_CAM_HEIGHT;
     setTarget(camHeight);
 
     // Kamerawinkel mit Geschwindigkeitszoom berechnen

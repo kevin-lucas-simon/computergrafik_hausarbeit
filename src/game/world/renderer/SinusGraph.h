@@ -16,10 +16,10 @@ public:
     virtual ~SinusGraph();
 
     // Implementation vom GraphService Interface
-    virtual float heightFunction(float valueX);
-    virtual float heightFunctionDerivation(float valueX);
-    virtual float depthFunction(float valueZ);
-    virtual float depthFunctionDerivation(float valueZ);
+    virtual double heightFunction(float valueX);
+    virtual double heightFunctionDerivation(float valueX);
+    virtual double depthFunction(float valueZ);
+    virtual double depthFunctionDerivation(float valueZ);
 };
 
 

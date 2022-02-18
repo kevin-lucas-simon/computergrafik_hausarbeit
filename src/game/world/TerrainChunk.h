@@ -7,7 +7,7 @@
 #include "texture/Texture.h"
 #include "buffer/VertexBuffer.h"
 #include "buffer/IndexBuffer.h"
-#include "GraphService.h"
+#include "game/world/renderer/GraphService.h"
 
 class TerrainChunk : public BaseModel
 {

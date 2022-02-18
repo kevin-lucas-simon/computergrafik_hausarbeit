@@ -12,16 +12,16 @@ public:
     virtual ~GraphService() = 0 {};
 
     // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-    virtual float heightFunction(float valueX) = 0;
+    virtual double heightFunction(float valueX) = 0;
 
     // Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-    virtual float heightFunctionDerivation(float valueX) = 0;
+    virtual double heightFunctionDerivation(float valueX) = 0;
 
     // Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-    virtual float depthFunction(float valueZ) = 0;
+    virtual double depthFunction(float valueZ) = 0;
 
     // Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-    virtual float depthFunctionDerivation(float valueZ) = 0;
+    virtual double depthFunctionDerivation(float valueZ) = 0;
 };
 
 

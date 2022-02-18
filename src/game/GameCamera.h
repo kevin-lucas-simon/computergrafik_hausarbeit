@@ -51,9 +51,6 @@ protected:
     PlayerPositionService* player;
     TerrainControlService* terrain;
 
-    // Höhe ab wann die Kamera nicht mit dem Spieler mitgeht
-    const float MAX_CAM_HEIGHT = 8;
-
     // Zoombereich der Kamera bei Geschwindigkeitsänderungen
     const float MIN_CAM_DEPTH = 5.0;
     const float MAX_CAM_DEPTH = 50.0;

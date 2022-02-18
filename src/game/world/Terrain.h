@@ -9,10 +9,12 @@
 #include <shader/BaseShader.h>
 #include <texture/Texture.h>
 #include <list>
-#include "GraphService.h"
-#include "SinusGraph.h"
+#include "game/world/renderer/GraphService.h"
+#include "game/world/renderer/SinusGraph.h"
 #include "TerrainChunk.h"
 #include "texture/rgbimage.h"
+#include "game/world/renderer/PerlinGraph.h"
+#include "game/world/renderer/FlatGraph.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
@@ -36,7 +38,7 @@ protected:
 
     typedef std::list<TerrainChunk*> TerrainChunkList;
     TerrainChunkList chunks;
-    GraphService* graphService;
+    GraphService* graphService = new PerlinGraph();
 
     const char* assetDirectory;
     float vertexGapSize;

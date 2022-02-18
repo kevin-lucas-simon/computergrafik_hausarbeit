@@ -25,8 +25,8 @@ void Tank::bindToTerrain(TerrainControlService* terrainControl) {
     this->terrainControl = terrainControl;
 }
 
-void Tank::update(float dTime, int keyFrontBack) {
-    calculatePhysics(dTime, keyFrontBack);
+void Tank::update(float dTime, int keyForward, int keyBackward) {
+    calculatePhysics(dTime, keyForward, keyBackward);
     calculateTransformation();
 }
 
@@ -34,7 +34,7 @@ void Tank::draw(const BaseCamera& Cam) {
     modelChassis->draw(Cam);
 }
 
-void Tank::calculatePhysics(float dTime, int keyFrontBack) {
+void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
     // Position aktualisieren, mit Beachtung des Weltlimits
     position += velocity;
     if(position.X < 0) {
@@ -60,25 +60,28 @@ void Tank::calculatePhysics(float dTime, int keyFrontBack) {
             velocity = slope * (velocity.length()
                     - std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
                     - std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
-                    + keyFrontBack * dTime * USER_FORCE_DRIVING);
+                    + keyForward * dTime * USER_FORCE_DRIVING);
         else // x ist negativ
             velocity = -slope * (velocity.length()
                     + std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
                     + std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
-                    - keyFrontBack * dTime * USER_FORCE_DRIVING);
+                    - keyForward * dTime * USER_FORCE_DRIVING);
 
         // Reibung simulieren
         velocity = velocity * GENERAL_DRAG;
     } else {
         // Gravitation auf fallendes Object anwenden samt Einwirkung des Spielers
         Vector gravity = Vector(0, -1, 0) * dTime * GRAVITY_FORCE;
-        Vector userForce = Vector(0, -1, 0) * dTime * fabs(keyFrontBack) * USER_FORCE_FALLING;
-        velocity = (velocity + gravity + userForce);
+        Vector userForceFalling = Vector(0, -1, 0) * dTime * keyBackward * USER_FORCE_FALLING;
+        Vector userForceGliding = Vector(0, 1, 0) * dTime * keyForward * USER_FORCE_GLIDING;
+        velocity = (velocity + gravity + userForceFalling + userForceGliding);
     }
 
     // Stoppen, wenn die Geschwindigkeit zu langsam ist
-    if(velocity.length() < STOPPING_SPEED)
-        velocity = Vector(0,0,0);
+    if(velocity.length() < MINIMUM_SPEED) velocity = Vector(0, 0, 0);
+
+    // Geschwindigkeit auf Maximalgeschwindigkeit begrenzen, falls diese überschritten wird
+    if(velocity.length() > MAXIMUM_SPEED) velocity = velocity.normalize() * MAXIMUM_SPEED;
 
     // Welt-Center Variable aktualisieren
     terrainControl->setWorldCenter(position.X);

@@ -34,10 +34,9 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
     // Skybox
-    BaseModel* pModel;
-    pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
-    pModel->shader(new PhongShader(), true);
-    Models.push_back(pModel);
+    pSkybox = new Model(ASSET_DIRECTORY "skybox.obj", false);
+    pSkybox->shader(new PhongShader(), true);
+    Models.push_back(pSkybox);
 
     // Terrain
     pTerrain = new Terrain(ASSET_DIRECTORY, 0.5, 8);
@@ -74,10 +73,17 @@ void Application::update(float dTime)
     if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
+    // Punkte Ausgabe
+    if(points < (unsigned int) pTank->getPosition()) {
+        points = pTank->getPosition();
+        std::cout << "Punkte: " << points << std::endl;
+    }
+
     // Alle Objekte aktualisieren
     Cam->update();
-    pTank->update(dTime, keyManager->getForwardKey() - keyManager->getBackwardKey());
+    pTank->update(dTime, keyManager->getForwardKey(), keyManager->getBackwardKey());
     pTerrain->update();
+    pSkybox->transform(Matrix().translation(0,pTank->getHeight(),0));
 }
 
 void Application::draw()

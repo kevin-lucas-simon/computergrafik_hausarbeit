@@ -10,21 +10,21 @@ FlatGraph::FlatGraph() {}
 FlatGraph::~FlatGraph() {}
 
 // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
-float FlatGraph::heightFunction(float valueX) {
+double FlatGraph::heightFunction(float valueX) {
     return 0;
 }
 
 // Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)
-float FlatGraph::heightFunctionDerivation(float valueX) {
+double FlatGraph::heightFunctionDerivation(float valueX) {
     return 0;
 }
 
 // Gibt die Höhe von der Z Position an, ermittelt aus der Funktion g(x)
-float FlatGraph::depthFunction(float valueZ) {
+double FlatGraph::depthFunction(float valueZ) {
     return -0.5 * valueZ * valueZ;
 }
 
 // Gibt die Steigung von der Z Position an, ermittelt aus der Funktion g'(x)
-float FlatGraph::depthFunctionDerivation(float valueZ) {
+double FlatGraph::depthFunctionDerivation(float valueZ) {
     return -1 * valueZ;
 }
