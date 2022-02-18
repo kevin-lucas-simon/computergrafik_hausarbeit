@@ -10,7 +10,10 @@
 PerlinGraph::PerlinGraph() { PerlinGraph(rand() % RAND_MAX); }
 
 // Konstruktor mit bestimmten Seed
-PerlinGraph::PerlinGraph(unsigned int seed) { this->seed = seed; }
+PerlinGraph::PerlinGraph(unsigned int seed) {
+    this->seed = seed;
+    std::cout << "Used Seed: " << this->seed << std::endl;
+}
 
 // Destruktor
 PerlinGraph::~PerlinGraph() {}
@@ -59,7 +62,9 @@ float PerlinGraph::perlinOctave(float valueX, unsigned int octave) {
 
 // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
 float PerlinGraph::heightFunction(float valueX) {
-    return perlinOctave(valueX, OCTAVE_COUNT);
+    float difficultyFactor = (valueX - DIFFICULTY_INTERVAL) * DIFFICULTY_FACTOR / DIFFICULTY_INTERVAL + 1;
+    if(valueX < DIFFICULTY_INTERVAL) difficultyFactor = 1;
+    return perlinOctave(valueX, OCTAVE_COUNT) * difficultyFactor;
 }
 
 // Gibt die Steigung von der X Position an, ermittelt aus der Funktion f'(x)

@@ -30,10 +30,14 @@ protected:
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
 
-    // Anzahl der durchzuführenden Perlin-Noise Oktaven
-    const int OCTAVE_COUNT = 10;
-    const int MIN_OCTAVE_WIDTH = 6;
-    const int MIN_OCTAVE_HEIGHT = 4;
+    // Anzahl und Größen der durchzuführenden Perlin-Noise Oktaven
+    const unsigned int OCTAVE_COUNT = 10;
+    const unsigned int MIN_OCTAVE_WIDTH = 6;
+    const unsigned int MIN_OCTAVE_HEIGHT = 4;
+
+    // Intervallbreite, in der die Schwierigkeit um den eingestellten Faktor sich erhöht (steilere Hänge usw.)
+    const unsigned int DIFFICULTY_INTERVAL = 500;
+    const float DIFFICULTY_FACTOR = 0.1;
 };
 
 
