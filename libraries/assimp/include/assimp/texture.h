@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** @file texture.h
  *  @brief Defines texture helper structures for the library
  *
- * Used for file formats which embed their textures into the model file.
+ * Used for file formats which embed their textures into the models file.
  * Supported are both normal textures, which are stored as uncompressed
  * pixels, and "compressed" textures, which are stored in a file format
  * such as PNG or TGA.
@@ -62,7 +62,7 @@ extern "C" {
 /** @def AI_MAKE_EMBEDDED_TEXNAME
  *  Used to build the reserved path name used by the material system to
  *  reference textures that are embedded into their corresponding
- *  model files. The parameter specifies the index of the texture
+ *  models files. The parameter specifies the index of the texture
  *  (zero-based, in the aiScene::mTextures array)
  */
 #if (!defined AI_MAKE_EMBEDDED_TEXNAME)
@@ -111,7 +111,7 @@ struct aiTexel
 /** Helper structure to describe an embedded texture
  *
  * Normally textures are contained in external files but some file formats embed
- * them directly in the model file. There are two types of embedded textures:
+ * them directly in the models file. There are two types of embedded textures:
  * 1. Uncompressed textures. The color data is given in an uncompressed format.
  * 2. Compressed textures stored in a file format like png or jpg. The raw file
  * bytes are given so the application must utilize an image decoder (e.g. DevIL) to

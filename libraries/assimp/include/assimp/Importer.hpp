@@ -425,7 +425,7 @@ public:
      *   instance. Use GetOrphanedScene() to take ownership of it.
      *
      * @note This is a straightforward way to decode models from memory
-     * buffers, but it doesn't handle model formats that spread their
+     * buffers, but it doesn't handle models formats that spread their
      * data across multiple files or even directories. Examples include
      * OBJ or MD3, which outsource parts of their material info into
      * external scripts. If you need full functionality, provide

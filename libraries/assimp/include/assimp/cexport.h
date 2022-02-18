@@ -122,7 +122,7 @@ ASSIMP_API void aiFreeScene(const C_STRUCT aiScene* pIn);
 /** Exports the given scene to a chosen file format and writes the result file(s) to disk.
 * @param pScene The scene to export. Stays in possession of the caller, is not changed by the function.
 *   The scene is expected to conform to Assimp's Importer output format as specified
-*   in the @link data Data Structures Page @endlink. In short, this means the model data
+*   in the @link data Data Structures Page @endlink. In short, this means the models data
 *   should use a right-handed coordinate systems, face winding should be counter-clockwise
 *   and the UV coordinate origin is assumed to be in the upper left. If your input data
 *   uses different conventions, have a look at the last parameter.

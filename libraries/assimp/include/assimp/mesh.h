@@ -447,7 +447,7 @@ struct aiAnimMesh
 
 
 // ---------------------------------------------------------------------------
-/** @brief A mesh represents a geometry or model with a single material.
+/** @brief A mesh represents a geometry or models with a single material.
 *
 * It usually consists of a number of vertices and a series of primitives/faces
 * referencing the vertices. In addition there might be a series of bones, each
@@ -510,7 +510,7 @@ struct aiMesh
     * @c fpclassify instead.
     * @note Normal vectors computed by Assimp are always unit-length.
     * However, this needn't apply for normals that have been taken
-    *   directly from the model file.
+    *   directly from the models file.
     */
     C_STRUCT aiVector3D* mNormals;
 
@@ -579,7 +579,7 @@ struct aiMesh
     C_STRUCT aiBone** mBones;
 
     /** The material used by this mesh.
-     * A mesh uses only a single material. If an imported model uses
+     * A mesh uses only a single material. If an imported models uses
      * multiple materials, the import splits up the mesh. Use this value
      * as index into the scene's material list.
      */

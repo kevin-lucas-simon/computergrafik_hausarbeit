@@ -30,8 +30,8 @@ protected:
     IndexBuffer IB;
 
     const char* assetDirectory;
-    const char* detailTex0 = "grass.bmp";
-    const char* detailTex1 = "rock.bmp";
+    const char* detailTex0 = "models/terrain/grass.bmp";
+    const char* detailTex1 = "models/terrain/rock.bmp";
     Texture DetailTex[2];
 
     GraphService* graphService;

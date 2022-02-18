@@ -691,7 +691,7 @@ enum aiComponent
  *
  * UV coordinates for terrains are so simple to compute that you'll usually
  * want to compute them on your own, if you need them. This option is intended
- * for model viewers which want to offer an easy way to apply textures to
+ * for models viewers which want to offer an easy way to apply textures to
  * terrains.
  * * Property type: bool. Default value: false.
  */
@@ -751,12 +751,12 @@ enum aiComponent
     "IMPORT_MD3_SHADER_SRC"
 
 // ---------------------------------------------------------------------------
-/** @brief  Configures the LWO loader to load just one layer from the model.
+/** @brief  Configures the LWO loader to load just one layer from the models.
  *
  * LWO files consist of layers and in some cases it could be useful to load
  * only one of them. This property can be either a string - which specifies
  * the name of the layer - or an integer - the index of the layer. If the
- * property is not set the whole LWO model is loaded. Loading fails if the
+ * property is not set the whole LWO models is loaded. Loading fails if the
  * requested layer is not available. The layer index is zero-based and the
  * layer name may not be empty.<br>
  * Property type: Integer. Default value: all layers are loaded.

@@ -1481,7 +1481,7 @@ GLFWAPI void glfwGetMonitorPhysicalSize(GLFWmonitor* monitor, int* widthMM, int*
 /*! @brief Returns the name of the specified monitor.
  *
  *  This function returns a human-readable name, encoded as UTF-8, of the
- *  specified monitor.  The name typically reflects the make and model of the
+ *  specified monitor.  The name typically reflects the make and models of the
  *  monitor and is not guaranteed to be unique among the connected monitors.
  *
  *  @param[in] monitor The monitor to query.

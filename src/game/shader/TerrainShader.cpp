@@ -3,8 +3,8 @@
 
 TerrainShader::TerrainShader(const std::string& AssetDirectory) : PhongShader(false), Scaling(1,1,1)
 {
-    std::string VSFile = AssetDirectory + "vsterrain.glsl";
-    std::string FSFile = AssetDirectory + "fsterrain.glsl";
+    std::string VSFile = AssetDirectory + "shader/vsterrain.glsl";
+    std::string FSFile = AssetDirectory + "shader/fsterrain.glsl";
     if( !load(VSFile.c_str(), FSFile.c_str()))
         throw std::exception();
     PhongShader::assignLocations();

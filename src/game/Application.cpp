@@ -33,7 +33,7 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
     // Skybox
-    pSkybox = new Model(ASSET_DIRECTORY "skybox.obj", false);
+    pSkybox = new Model(ASSET_DIRECTORY "models/skybox/skybox.obj", false);
     pSkybox->shader(new PhongShader(), true);
     Models.push_back(pSkybox);
 
@@ -46,7 +46,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     pTank = new Tank();
     pTank->bindToTerrain(pTerrain);
     pTank->shader(new PhongShader(ASSET_DIRECTORY), true);
-    pTank->loadModels(ASSET_DIRECTORY "tank_bottom.dae", ASSET_DIRECTORY "tank_top.dae");
+    pTank->loadModels(ASSET_DIRECTORY "models/tank/tank_bottom.dae", ASSET_DIRECTORY "models/tank/tank_top.dae");
     Models.push_back(pTank);
 
     // Kamera und KeyManager

@@ -178,7 +178,7 @@ enum aiTextureMapping
  *  kinds of textures. For very common texture types, such as bumpmaps, the
  *  rendering results depend on implementation details in the rendering
  *  pipelines of these applications. Assimp loads all texture references from
- *  the model file and tries to determine which of the predefined texture
+ *  the models file and tries to determine which of the predefined texture
  *  types below is the best choice to match the original use of the texture
  *  as closely as possible.<br>
  *
@@ -298,7 +298,7 @@ enum aiTextureType
  *  undefined). <br>
  *  Again, this value is just a hint. Assimp tries to select the shader whose
  *  most common implementation matches the original rendering results of the
- *  3D modeller which wrote a particular model as closely as possible.
+ *  3D modeller which wrote a particular models as closely as possible.
  */
 enum aiShadingMode
 {
@@ -382,7 +382,7 @@ enum aiTextureFlags
      *
      *  Mutually exclusive with #aiTextureFlags_IgnoreAlpha. These
      *  flags are set if the library can say for sure that the alpha
-     *  channel is used/is not used. If the model format does not
+     *  channel is used/is not used. If the models format does not
      *  define this, it is left to the application to decide whether
      *  the texture alpha channel - if any - is evaluated or not.
      */
