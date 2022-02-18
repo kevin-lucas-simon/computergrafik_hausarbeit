@@ -126,7 +126,7 @@ ASSIMP_API const C_STRUCT aiScene* aiImportFile(
  * @param pFlags Optional post processing steps to be executed after
  *   a successful import. Provide a bitwise combination of the
  *   #aiPostProcessSteps flags.
- * @param pFS aiFileIO structure. Will be used to open the model file itself
+ * @param pFS aiFileIO structure. Will be used to open the models file itself
  *   and any other files the loader needs to open.  Pass NULL to use the default
  *   implementation.
  * @return Pointer to the imported data or NULL if the import failed.
@@ -145,7 +145,7 @@ ASSIMP_API const C_STRUCT aiScene* aiImportFileEx(
  * @param pFlags Optional post processing steps to be executed after
  *   a successful import. Provide a bitwise combination of the
  *   #aiPostProcessSteps flags.
- * @param pFS aiFileIO structure. Will be used to open the model file itself
+ * @param pFS aiFileIO structure. Will be used to open the models file itself
  *   and any other files the loader needs to open.  Pass NULL to use the default
  *   implementation.
  * @param pProps #aiPropertyStore instance containing import settings.
@@ -183,7 +183,7 @@ ASSIMP_API const C_STRUCT aiScene* aiImportFileExWithProperties(
  * @return A pointer to the imported data, NULL if the import failed.
  *
  * @note This is a straightforward way to decode models from memory
- * buffers, but it doesn't handle model formats that spread their
+ * buffers, but it doesn't handle models formats that spread their
  * data across multiple files or even directories. Examples include
  * OBJ or MD3, which outsource parts of their material info into
  * external scripts. If you need full functionality, provide
@@ -216,7 +216,7 @@ ASSIMP_API const C_STRUCT aiScene* aiImportFileFromMemory(
  * @return A pointer to the imported data, NULL if the import failed.
  *
  * @note This is a straightforward way to decode models from memory
- * buffers, but it doesn't handle model formats that spread their
+ * buffers, but it doesn't handle models formats that spread their
  * data across multiple files or even directories. Examples include
  * OBJ or MD3, which outsource parts of their material info into
  * external scripts. If you need full functionality, provide

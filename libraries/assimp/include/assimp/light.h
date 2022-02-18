@@ -75,7 +75,7 @@ enum aiLightSourceType
     //! sport arenas.
     aiLightSource_SPOT          = 0x3,
 
-    //! The generic light level of the world, including the bounces
+    //! The generic light level of the terrain, including the bounces
     //! of all other light sources.
     //! Typically, there's at most one ambient light in a scene.
     //! This light type doesn't have a valid position, direction, or

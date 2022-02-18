@@ -6,17 +6,17 @@
 #define Tank_hpp
 
 #include <stdio.h>
-#include <game/world/TerrainControlService.h>
-#include "model/Model.h"
+#include <game/terrain/TerrainControlService.h>
+#include <framework/model/BaseModel.h>
+#include <framework/model/Model.h>
 #include "PlayerPositionService.h"
 
 class Tank : public BaseModel, virtual public PlayerPositionService
 {
 public:
-    Tank();
+    Tank(char *assetDirectory, TerrainControlService* terrainControl);
     virtual ~Tank();
-    bool loadModels(const char* ChassisFile, const char* CannonFile);
-    void bindToTerrain(TerrainControlService* terrainControl);
+    void shader(BaseShader *shader, bool deleteOnDestruction) override;
     void update(float dTime, int keyForward, int keyBackward);
     virtual void draw(const BaseCamera& Cam);
 
@@ -28,10 +28,14 @@ protected:
     void calculateTransformation();
 
     Model* modelChassis;
+    Model* modelCannon;
     TerrainControlService* terrainControl;
 
     Vector position;
     Vector velocity;
+
+    const char* chassisFile = "models/tank/tank_bottom.dae";
+    const char* cannonFile = "models/tank/tank_top.dae";
 
     // Beschleunigungsrate des Nutzers beim Fahren, positiver Wert
     const float USER_FORCE_DRIVING = 0.65;

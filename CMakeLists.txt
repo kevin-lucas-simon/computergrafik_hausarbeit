@@ -3,29 +3,29 @@ project(computergrafik_praktikum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/shader/TerrainShader.cpp src/shader/TerrainShader.h src/game/world/TerrainChunk.cpp src/game/world/TerrainChunk.h src/game/world/TerrainControlService.h src/game/world/Terrain.cpp src/game/world/Terrain.h src/game/world/renderer/GraphService.h src/game/world/renderer/SinusGraph.cpp src/game/world/renderer/SinusGraph.h src/game/KeyManager.cpp src/game/KeyManager.h src/game/world/renderer/FlatGraph.cpp src/game/world/renderer/FlatGraph.h src/game/GameCamera.cpp src/game/GameCamera.h src/game/player/PlayerPositionService.h src/game/world/renderer/PerlinGraph.cpp src/game/world/renderer/PerlinGraph.h)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/game/shader/TerrainShader.cpp src/game/shader/TerrainShader.h src/game/terrain/TerrainChunk.cpp src/game/terrain/TerrainChunk.h src/game/terrain/TerrainControlService.h src/game/terrain/Terrain.cpp src/game/terrain/Terrain.h src/game/terrain/renderer/GraphService.h src/game/terrain/renderer/SinusGraph.cpp src/game/terrain/renderer/SinusGraph.h src/game/util/KeyManager.cpp src/game/util/KeyManager.h src/game/terrain/renderer/FlatGraph.cpp src/game/terrain/renderer/FlatGraph.h src/game/util/GameCamera.cpp src/game/util/GameCamera.h src/game/player/PlayerPositionService.h src/game/terrain/renderer/PerlinGraph.cpp src/game/terrain/renderer/PerlinGraph.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PUBLIC
-        src/util/Aabb.cpp
-        src/Application.cpp
-        src/model/BaseModel.cpp
-        src/shader/BaseShader.cpp
-        src/camera/Camera.cpp
-        src/util/CGUtilities.cpp
-        src/texture/color.cpp
+        src/framework/util/Aabb.cpp
+        src/game/Application.cpp
+        src/framework/model/BaseModel.cpp
+        src/framework/shader/BaseShader.cpp
+        src/framework/camera/Camera.cpp
+        src/framework/util/CGUtilities.cpp
+        src/framework/texture/color.cpp
         src/game/player/Tank.cpp
-        src/shader/ConstantShader.cpp
-        src/buffer/IndexBuffer.cpp
-        src/model/LinePlaneModel.cpp
-        src/game/world/TerrainChunk.cpp
+        src/framework/shader/ConstantShader.cpp
+        src/framework/buffer/IndexBuffer.cpp
+        src/framework/model/LinePlaneModel.cpp
+        src/game/terrain/TerrainChunk.cpp
         src/main.cpp
-        src/util/Matrix.cpp
-        src/model/Model.cpp
-        src/shader/PhongShader.cpp
-        src/texture/rgbimage.cpp
-        src/texture/Texture.cpp
-        src/util/vector.cpp
-        src/buffer/VertexBuffer.cpp
+        src/framework/util/Matrix.cpp
+        src/framework/model/Model.cpp
+        src/framework/shader/PhongShader.cpp
+        src/framework/texture/rgbimage.cpp
+        src/framework/texture/Texture.cpp
+        src/framework/util/vector.cpp
+        src/framework/buffer/VertexBuffer.cpp
 )
 
 include_directories(

@@ -7,7 +7,7 @@
 #include <glfw/glfw3.h>
 #endif
 #include <stdio.h>
-#include "Application.h"
+#include "game/Application.h"
 #include "freeimage.h"
 
 void PrintOpenGLVersion();

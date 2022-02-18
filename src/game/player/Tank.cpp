@@ -2,36 +2,42 @@
 // Created by kevin on 11.02.2022.
 //
 
-#include <shader/PhongShader.h>
 #include "Tank.h"
 
 
-Tank::Tank() {
+Tank::Tank(char *assetDirectory, TerrainControlService* terrainControl) {
+    // Parameter übertragen
+    this->assetDirectory = assetDirectory;
+    this->terrainControl = terrainControl;
+
+    // Modelle laden
+    modelChassis = new Model(std::string().append(assetDirectory).append(chassisFile).data(), false);
+    modelCannon = new Model(std::string().append(assetDirectory).append(cannonFile).data(), false);
+
+    // Physik initialisieren
     position = Vector(0,0,0);
     velocity = Vector(0,0,0);
 }
 
 Tank::~Tank() {
     delete modelChassis;
+    delete modelCannon;
 }
 
-bool Tank::loadModels(const char* ChassisFile, const char* CannonFile) {
-    modelChassis = new Model(ChassisFile, false);
-    modelChassis->shader(pShader, true);
-    return true;
+void Tank::shader(BaseShader *shader, bool deleteOnDestruction) {
+    this->pShader = shader;
+    modelChassis->shader(pShader, deleteOnDestruction);
+    modelCannon->shader(pShader, deleteOnDestruction);
 }
 
-void Tank::bindToTerrain(TerrainControlService* terrainControl) {
-    this->terrainControl = terrainControl;
+void Tank::draw(const BaseCamera& Cam) {
+    modelChassis->draw(Cam);
+    modelCannon->draw(Cam);
 }
 
 void Tank::update(float dTime, int keyForward, int keyBackward) {
     calculatePhysics(dTime, keyForward, keyBackward);
     calculateTransformation();
-}
-
-void Tank::draw(const BaseCamera& Cam) {
-    modelChassis->draw(Cam);
 }
 
 void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
@@ -116,7 +122,9 @@ void Tank::calculateTransformation() {
     objectTranslation.translation(0, position.Y, 0);
 
     // Transformation anwenden
-    modelChassis->transform(objectTranslation * objectRotation * objectDirection);
+    Matrix finalTransformation = objectTranslation * objectRotation * objectDirection;
+    modelChassis->transform(finalTransformation);
+    modelCannon->transform(finalTransformation);
 }
 
 // Schnittstelle zur Höhe des Spielers

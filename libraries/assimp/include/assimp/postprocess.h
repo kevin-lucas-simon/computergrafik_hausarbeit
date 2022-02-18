@@ -138,7 +138,7 @@ enum aiPostProcessSteps
      * step you can make sure they are NOT there.
      *
      * This flag is a poor one, mainly because its purpose is usually
-     * misunderstood. Consider the following case: a 3D model has been exported
+     * misunderstood. Consider the following case: a 3D models has been exported
      * from a CAD app, and it has per-face vertex colors. Vertex positions can't be
      * shared, thus the #aiProcess_JoinIdenticalVertices step fails to
      * optimize the data because of these nasty little vertex colors.
@@ -387,7 +387,7 @@ enum aiPostProcessSteps
      * Most applications will support UV mapping only, so you will
      * probably want to specify this step in every case. Note that Assimp is not
      * always able to match the original mapping implementation of the
-     * 3D app which produced a model perfectly. It's always better to let the
+     * 3D app which produced a models perfectly. It's always better to let the
      * modelling app compute the UV channels - 3ds max, Maya, Blender,
      * LightWave, and Modo do this for example.
      *
@@ -456,7 +456,7 @@ enum aiPostProcessSteps
      *  Use this flag with caution. Most simple files will be collapsed to a
      *  single node, so complex hierarchies are usually completely lost. This is not
      *  useful for editor environments, but probably a very effective
-     *  optimization if you just want to get the model data, convert it to your
+     *  optimization if you just want to get the models data, convert it to your
      *  own format, and render it as fast as possible.
      *
      *  This flag is designed to be used with #aiProcess_OptimizeMeshes for best
