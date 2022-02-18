@@ -9,12 +9,12 @@
 #include <shader/BaseShader.h>
 #include <texture/Texture.h>
 #include <list>
-#include "GraphService.h"
-#include "SinusGraph.h"
+#include "game/world/renderer/GraphService.h"
+#include "game/world/renderer/SinusGraph.h"
 #include "TerrainChunk.h"
 #include "texture/rgbimage.h"
-#include "PerlinGraph.h"
-#include "FlatGraph.h"
+#include "game/world/renderer/PerlinGraph.h"
+#include "game/world/renderer/FlatGraph.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
