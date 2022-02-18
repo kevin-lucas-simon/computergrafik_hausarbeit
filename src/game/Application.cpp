@@ -82,7 +82,7 @@ void Application::update(float dTime)
     Cam->update();
     pTank->update(dTime, keyManager->getForwardKey(), keyManager->getBackwardKey());
     pTerrain->update();
-    pSkybox->transform(Matrix().translation(0,pTank->getHeight(),0));
+    pSkybox->transform(Matrix().translation(0,pTank->getHeight() - 32,0));
 }
 
 void Application::draw()
