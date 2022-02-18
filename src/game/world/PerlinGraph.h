@@ -22,10 +22,10 @@ public:
     virtual float depthFunctionDerivation(float valueZ);
 
 protected:
-    float lerp(float a, float b, float x);
-    float smoothstep(float x);
-    float fFunction(float x, int n);
-    float perlinOctave(float valueX, unsigned int octave);
+    static float lerp(float left, float right, float valueX);
+    static float smoothstep(float x);
+    float tangent(float x, int n);
+    float perlinNoise(float valueX, unsigned int octave);
 
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
@@ -38,6 +38,9 @@ protected:
     // Intervallbreite, in der die Schwierigkeit um den eingestellten Faktor sich erhöht (steilere Hänge usw.)
     const unsigned int DIFFICULTY_INTERVAL = 500;
     const float DIFFICULTY_FACTOR = 0.1;
+
+    // Abstandsbreite zur Ermittlung der Ableitung
+    const float EPSILON = 0.001;
 };
 
 
