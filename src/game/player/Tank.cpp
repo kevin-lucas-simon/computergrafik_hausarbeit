@@ -16,7 +16,7 @@ Tank::~Tank() {
 
 bool Tank::loadModels(const char* ChassisFile, const char* CannonFile) {
     modelChassis = new Model(ChassisFile, false);
-    modelChassis->shader(pShader, true);
+    modelChassis->shader(pShader, false);
     return true;
 }
 
