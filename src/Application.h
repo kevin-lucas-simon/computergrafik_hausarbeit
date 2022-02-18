@@ -38,11 +38,11 @@ protected:
     GLFWwindow* pWindow;
     KeyManager* keyManager;
 
-    // TODO entfernen!
-    unsigned int points = 0;
-
+    BaseModel* pSkybox;
     Terrain* pTerrain;
     Tank* pTank;
+
+    unsigned int points = 0;
 };
 
 #endif /* Application_hpp */
