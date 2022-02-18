@@ -60,20 +60,21 @@ void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
             velocity = slope * (velocity.length()
                     - std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
                     - std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
-                    + (keyForward - keyBackward) * dTime * USER_FORCE_DRIVING);
+                    + keyForward * dTime * USER_FORCE_DRIVING);
         else // x ist negativ
             velocity = -slope * (velocity.length()
                     + std::max(0.0f, terrainDerivation) * dTime * SLOPE_FORCE_UPWARD
                     + std::min(terrainDerivation, 0.0f) * dTime * SLOPE_FORCE_DOWNWARD
-                    - (keyForward - keyBackward) * dTime * USER_FORCE_DRIVING);
+                    - keyForward * dTime * USER_FORCE_DRIVING);
 
         // Reibung simulieren
         velocity = velocity * GENERAL_DRAG;
     } else {
         // Gravitation auf fallendes Object anwenden samt Einwirkung des Spielers
         Vector gravity = Vector(0, -1, 0) * dTime * GRAVITY_FORCE;
-        Vector userForce = Vector(0, -1, 0) * dTime * keyBackward * USER_FORCE_FALLING;
-        velocity = (velocity + gravity + userForce);
+        Vector userForceFalling = Vector(0, -1, 0) * dTime * keyBackward * USER_FORCE_FALLING;
+        Vector userForceGliding = Vector(0, 1, 0) * dTime * keyForward * USER_FORCE_GLIDING;
+        velocity = (velocity + gravity + userForceFalling + userForceGliding);
     }
 
     // Stoppen, wenn die Geschwindigkeit zu langsam ist

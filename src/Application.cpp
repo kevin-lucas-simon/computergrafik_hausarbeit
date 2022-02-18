@@ -74,6 +74,12 @@ void Application::update(float dTime)
     if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
+    // Punkte Ausgabe
+    if(points < (unsigned int) pTank->getPosition()) {
+        points = pTank->getPosition();
+        std::cout << "Punkte: " << points << std::endl;
+    }
+
     // Alle Objekte aktualisieren
     Cam->update();
     pTank->update(dTime, keyManager->getForwardKey(), keyManager->getBackwardKey());

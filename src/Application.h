@@ -39,7 +39,7 @@ protected:
     KeyManager* keyManager;
 
     // TODO entfernen!
-    float worldSizeTest = 32.0;
+    unsigned int points = 0;
 
     Terrain* pTerrain;
     Tank* pTank;

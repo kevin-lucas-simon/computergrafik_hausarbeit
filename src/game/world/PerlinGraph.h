@@ -30,8 +30,9 @@ protected:
     unsigned int seed;
     std::hash<unsigned int> hash_seed;
 
-    const int OCTAVE_COUNT = 5;
-    const int MIN_OCTAVE_WIDTH = 4;
+    // Anzahl der durchzuführenden Perlin-Noise Oktaven
+    const int OCTAVE_COUNT = 10;
+    const int MIN_OCTAVE_WIDTH = 6;
     const int MIN_OCTAVE_HEIGHT = 4;
 };
 

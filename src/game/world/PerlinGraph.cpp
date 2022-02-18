@@ -39,23 +39,22 @@ float PerlinGraph::fFunction(float x, int n) {
 // Rekursive Oktave-Funktion des Perlin-Noise-Verfahrens, Variable octave definiert die Anzahl der Durchführungen
 float PerlinGraph::perlinOctave(float valueX, unsigned int octave) {
     // Ende der Rekursion
-    if(octave <= 0)
-        return 0;
+    if(octave <= 0) return 0;
 
     // Koordinaten auf Dichte der Oktave anpassen
-    valueX = valueX / octave / MIN_OCTAVE_WIDTH;
+    float x = valueX / octave / MIN_OCTAVE_WIDTH;
 
     // Ganzzahlige Koordinate für Interpolation ermitteln
-    float n = (int) valueX;
-    if(valueX < 0) n--;
+    float n = (int) x;
+    if(x < 0) n--;
 
     // Steigung Links und Rechts anhand des Seeds erzeugen
-    float left = fFunction(valueX, n);
-    float right = fFunction(valueX, n + 1);
+    float left = fFunction(x, n);
+    float right = fFunction(x, n + 1);
 
     // Interpolieren und zur nächstkleineren Oktave addieren
     return perlinOctave(valueX, octave-1)
-        + octave * MIN_OCTAVE_HEIGHT * lerp(left, right, smoothstep(valueX - n));
+        + octave * MIN_OCTAVE_HEIGHT * lerp(left, right, smoothstep(x - n));
 }
 
 // Gibt die Höhe von der X Position an, ermittelt aus der Funktion f(x)
