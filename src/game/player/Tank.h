@@ -14,10 +14,9 @@
 class Tank : public BaseModel, virtual public PlayerPositionService
 {
 public:
-    Tank();
+    Tank(char *assetDirectory, TerrainControlService* terrainControl);
     virtual ~Tank();
-    bool loadModels(const char* ChassisFile, const char* CannonFile);
-    void bindToTerrain(TerrainControlService* terrainControl);
+    void shader(BaseShader *shader, bool deleteOnDestruction) override;
     void update(float dTime, int keyForward, int keyBackward);
     virtual void draw(const BaseCamera& Cam);
 
@@ -34,6 +33,9 @@ protected:
 
     Vector position;
     Vector velocity;
+
+    const char* chassisFile = "models/tank/tank_bottom.dae";
+    const char* cannonFile = "models/tank/tank_top.dae";
 
     // Beschleunigungsrate des Nutzers beim Fahren, positiver Wert
     const float USER_FORCE_DRIVING = 0.65;

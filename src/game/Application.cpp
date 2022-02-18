@@ -43,10 +43,8 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     Models.push_back(pTerrain);
 
     // Player Car
-    pTank = new Tank();
-    pTank->bindToTerrain(pTerrain);
+    pTank = new Tank(ASSET_DIRECTORY, pTerrain);
     pTank->shader(new PhongShader(ASSET_DIRECTORY), true);
-    pTank->loadModels(ASSET_DIRECTORY "models/tank/tank_bottom.dae", ASSET_DIRECTORY "models/tank/tank_top.dae");
     Models.push_back(pTank);
 
     // Kamera und KeyManager

@@ -5,7 +5,16 @@
 #include "Tank.h"
 
 
-Tank::Tank() {
+Tank::Tank(char *assetDirectory, TerrainControlService* terrainControl) {
+    // Parameter übertragen
+    this->assetDirectory = assetDirectory;
+    this->terrainControl = terrainControl;
+
+    // Modelle laden
+    modelChassis = new Model(std::string().append(assetDirectory).append(chassisFile).data(), false);
+    modelCannon = new Model(std::string().append(assetDirectory).append(cannonFile).data(), false);
+
+    // Physik initialisieren
     position = Vector(0,0,0);
     velocity = Vector(0,0,0);
 }
@@ -15,26 +24,20 @@ Tank::~Tank() {
     delete modelCannon;
 }
 
-bool Tank::loadModels(const char* ChassisFile, const char* CannonFile) {
-    modelChassis = new Model(ChassisFile, false);
-    modelChassis->shader(pShader, false);
-    modelCannon = new Model(CannonFile, false);
-    modelCannon->shader(pShader, false);
-    return true;
-}
-
-void Tank::bindToTerrain(TerrainControlService* terrainControl) {
-    this->terrainControl = terrainControl;
-}
-
-void Tank::update(float dTime, int keyForward, int keyBackward) {
-    calculatePhysics(dTime, keyForward, keyBackward);
-    calculateTransformation();
+void Tank::shader(BaseShader *shader, bool deleteOnDestruction) {
+    this->pShader = shader;
+    modelChassis->shader(pShader, deleteOnDestruction);
+    modelCannon->shader(pShader, deleteOnDestruction);
 }
 
 void Tank::draw(const BaseCamera& Cam) {
     modelChassis->draw(Cam);
     modelCannon->draw(Cam);
+}
+
+void Tank::update(float dTime, int keyForward, int keyBackward) {
+    calculatePhysics(dTime, keyForward, keyBackward);
+    calculateTransformation();
 }
 
 void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
