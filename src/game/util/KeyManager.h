@@ -8,7 +8,7 @@
 
 #ifdef WIN32
 #include <GL/glew.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <list>

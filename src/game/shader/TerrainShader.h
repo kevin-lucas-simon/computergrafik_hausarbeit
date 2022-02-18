@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "PhongShader.h"
+#include "framework/shader/PhongShader.h"
 
 
 class TerrainShader : public PhongShader

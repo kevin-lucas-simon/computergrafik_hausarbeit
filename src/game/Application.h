@@ -14,7 +14,7 @@
 #include <game/world/TerrainChunk.h>
 #include <game/world/Terrain.h>
 #include <game/player/Tank.h>
-#include <game/KeyManager.h>
+#include <game/util/KeyManager.h>
 
 class Application
 {

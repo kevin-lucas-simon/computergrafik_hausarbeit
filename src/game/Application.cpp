@@ -9,12 +9,12 @@
 #include "Application.h"
 #ifdef WIN32
 #include <GL/glew.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <game/GameCamera.h>
+#include <game/util/GameCamera.h>
 #include <framework/shader/PhongShader.h>
-#include <framework/shader/TerrainShader.h>
+#include <game/shader/TerrainShader.h>
 
 #else
 #define GLFW_INCLUDE_GLCOREARB
