@@ -12,7 +12,7 @@
 #include <stdio.h>
 #ifdef WIN32
 #include <GL/glew.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
@@ -20,12 +20,8 @@
 #endif
 #include <iostream>
 #include <assert.h>
-#include "texture/color.h"
-#include "util/vector.h"
-#include "util/matrix.h"
-#include "camera/camera.h"
-#include "shader/baseshader.h"
-#include "texture/texture.h"
+#include <framework/texture/Texture.h>
+#include "BaseShader.h"
 
 class PhongShader : public BaseShader
 {

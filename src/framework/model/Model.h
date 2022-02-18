@@ -14,11 +14,11 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "buffer/VertexBuffer.h"
-#include "buffer/IndexBuffer.h"
-#include "texture/Texture.h"
-#include "util/Aabb.h"
 #include <string>
+#include <framework/buffer/VertexBuffer.h>
+#include <framework/buffer/IndexBuffer.h>
+#include <framework/texture/Texture.h>
+#include <framework/util/Aabb.h>
 
 class Model : public BaseModel
 {

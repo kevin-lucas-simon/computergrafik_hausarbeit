@@ -20,11 +20,7 @@
 #endif
 #include <iostream>
 #include <assert.h>
-#include "texture/color.h"
-#include "util/vector.h"
-#include "util/Matrix.h"
-#include "camera/Camera.h"
-#include "shader/BaseShader.h"
+#include "BaseShader.h"
 
 
 class ConstantShader : public BaseShader

@@ -8,7 +8,7 @@
 
 #include "Scene.h"
 #include <string.h>
-#include "model.h"
+#include "Model.h"
 #include <assert.h>
 
 SceneNode::SceneNode() : m_pParent(NULL), m_pModel(NULL), m_Scaling(1,1,1)

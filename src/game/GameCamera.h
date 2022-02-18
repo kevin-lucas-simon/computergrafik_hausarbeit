@@ -9,17 +9,15 @@
 #ifdef WIN32
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <camera/Camera.h>
 #include <game/player/PlayerPositionService.h>
 #include <game/world/TerrainControlService.h>
+#include <framework/camera/Camera.h>
 
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
 #include <glfw/glfw3.h>
 #endif
-#include "util/vector.h"
-#include "util/Matrix.h"
 #define _USE_MATH_DEFINES
 #include "math.h"
 

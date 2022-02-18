@@ -12,7 +12,7 @@
 #include <stdio.h>
 #ifdef WIN32
 #include <GL/glew.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
@@ -20,10 +20,9 @@
 #endif
 #include <iostream>
 #include <assert.h>
-#include "texture/color.h"
-#include "util/vector.h"
-#include "util/matrix.h"
-#include "camera/camera.h"
+#include <framework/util/Matrix.h>
+#include <framework/camera/Camera.h>
+#include <framework/texture/color.h>
 
 class BaseShader
 {

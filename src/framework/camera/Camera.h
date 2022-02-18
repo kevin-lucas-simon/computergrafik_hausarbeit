@@ -13,13 +13,13 @@
 #ifdef WIN32
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <framework/util/Matrix.h>
+
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
 #include <glfw/glfw3.h>
 #endif
-#include "util/vector.h"
-#include "util/Matrix.h"
 
 class BaseCamera
 {

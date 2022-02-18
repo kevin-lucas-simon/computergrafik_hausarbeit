@@ -10,9 +10,8 @@
 #define BaseModel_hpp
 
 #include <stdio.h>
-#include "camera/Camera.h"
-#include "util/Matrix.h"
-#include "shader/BaseShader.h"
+#include <framework/camera/Camera.h>
+#include <framework/shader/BaseShader.h>
 
 class BaseModel
 {

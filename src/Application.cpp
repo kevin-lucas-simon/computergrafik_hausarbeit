@@ -13,15 +13,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <game/GameCamera.h>
+#include <framework/shader/PhongShader.h>
+#include <framework/shader/TerrainShader.h>
 
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
 #include <glfw/glfw3.h>
 #endif
-#include "model/lineplanemodel.h"
-#include "model/model.h"
-#include "shader/terrainshader.h"
 
 
 #ifdef WIN32

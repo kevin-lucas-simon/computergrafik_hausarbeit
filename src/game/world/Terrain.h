@@ -6,13 +6,10 @@
 #define COMPUTERGRAFIK_PRAKTIKUM_TERRAIN_H
 
 
-#include <shader/BaseShader.h>
-#include <texture/Texture.h>
 #include <list>
 #include "game/world/renderer/GraphService.h"
 #include "game/world/renderer/SinusGraph.h"
 #include "TerrainChunk.h"
-#include "texture/rgbimage.h"
 #include "game/world/renderer/PerlinGraph.h"
 #include "game/world/renderer/FlatGraph.h"
 

@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <game/world/TerrainControlService.h>
-#include "model/Model.h"
+#include <framework/model/BaseModel.h>
+#include <framework/model/Model.h>
 #include "PlayerPositionService.h"
 
 class Tank : public BaseModel, virtual public PlayerPositionService

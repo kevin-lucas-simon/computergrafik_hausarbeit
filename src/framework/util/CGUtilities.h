@@ -1,8 +1,8 @@
 #ifndef SimpleRayTracer_CGUtilities_h
 #define SimpleRayTracer_CGUtilities_h
 #include <vector>
+#include <framework/texture/color.h>
 #include "vector.h"
-#include "texture/color.h"
 
 class Material
 {

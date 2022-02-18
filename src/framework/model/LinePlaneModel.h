@@ -10,8 +10,8 @@
 #define LinePlaneModel_hpp
 
 #include <stdio.h>
-#include "model/BaseModel.h"
-#include "buffer/VertexBuffer.h"
+#include <framework/buffer/VertexBuffer.h>
+#include "BaseModel.h"
 
 class LinePlaneModel : public BaseModel
 {

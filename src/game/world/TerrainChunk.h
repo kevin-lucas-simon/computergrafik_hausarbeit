@@ -3,11 +3,13 @@
 
 #include <stdio.h>
 #include <game/world/TerrainControlService.h>
-#include "model/BaseModel.h"
-#include "texture/Texture.h"
-#include "buffer/VertexBuffer.h"
-#include "buffer/IndexBuffer.h"
-#include "game/world/renderer/GraphService.h"
+#include <framework/shader/BaseShader.h>
+#include <framework/camera/Camera.h>
+#include <game/world/renderer/GraphService.h>
+#include <framework/buffer/VertexBuffer.h>
+#include <framework/buffer/IndexBuffer.h>
+#include <framework/texture/Texture.h>
+#include <framework/model/BaseModel.h>
 
 class TerrainChunk : public BaseModel
 {

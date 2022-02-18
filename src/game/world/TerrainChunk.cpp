@@ -2,8 +2,7 @@
 // Created by kevin on 09.02.2022.
 //
 
-#include <shader/TerrainShader.h>
-#include <texture/rgbimage.h>
+#include <framework/shader/TerrainShader.h>
 #include "TerrainChunk.h"
 
 TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* assetDirectory)

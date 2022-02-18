@@ -14,7 +14,7 @@
 #include <set>
 #include <vector>
 #include <map>
-#include "basemodel.h"
+#include "BaseModel.h"
 
 class Model;
 

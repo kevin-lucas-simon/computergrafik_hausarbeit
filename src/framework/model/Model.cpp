@@ -7,10 +7,10 @@
 //
 
 #include "Model.h"
-#include "shader/PhongShader.h"
 #include <list>
 #include <limits>
 #include <iostream>
+#include <framework/shader/PhongShader.h>
 
 Model::Model() : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
