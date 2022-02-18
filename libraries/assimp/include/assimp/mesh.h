@@ -289,7 +289,7 @@ enum aiPrimitiveType
 {
     /** A point primitive.
      *
-     * This is just a single vertex in the virtual world,
+     * This is just a single vertex in the virtual terrain,
      * #aiFace contains just one index for such a primitive.
      */
     aiPrimitiveType_POINT       = 0x1,

@@ -2,10 +2,10 @@
 #define COMPUTERGRAFIK_PRAKTIKUM_TERRAINCHUNK_H
 
 #include <stdio.h>
-#include <game/world/TerrainControlService.h>
+#include <game/terrain/TerrainControlService.h>
 #include <framework/shader/BaseShader.h>
 #include <framework/camera/Camera.h>
-#include <game/world/renderer/GraphService.h>
+#include <game/terrain/renderer/GraphService.h>
 #include <framework/buffer/VertexBuffer.h>
 #include <framework/buffer/IndexBuffer.h>
 #include <framework/texture/Texture.h>

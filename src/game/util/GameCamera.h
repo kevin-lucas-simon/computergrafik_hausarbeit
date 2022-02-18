@@ -10,7 +10,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <game/player/PlayerPositionService.h>
-#include <game/world/TerrainControlService.h>
+#include <game/terrain/TerrainControlService.h>
 #include <framework/camera/Camera.h>
 
 #else

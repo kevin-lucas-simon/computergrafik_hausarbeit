@@ -3,7 +3,7 @@ project(computergrafik_praktikum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/game/shader/TerrainShader.cpp src/game/shader/TerrainShader.h src/game/world/TerrainChunk.cpp src/game/world/TerrainChunk.h src/game/world/TerrainControlService.h src/game/world/Terrain.cpp src/game/world/Terrain.h src/game/world/renderer/GraphService.h src/game/world/renderer/SinusGraph.cpp src/game/world/renderer/SinusGraph.h src/game/util/KeyManager.cpp src/game/util/KeyManager.h src/game/world/renderer/FlatGraph.cpp src/game/world/renderer/FlatGraph.h src/game/util/GameCamera.cpp src/game/util/GameCamera.h src/game/player/PlayerPositionService.h src/game/world/renderer/PerlinGraph.cpp src/game/world/renderer/PerlinGraph.h)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/game/shader/TerrainShader.cpp src/game/shader/TerrainShader.h src/game/terrain/TerrainChunk.cpp src/game/terrain/TerrainChunk.h src/game/terrain/TerrainControlService.h src/game/terrain/Terrain.cpp src/game/terrain/Terrain.h src/game/terrain/renderer/GraphService.h src/game/terrain/renderer/SinusGraph.cpp src/game/terrain/renderer/SinusGraph.h src/game/util/KeyManager.cpp src/game/util/KeyManager.h src/game/terrain/renderer/FlatGraph.cpp src/game/terrain/renderer/FlatGraph.h src/game/util/GameCamera.cpp src/game/util/GameCamera.h src/game/player/PlayerPositionService.h src/game/terrain/renderer/PerlinGraph.cpp src/game/terrain/renderer/PerlinGraph.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/framework/util/Aabb.cpp
@@ -17,7 +17,7 @@ target_sources(${CMAKE_PROJECT_NAME} PUBLIC
         src/framework/shader/ConstantShader.cpp
         src/framework/buffer/IndexBuffer.cpp
         src/framework/model/LinePlaneModel.cpp
-        src/game/world/TerrainChunk.cpp
+        src/game/terrain/TerrainChunk.cpp
         src/main.cpp
         src/framework/util/Matrix.cpp
         src/framework/model/Model.cpp

@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <list>
-#include <game/world/TerrainChunk.h>
-#include <game/world/Terrain.h>
+#include <game/terrain/TerrainChunk.h>
+#include <game/terrain/Terrain.h>
 #include <game/player/Tank.h>
 #include <game/util/KeyManager.h>
 

@@ -6,7 +6,7 @@
 #define Tank_hpp
 
 #include <stdio.h>
-#include <game/world/TerrainControlService.h>
+#include <game/terrain/TerrainControlService.h>
 #include <framework/model/BaseModel.h>
 #include <framework/model/Model.h>
 #include "PlayerPositionService.h"

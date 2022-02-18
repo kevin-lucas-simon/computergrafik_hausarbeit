@@ -7,11 +7,11 @@
 
 
 #include <list>
-#include "game/world/renderer/GraphService.h"
-#include "game/world/renderer/SinusGraph.h"
+#include "game/terrain/renderer/GraphService.h"
+#include "game/terrain/renderer/SinusGraph.h"
 #include "TerrainChunk.h"
-#include "game/world/renderer/PerlinGraph.h"
-#include "game/world/renderer/FlatGraph.h"
+#include "game/terrain/renderer/PerlinGraph.h"
+#include "game/terrain/renderer/FlatGraph.h"
 
 class Terrain: public BaseModel, virtual public TerrainControlService
 {
