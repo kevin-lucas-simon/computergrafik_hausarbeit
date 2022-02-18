@@ -12,11 +12,14 @@ Tank::Tank() {
 
 Tank::~Tank() {
     delete modelChassis;
+    delete modelCannon;
 }
 
 bool Tank::loadModels(const char* ChassisFile, const char* CannonFile) {
     modelChassis = new Model(ChassisFile, false);
     modelChassis->shader(pShader, false);
+    modelCannon = new Model(CannonFile, false);
+    modelCannon->shader(pShader, false);
     return true;
 }
 
@@ -31,6 +34,7 @@ void Tank::update(float dTime, int keyForward, int keyBackward) {
 
 void Tank::draw(const BaseCamera& Cam) {
     modelChassis->draw(Cam);
+    modelCannon->draw(Cam);
 }
 
 void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
@@ -115,7 +119,9 @@ void Tank::calculateTransformation() {
     objectTranslation.translation(0, position.Y, 0);
 
     // Transformation anwenden
-    modelChassis->transform(objectTranslation * objectRotation * objectDirection);
+    Matrix finalTransformation = objectTranslation * objectRotation * objectDirection;
+    modelChassis->transform(finalTransformation);
+    modelCannon->transform(finalTransformation);
 }
 
 // Schnittstelle zur Höhe des Spielers

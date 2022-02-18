@@ -29,6 +29,7 @@ protected:
     void calculateTransformation();
 
     Model* modelChassis;
+    Model* modelCannon;
     TerrainControlService* terrainControl;
 
     Vector position;
