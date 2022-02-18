@@ -39,6 +39,7 @@ protected:
     const float USER_FORCE_FALLING = 0.9;
     // Entschleunigungsrate des Nutzers beim Fallen, Wert zwischen 0 (kein Effekt) und 1 (komplett gleiten)
     const float USER_FORCE_GLIDING = 0.17;
+
     // Gravitation, positiver Wert, entspricht nicht der reale Konstante
     const float GRAVITY_FORCE = 0.4;
     // Abbremsungs- und Beschleunigungsrate eines Gefälles beim Fahren, positiver Wert
@@ -46,12 +47,16 @@ protected:
     const float SLOPE_FORCE_DOWNWARD = 0.6;
     // Benötigte Höhe zum Abheben des Fahrzeugs, positiver Wert
     const float LIFT_HEIGHT = 0.02;
+
     // Rate der Abbremsung generell beim Fahren, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
     const float GENERAL_DRAG = 0.99;
     // Rate der Abbremsung, wenn der Nutzer auf ein Berg knallt, Wert zwischen 0 (UHU Kleber) und 1 (Glatteis)
     const float IMPACT_DRAG = 0.05;
+
     // Minimalgeschwindigkeit, darunter hält das Fahrzeug an, positiver Wert
-    const float STOPPING_SPEED = 0.003;
+    const float MINIMUM_SPEED = 0.003;
+    // Maximalgeschwindigkeit, positiver Wert (Empfehlenswert: Knapp kleiner als Chunkgröße)
+    const float MAXIMUM_SPEED = 7.5;
 };
 
 #endif /* Tank_hpp */

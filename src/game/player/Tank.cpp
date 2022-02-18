@@ -78,8 +78,10 @@ void Tank::calculatePhysics(float dTime, int keyForward, int keyBackward) {
     }
 
     // Stoppen, wenn die Geschwindigkeit zu langsam ist
-    if(velocity.length() < STOPPING_SPEED)
-        velocity = Vector(0,0,0);
+    if(velocity.length() < MINIMUM_SPEED) velocity = Vector(0, 0, 0);
+
+    // Geschwindigkeit auf Maximalgeschwindigkeit begrenzen, falls diese überschritten wird
+    if(velocity.length() > MAXIMUM_SPEED) velocity = velocity.normalize() * MAXIMUM_SPEED;
 
     // Welt-Center Variable aktualisieren
     terrainControl->setWorldCenter(position.X);
