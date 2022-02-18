@@ -14,7 +14,7 @@
 class TerrainChunk : public BaseModel
 {
 public:
-    TerrainChunk(GraphService* graphService, float minX, float maxX, float vertexGapSize, const char* DetailMap1);
+    TerrainChunk(const char* assetDirectory, GraphService* graphService, float minX, float maxX, float vertexGapSize);
     virtual ~TerrainChunk();
     bool load();
 
@@ -29,9 +29,8 @@ protected:
     VertexBuffer VB;
     IndexBuffer IB;
 
-    const char* assetDirectory;
-    const char* detailTex0 = "models/terrain/grass.bmp";
-    const char* detailTex1 = "models/terrain/rock.bmp";
+    const char* grassTextureFile = "models/terrain/grass.bmp";
+    const char* rockTextureFile = "models/terrain/rock.bmp";
     Texture DetailTex[2];
 
     GraphService* graphService;

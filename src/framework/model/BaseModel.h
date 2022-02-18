@@ -24,7 +24,7 @@ public:
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual BaseShader* shader() const { return pShader; }
 protected:
-    char *assetDirectory;
+    const char *assetDirectory;
     Matrix Transform;
     BaseShader* pShader;
     bool DeleteShader;

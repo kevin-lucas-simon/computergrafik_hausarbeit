@@ -35,9 +35,8 @@ protected:
 
     typedef std::list<TerrainChunk*> TerrainChunkList;
     TerrainChunkList chunks;
-    GraphService* graphService = new PerlinGraph();
 
-    const char* assetDirectory;
+    GraphService* graphService = new PerlinGraph();
     float vertexGapSize;
     int chunkSize;
 

@@ -13,7 +13,7 @@ Terrain::Terrain(char *assetDirectory, float vertexGapSize, int chunkSize) {
     this->assetDirectory = assetDirectory;
 
     // Haupt-Chunk generieren und anschließend alle anderen
-    chunks.push_back(new TerrainChunk(graphService, 0, chunkSize, vertexGapSize, this->assetDirectory));
+    chunks.push_back(new TerrainChunk(this->assetDirectory, graphService, 0, chunkSize, vertexGapSize));
     chunks.front()->shader(pShader, false);
     this->distantChunks();
 }
@@ -56,18 +56,16 @@ void Terrain::shiftChunks() {
     if ((int) oldWorldCenter / chunkSize != (int) actualWorldCenter / chunkSize) {
         // Rechter Chunk wurde betreten
         if (actualWorldCenter - chunks.front()->getMinX() > chunks.back()->getMaxX() - actualWorldCenter) {
-            chunks.push_back(new TerrainChunk(
-                    graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
-                    vertexGapSize, this->assetDirectory));
+            chunks.push_back(new TerrainChunk(this->assetDirectory, graphService,
+                  chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize, vertexGapSize));
             chunks.back()->shader(pShader, false);
             delete chunks.front();
             chunks.pop_front();
         }
         // Linker Chunk wurde betreten
         else {
-            chunks.push_front(new TerrainChunk(
-                    graphService, chunks.front()->getMinX() - chunkSize, chunks.front()->getMinX(),
-                    vertexGapSize, this->assetDirectory));
+            chunks.push_front(new TerrainChunk(this->assetDirectory, graphService,
+                   chunks.front()->getMinX() - chunkSize, chunks.front()->getMinX(), vertexGapSize));
             chunks.front()->shader(pShader, false);
             delete chunks.back();
             chunks.pop_back();
@@ -83,12 +81,10 @@ void Terrain::distantChunks() {
         // Chunks hinzufügen, wenn der Chunkrendering-Bereich größer wird
         if(chunkDifference > 0) {
             while (chunks.size() < (int) actualWorldSize / chunkSize + 1) {
-                chunks.push_front(new TerrainChunk(
-                        graphService, chunks.front()->getMinX()-chunkSize, chunks.front()->getMinX(),
-                        vertexGapSize, this->assetDirectory));
-                chunks.push_back(new TerrainChunk(
-                        graphService, chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize,
-                        vertexGapSize, this->assetDirectory));
+                chunks.push_front(new TerrainChunk(this->assetDirectory, graphService,
+                       chunks.front()->getMinX()-chunkSize, chunks.front()->getMinX(), vertexGapSize));
+                chunks.push_back(new TerrainChunk(this->assetDirectory, graphService,
+                       chunks.back()->getMaxX(), chunks.back()->getMaxX() + chunkSize, vertexGapSize));
                 chunks.front()->shader(pShader, false);
                 chunks.back()->shader(pShader, false);
             }

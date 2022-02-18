@@ -5,7 +5,7 @@
 #include <game/shader/TerrainShader.h>
 #include "TerrainChunk.h"
 
-TerrainChunk::TerrainChunk(GraphService* graphService, float minX, float maxX, float gap, const char* assetDirectory)
+TerrainChunk::TerrainChunk(const char* assetDirectory, GraphService* graphService, float minX, float maxX, float gap)
 {
     this->graphService = graphService;
     this->minX = minX;
@@ -24,9 +24,9 @@ TerrainChunk::~TerrainChunk() {}
 bool TerrainChunk::load()
 {
     // Texturen laden
-    if( !DetailTex[0].load(std::string().append(assetDirectory).append(detailTex0).data()) )
+    if( !DetailTex[0].load(std::string().append(assetDirectory).append(grassTextureFile).data()) )
         return false;
-    if( !DetailTex[1].load(std::string().append(assetDirectory).append(detailTex1).data()) )
+    if( !DetailTex[1].load(std::string().append(assetDirectory).append(rockTextureFile).data()) )
         return false;
 
     // Hilfsvariable: Anzahl Punkte im Chunk
