@@ -7,6 +7,8 @@
 //
 
 #include "Application.h"
+#include "framework/shader/ConstantShader.h"
+
 #ifdef WIN32
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -21,7 +23,6 @@
 #define GLFW_INCLUDE_GLEXT
 #include <glfw/glfw3.h>
 #endif
-
 
 #ifdef WIN32
 #define ASSET_DIRECTORY "../assets/"
@@ -50,6 +51,13 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     // Kamera und KeyManager
     keyManager = new KeyManager(pWindow);
     Cam = new GameCamera(pWin, pTank, pTerrain);
+
+    // TODO GUI
+    pLoosingGUI = new LoosingGUI();
+    ConstantShader *pConstShader = new ConstantShader();
+    pConstShader->color(Color(1,1,0));
+    pLoosingGUI->shader(pConstShader, true);
+    Models.push_back(pLoosingGUI);
 }
 void Application::start()
 {
@@ -64,19 +72,35 @@ void Application::start()
 void Application::update(float dTime)
 {
     // User Input einlesen
-    keyManager->readUserInput();
+    //if(!pLoosingGUI->isDead())
+        keyManager->readUserInput();
+
 
     // Debug Modus Wechsel
     if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
+    //TODO Wenn dies True wird und der Spieler verloren hat, wird das Spiel neu gestartet
+    if(keyManager->getSpaceBarKey() && pLoosingGUI->isDead()){
+
+    }
+
     // Punkte Ausgabe
     if(points < (unsigned int) pTank->getPosition()) {
         points = pTank->getPosition();
+        // TODO Punkte Ausgabe auf der GUI
         std::cout << "Punkte: " << points << std::endl;
+        deadTimer = 0;
+    }else{
+        std::cout << "DeadTimer: " << deadTimer << std::endl;
+        deadTimer++;
+        if(deadTimer > 100){
+           pLoosingGUI->update();
+        }
     }
 
     // Alle Objekte aktualisieren
+
     Cam->update();
     pTank->update(dTime, keyManager->getForwardKey(), keyManager->getBackwardKey());
     pTerrain->update();
@@ -92,9 +116,14 @@ void Application::draw()
     for (const auto &model : Models)
         model->draw(*Cam);
 
+
     // 3. check once per frame for opengl errors
     GLenum Error = glGetError();
     assert(Error==0);
+}
+
+void Application::restart()
+{
 }
 void Application::end()
 {

@@ -28,6 +28,7 @@ public:
     float getBackwardKey();
     float getDebugStartKey();
     float getDebugEndKey();
+    bool getSpaceBarKey();
 
 protected:
     GLFWwindow* pWindow;
@@ -43,6 +44,9 @@ protected:
 
     std::list<int> debugEndKeys;
     float debugEndValue = 0.0;
+
+    int spacebar;
+    bool spacebarPressed;
 };
 
 

@@ -2,6 +2,7 @@
 // Created by kevin on 12.02.2022.
 //
 
+#include <iostream>
 #include "KeyManager.h"
 
 KeyManager::KeyManager(GLFWwindow* pWindow) {
@@ -22,6 +23,11 @@ KeyManager::KeyManager(GLFWwindow* pWindow) {
     // Tasten für Debug Camera
     debugStartKeys.push_back(GLFW_KEY_F3);
     debugEndKeys.push_back(GLFW_KEY_F1);
+
+    //Taste für das neustarten eines spieles
+    spacebar = (GLFW_KEY_SPACE);
+
+
 }
 
 KeyManager::~KeyManager() {}
@@ -50,6 +56,11 @@ void KeyManager::readUserInput() {
     for (const auto &key : debugEndKeys)
         if(glfwGetKey(pWindow, key) != 0)
             debugEndValue = glfwGetKey(pWindow, key);
+
+    //Tasten für Spiel neu starten
+    if(glfwGetKey(pWindow,spacebar) != 0 ){
+        std::cout << "Spacebar Clicked";
+    }
 }
 
 float KeyManager::getForwardKey() {
@@ -66,4 +77,8 @@ float KeyManager::getDebugStartKey() {
 
 float KeyManager::getDebugEndKey() {
     return debugEndValue;
+}
+
+bool KeyManager::getSpaceBarKey(){
+    return spacebarPressed;
 }

@@ -9,22 +9,22 @@
 #include "ConstantShader.h"
 
 const char *CVertexShaderCode =
-"#version 400\n"
-"in vec4 VertexPos;"
-"uniform mat4 ModelViewProjMat;"
-"void main()"
-"{"
-"    gl_Position = ModelViewProjMat * VertexPos;"
-"}";
+        "#version 400\n"
+        "in vec4 VertexPos;"
+        "uniform mat4 ModelViewProjMat;"
+        "void main()"
+        "{"
+        "    gl_Position = VertexPos;"
+        "}";
 
 const char *CFragmentShaderCode =
-"#version 400\n"
-"uniform vec3 Color;"
-"out vec4 FragColor;"
-"void main()"
-"{"
-"    FragColor = vec4(Color,0);"
-"}";
+        "#version 400\n"
+        "uniform vec3 Color;"
+        "out vec4 FragColor;"
+        "void main()"
+        "{"
+        "    FragColor = vec4(Color,0);"
+        "}";
 
 ConstantShader::ConstantShader() : Col(1.0f,0.0f,0.0f)
 {
@@ -33,7 +33,7 @@ ConstantShader::ConstantShader() : Col(1.0f,0.0f,0.0f)
     ColorLoc = glGetUniformLocation(ShaderProgram, "Color");
     assert(ColorLoc>=0);
     ModelViewProjLoc  = glGetUniformLocation(ShaderProgram, "ModelViewProjMat");
-    assert(ModelViewProjLoc>=0);
+    //assert(ModelViewProjLoc>=0);
 
 }
 void ConstantShader::activate(const BaseCamera& Cam) const
