@@ -48,19 +48,26 @@ int main () {
 
     {
         double lastTime=0;
-        Application App(window);
-        App.start();
+        Application *App = new Application (window);
+        //Application App(window);
+        App->start();
         while (!glfwWindowShouldClose (window)) {
             double now = glfwGetTime();
             double delta = now - lastTime;
             lastTime = now;
             // once per frame
             glfwPollEvents();
-            App.update((float)delta);
-            App.draw();
+
+            App->update((float)delta);
+            App->draw();
             glfwSwapBuffers (window);
+
+            if (App->getEndOfGame()){
+                delete App;
+                App = new Application(window);
+            }
         }
-        App.end();
+        App->end();
     }
 
     glfwTerminate();

@@ -102,3 +102,7 @@ void Application::end()
         delete model;
     Models.clear();
 }
+
+bool Application::getEndOfGame(){
+    if()
+}

@@ -21,10 +21,12 @@ class Application
 public:
     typedef std::list<BaseModel*> ModelList;
     Application(GLFWwindow* pWin);
+    ~Application(){}
     void start();
     void update(float dtime);
     void draw();
     void end();
+    bool getEndOfGame();
 
 protected:
     BaseCamera* Cam;
@@ -37,6 +39,8 @@ protected:
     Tank* pTank;
 
     unsigned int points = 0;
+
+
 };
 
 #endif /* Application_hpp */
