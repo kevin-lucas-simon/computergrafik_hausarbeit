@@ -43,8 +43,6 @@ protected:
     LoosingGUI* pLoosingGUI;
 
     unsigned int points = 0;
-
-
     unsigned int deadTimer = 0;
 };
 

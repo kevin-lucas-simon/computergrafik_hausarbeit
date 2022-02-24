@@ -8,6 +8,7 @@
 
 #include "Application.h"
 #include "framework/shader/ConstantShader.h"
+#include "game/shader/GUIShader.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -53,10 +54,10 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     Cam = new GameCamera(pWin, pTank, pTerrain);
 
     // TODO GUI
-    pLoosingGUI = new LoosingGUI();
-    ConstantShader *pConstShader = new ConstantShader();
-    pConstShader->color(Color(1,1,0));
-    pLoosingGUI->shader(pConstShader, true);
+    pLoosingGUI = new LoosingGUI(ASSET_DIRECTORY);
+    GUIShader *pGUIShader = new GUIShader();
+    pGUIShader->color(Color(1,1,0));
+    pLoosingGUI->shader(pGUIShader, true);
     Models.push_back(pLoosingGUI);
 }
 void Application::start()
@@ -95,7 +96,7 @@ void Application::update(float dTime)
     }else{
         std::cout << "DeadTimer: " << deadTimer << std::endl;
         deadTimer++;
-        if(deadTimer > 1000){
+        if(deadTimer > 100){
            pLoosingGUI->update();
         }
     }

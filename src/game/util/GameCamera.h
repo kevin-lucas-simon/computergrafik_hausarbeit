@@ -64,7 +64,7 @@ protected:
     const float CAM_ZOOM_SPEED_OUT = CAM_ZOOM_SPEED_IN * 2.5;
 
     // Weltgrößenfaktor, um mögliche Ladedarstellungen zu vermeiden
-    const float WORLD_SIZE_FACTOR = 1.2;
+    const float WORLD_SIZE_FACTOR = 1.5;
 };
 
 #endif //COMPUTERGRAFIK_PRAKTIKUM_GAMECAMERA_H

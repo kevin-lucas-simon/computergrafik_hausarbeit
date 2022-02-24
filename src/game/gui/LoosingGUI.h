@@ -11,12 +11,13 @@
 
 #include "framework/buffer/VertexBuffer.h"
 #include "framework/model/BaseModel.h"
+#include "framework/buffer/IndexBuffer.h"
 
 class LoosingGUI: public BaseModel
 {
 
 public:
-    LoosingGUI();
+    LoosingGUI(const std::string& AssetDirectory);
     virtual ~LoosingGUI();
 
     void shader(BaseShader* shader, bool deleteOnDestruction = false);
@@ -27,7 +28,7 @@ public:
     bool isDead();
 
 protected:
-    unsigned char string[9] = "You Died";
     VertexBuffer VB;
+    IndexBuffer IB;
     bool dead = false;
 };
