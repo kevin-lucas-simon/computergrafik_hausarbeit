@@ -30,6 +30,8 @@ public:
     float getDebugEndKey();
     bool getSpaceBarKey();
 
+    void readUserInputAfterDeath();
+
 protected:
     GLFWwindow* pWindow;
 
@@ -45,8 +47,9 @@ protected:
     std::list<int> debugEndKeys;
     float debugEndValue = 0.0;
 
-    int spacebar;
+    int spacebarKey = (GLFW_KEY_SPACE);
     bool spacebarPressed;
+
 };
 
 

@@ -25,7 +25,7 @@ KeyManager::KeyManager(GLFWwindow* pWindow) {
     debugEndKeys.push_back(GLFW_KEY_F1);
 
     //Taste für das neustarten eines spieles
-    spacebar = (GLFW_KEY_SPACE);
+
 
 
 }
@@ -57,9 +57,13 @@ void KeyManager::readUserInput() {
         if(glfwGetKey(pWindow, key) != 0)
             debugEndValue = glfwGetKey(pWindow, key);
 
-    //Tasten für Spiel neu starten
-    if(glfwGetKey(pWindow,spacebar) != 0 ){
-        std::cout << "Spacebar Clicked";
+
+}
+
+void KeyManager::readUserInputAfterDeath() {
+    //Tasten um das Spiel neu zu starten
+    if(glfwGetKey(pWindow, spacebarKey) != 0 ){
+        spacebarPressed = true;
     }
 }
 

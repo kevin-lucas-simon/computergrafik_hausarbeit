@@ -72,8 +72,11 @@ void Application::start()
 void Application::update(float dTime)
 {
     // User Input einlesen
-    //if(!pLoosingGUI->isDead())
+    if(!pLoosingGUI->isDead()){
         keyManager->readUserInput();
+    }else{
+        keyManager->readUserInputAfterDeath();
+    }
 
 
     // Debug Modus Wechsel
@@ -81,9 +84,7 @@ void Application::update(float dTime)
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
     //TODO Wenn dies True wird und der Spieler verloren hat, wird das Spiel neu gestartet
-    if(keyManager->getSpaceBarKey() && pLoosingGUI->isDead()){
-
-    }
+    //if(keyManager->getSpaceBarKey() && pLoosingGUI->isDead())
 
     // Punkte Ausgabe
     if(points < (unsigned int) pTank->getPosition()) {
@@ -94,7 +95,7 @@ void Application::update(float dTime)
     }else{
         std::cout << "DeadTimer: " << deadTimer << std::endl;
         deadTimer++;
-        if(deadTimer > 100){
+        if(deadTimer > 1000){
            pLoosingGUI->update();
         }
     }
@@ -133,5 +134,12 @@ void Application::end()
 }
 
 bool Application::getEndOfGame(){
-    if()
+    std::cout << "KEYMANAGER: " << keyManager->getSpaceBarKey() << std::endl;
+    std::cout << "Loosing: " << pLoosingGUI->isDead() << std::endl;
+    if(keyManager->getSpaceBarKey() == 1 && pLoosingGUI->isDead()){
+        return true;
+    }else{
+        return false;
+    }
+
 }
