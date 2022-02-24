@@ -29,6 +29,7 @@ public:
     virtual void setWorldCenter(float newWorldCenter);
     virtual void setWorldSize(float newWorldCenter);
 
+
 protected:
     void shiftChunks();
     void distantChunks();
