@@ -54,7 +54,7 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     Cam = new GameCamera(pWin, pTank, pTerrain);
 
     // TODO GUI
-    pLoosingGUI = new LoosingGUI(ASSET_DIRECTORY);
+    pLoosingGUI = new ShowText("TEST",100,100,2,glm::vec3(1,0,0));
     GUIShader *pGUIShader = new GUIShader();
     pGUIShader->color(Color(1,1,0));
     pLoosingGUI->shader(pGUIShader, true);

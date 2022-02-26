@@ -15,7 +15,7 @@
 #include <game/terrain/Terrain.h>
 #include <game/player/Tank.h>
 #include <game/util/KeyManager.h>
-#include "game/gui/LoosingGUI.h"
+#include "game/gui/ShowText.h"
 
 class Application
 {
@@ -40,7 +40,7 @@ protected:
     Terrain* pTerrain;
     Tank* pTank;
 
-    LoosingGUI* pLoosingGUI;
+    ShowText* pLoosingGUI;
 
     unsigned int points = 0;
     unsigned int deadTimer = 0;

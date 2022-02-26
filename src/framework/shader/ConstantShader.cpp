@@ -6,7 +6,9 @@
 //  Copyright © 2016 Philipp Lensing. All rights reserved.
 //
 
+
 #include "ConstantShader.h"
+
 
 const char *CVertexShaderCode =
         "#version 400\n"

@@ -5,24 +5,24 @@
 #include "GUIShader.h"
 
 const char *GVertexShaderCode =
-        "#version 400\n"
-        "in vec4 VertexPos;"
-        "in vec2 VertexTexcoord;"
-        "out vec2 Texcoord;"
-        "uniform mat4 ModelViewProjMat;"
-        "void main()"
-        "{"
-        "    Texcoord = VertexTexcoord;"
-        "    gl_Position = VertexPos;"
+        "#version 330 core\n"
+        "layout (location = 0) in vec4 vertex;"
+        "out vec2 texCoords;"
+        "uniform mat4 projection;"
+        "void main(){"
+        "    gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);"
+        "    texCoords = vertex.zw;"
         "}";
 
 const char *GFragmentShaderCode =
-        "#version 400\n"
-        "uniform vec3 Color;"
-        "out vec4 FragColor;"
-        "void main()"
-        "{"
-        "    FragColor = vec4(Color,0);"
+        "#version 330 core\n"
+        "in vec2 texCoords;"
+        "out vec4 color;"
+        "uniform sampler2D text;"
+        "uniform vec3 texColor;"
+        "void main(){"
+        "    vec4 sampled = vec4(1.0,1.0,1.0,texture(text,texCoords).r);"
+        "    color = vec4(texColor, 1.0) * sampled;"
         "}";
 
 GUIShader::GUIShader() : Col(1.0f,0.0f,0.0f)
@@ -30,7 +30,7 @@ GUIShader::GUIShader() : Col(1.0f,0.0f,0.0f)
     ShaderProgram = createShaderProgram(GVertexShaderCode, GFragmentShaderCode );
 
     ColorLoc = glGetUniformLocation(ShaderProgram, "Color");
-    assert(ColorLoc>=0);
+    //assert(ColorLoc>=0);
     //ModelViewProjLoc  = glGetUniformLocation(ShaderProgram, "ModelViewProjMat");
     //assert(ModelViewProjLoc>=0);
 }

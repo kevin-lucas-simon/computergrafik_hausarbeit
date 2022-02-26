@@ -12,13 +12,16 @@
 #include "framework/buffer/VertexBuffer.h"
 #include "framework/model/BaseModel.h"
 #include "framework/buffer/IndexBuffer.h"
+#include "../../../libraries/glm/include/detail/type_vec3.hpp"
 
-class LoosingGUI: public BaseModel
+class ShowText: public BaseModel
 {
 
 public:
-    LoosingGUI(const std::string& AssetDirectory);
-    virtual ~LoosingGUI();
+
+    ShowText(const std::string& text, float x, float y, float scale, glm::vec3 color);
+
+    virtual ~ShowText();
 
     void shader(BaseShader* shader, bool deleteOnDestruction = false);
 
