@@ -212,7 +212,7 @@ void VertexBuffer::end()
     
     glGenBuffers (1, &VBO);
     glBindBuffer (GL_ARRAY_BUFFER, VBO);
-    glBufferData (GL_ARRAY_BUFFER, BufferSize, ByteBuf, GL_STATIC_DRAW);
+    glBufferData (GL_ARRAY_BUFFER, BufferSize, ByteBuf, GL_DYNAMIC_DRAW);
     
     delete [] ByteBuf;
     

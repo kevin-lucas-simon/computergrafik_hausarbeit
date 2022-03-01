@@ -14,6 +14,7 @@ class GUIShader: public BaseShader
 {
 public:
     GUIShader();
+    ~GUIShader(){};
     void color( const Color& c);
     const Color& color() const { return Col; }
     virtual void activate(const BaseCamera& Cam) const;
@@ -24,4 +25,5 @@ private:
     GLint GUILoc;
     GLint GUITex;
 
+    void deactivate();
 };

@@ -8,3 +8,11 @@
 #endif //COMPUTERGRAFIK_PRAKTIKUM_FONTS_H
 
 
+class Fonts{
+public:
+    Fonts();
+    ~Fonts(){}
+    int initalize();
+};
+
+

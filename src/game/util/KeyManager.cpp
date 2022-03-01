@@ -65,6 +65,18 @@ void KeyManager::readUserInputAfterDeath() {
     if(glfwGetKey(pWindow, spacebarKey) != 0 ){
         spacebarPressed = true;
     }
+
+    // Tasten für Debug Modus starten
+    debugStartValue = 0;
+    for (const auto &key : debugStartKeys)
+        if(glfwGetKey(pWindow, key) != 0)
+            debugStartValue = glfwGetKey(pWindow, key);
+
+    // Tasten für Debug Modus beenden
+    debugEndValue = 0;
+    for (const auto &key : debugEndKeys)
+        if(glfwGetKey(pWindow, key) != 0)
+            debugEndValue = glfwGetKey(pWindow, key);
 }
 
 float KeyManager::getForwardKey() {

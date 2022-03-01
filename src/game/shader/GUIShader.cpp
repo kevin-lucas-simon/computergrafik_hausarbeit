@@ -3,19 +3,22 @@
 //
 
 #include "GUIShader.h"
+#include "../../../libraries/glm/include/detail/type_mat.hpp"
+#include "../../../libraries/glm/include/detail/type_mat4x4.hpp"
+#include "../../../libraries/glm/include/gtx/orthonormalize.hpp"
 
 const char *GVertexShaderCode =
-        "#version 330 core\n"
-        "layout (location = 0) in vec4 vertex;"
+        "#version 400\n"
+        "in vec4 VertexPos;"
         "out vec2 texCoords;"
         "uniform mat4 projection;"
         "void main(){"
-        "    gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);"
-        "    texCoords = vertex.zw;"
+        "    gl_Position = VertexPos;"
+        "    texCoords = VertexPos.zw;"
         "}";
 
 const char *GFragmentShaderCode =
-        "#version 330 core\n"
+        "#version 400\n"
         "in vec2 texCoords;"
         "out vec4 color;"
         "uniform sampler2D text;"
@@ -25,22 +28,25 @@ const char *GFragmentShaderCode =
         "    color = vec4(texColor, 1.0) * sampled;"
         "}";
 
-GUIShader::GUIShader() : Col(1.0f,0.0f,0.0f)
+
+
+GUIShader::GUIShader() : Col(1.0f, 0.0f, 0.0f)
 {
     ShaderProgram = createShaderProgram(GVertexShaderCode, GFragmentShaderCode );
 
-    ColorLoc = glGetUniformLocation(ShaderProgram, "Color");
-    //assert(ColorLoc>=0);
-    //ModelViewProjLoc  = glGetUniformLocation(ShaderProgram, "ModelViewProjMat");
-    //assert(ModelViewProjLoc>=0);
+    ColorLoc = glGetUniformLocation(ShaderProgram, "ModelViewProjMat");
 }
 
 void GUIShader::activate(const BaseCamera& Cam) const
 {
     BaseShader::activate(Cam);
+    Matrix ModelViewProj = Cam.getProjectionMatrix() * Cam.getViewMatrix() * modelTransform();
+    //glUniformMatrix4fv(ModelViewProjLoc, 1 , GL_FALSE, ModelViewProj.m);
 
-    glUniform3f(ColorLoc, Col.R, Col.G, Col.B);
+}
 
+void GUIShader::deactivate()  {
+    BaseShader::deactivate();
 }
 void GUIShader::color( const Color& c)
 {

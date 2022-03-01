@@ -34,6 +34,7 @@
 
 Application::Application(GLFWwindow* pWin) : pWindow(pWin)
 {
+
     // Skybox
     pSkybox = new Model(ASSET_DIRECTORY "models/skybox/skybox.obj", false);
     pSkybox->shader(new PhongShader(), true);
@@ -54,9 +55,9 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     Cam = new GameCamera(pWin, pTank, pTerrain);
 
     // TODO GUI
-    pLoosingGUI = new ShowText("TEST",100,100,2,glm::vec3(1,0,0));
+    pLoosingGUI = new ShowText();
     GUIShader *pGUIShader = new GUIShader();
-    pGUIShader->color(Color(1,1,0));
+    pGUIShader->color(Color(1,0,0));
     pLoosingGUI->shader(pGUIShader, true);
     Models.push_back(pLoosingGUI);
 }
@@ -67,7 +68,7 @@ void Application::start()
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glEnable(GL_BLEND);
-//    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Application::update(float dTime)
@@ -84,10 +85,9 @@ void Application::update(float dTime)
     if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
-    //TODO Wenn dies True wird und der Spieler verloren hat, wird das Spiel neu gestartet
-    //if(keyManager->getSpaceBarKey() && pLoosingGUI->isDead())
-
     // Punkte Ausgabe
+    //std::cout << "POINTS: --> " << points;
+    //std::cout << "Tank Position: --> " << pTank->getPosition();
     if(points < (unsigned int) pTank->getPosition()) {
         points = pTank->getPosition();
         // TODO Punkte Ausgabe auf der GUI
@@ -97,7 +97,7 @@ void Application::update(float dTime)
         std::cout << "DeadTimer: " << deadTimer << std::endl;
         deadTimer++;
         if(deadTimer > 100){
-           pLoosingGUI->update();
+            pLoosingGUI->update("This is sample text", 50.0f, 50.0f, 2.0f, glm::vec3(0.5, 0.8f, 0.2f));
         }
     }
 
@@ -124,9 +124,6 @@ void Application::draw()
     assert(Error==0);
 }
 
-void Application::restart()
-{
-}
 void Application::end()
 {
     for (const auto model : Models)

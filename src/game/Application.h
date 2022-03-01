@@ -28,7 +28,6 @@ public:
     void draw();
     void end();
     bool getEndOfGame();
-    void restart();
 
 protected:
     BaseCamera* Cam;
