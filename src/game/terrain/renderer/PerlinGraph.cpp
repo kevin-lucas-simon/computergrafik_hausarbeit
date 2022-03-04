@@ -5,13 +5,15 @@
 #include <memory>
 #include <iostream>
 #include "PerlinGraph.h"
+#include <random>
 
-// Standardkonstruktor mit zufälligen Seed
-PerlinGraph::PerlinGraph() { PerlinGraph(rand() % RAND_MAX); }
 
 // Konstruktor mit bestimmten Seed
-PerlinGraph::PerlinGraph(unsigned int seed) {
-    this->seed = seed;
+PerlinGraph::PerlinGraph() {
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_int_distribution<int> distr(0, RAND_MAX);
+    this->seed = distr(eng);
     std::cout << "Used Seed: " << this->seed << std::endl;
 }
 
@@ -35,6 +37,7 @@ double PerlinGraph::tangent(float x, int n) {
 
     // Zufälligen Wert aus dem Hash generieren
     float hash = hash_seed(seed + n);
+    //std::cout << "Hash --> " << hash;
     float angle = hash/std::numeric_limits<unsigned int>::max();
     return angle * (x - n);
 }
