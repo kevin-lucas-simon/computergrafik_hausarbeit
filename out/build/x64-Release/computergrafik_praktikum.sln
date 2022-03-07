@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{D63C66F6-4E89-3087-A30E-44500FE4177D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3F99B47-0029-301E-89FD-F0118A5B5EF5} = {C3F99B47-0029-301E-89FD-F0118A5B5EF5}
+		{3EA7DC7D-E3B5-319D-BF87-592402AD9673} = {3EA7DC7D-E3B5-319D-BF87-592402AD9673}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{C3F99B47-0029-301E-89FD-F0118A5B5EF5}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "computergrafik_praktikum", "computergrafik_praktikum.vcxproj", "{3EA7DC7D-E3B5-319D-BF87-592402AD9673}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3F99B47-0029-301E-89FD-F0118A5B5EF5} = {C3F99B47-0029-301E-89FD-F0118A5B5EF5}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D63C66F6-4E89-3087-A30E-44500FE4177D}.Release|Win32.ActiveCfg = Release|Win32
+		{C3F99B47-0029-301E-89FD-F0118A5B5EF5}.Release|Win32.ActiveCfg = Release|Win32
+		{C3F99B47-0029-301E-89FD-F0118A5B5EF5}.Release|Win32.Build.0 = Release|Win32
+		{3EA7DC7D-E3B5-319D-BF87-592402AD9673}.Release|Win32.ActiveCfg = Release|Win32
+		{3EA7DC7D-E3B5-319D-BF87-592402AD9673}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D88DB05-1199-3E43-B466-075063233D9B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

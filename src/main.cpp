@@ -1,6 +1,6 @@
 #ifdef WIN32
-#include <GL/glew.h>
-#include <glfw/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #else
 #define GLFW_INCLUDE_GLCOREARB
 #define GLFW_INCLUDE_GLEXT
@@ -8,7 +8,7 @@
 #endif
 #include <stdio.h>
 #include "game/Application.h"
-#include "freeimage.h"
+#include "FreeImage.h"
 
 void PrintOpenGLVersion();
 
@@ -16,7 +16,7 @@ void PrintOpenGLVersion();
 int main () {
     FreeImage_Initialise();
     // start GL context and O/S window using the GLFW helper library
-    if (!glfwInit ()) {
+    if (!glfwInit()) {
         fprintf (stderr, "ERROR: could not start GLFW3\n");
         return 1;
     }

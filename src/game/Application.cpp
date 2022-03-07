@@ -24,7 +24,7 @@
 
 
 #ifdef WIN32
-#define ASSET_DIRECTORY "../assets/"
+#define ASSET_DIRECTORY "C:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit/assets/"
 #else
 #define ASSET_DIRECTORY "../assets/"
 #endif

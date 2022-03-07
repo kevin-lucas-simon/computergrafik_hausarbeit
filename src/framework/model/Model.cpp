@@ -20,7 +20,8 @@ Model::Model(const char* ModelFile, bool FitSize) : pMeshes(NULL), MeshCount(0),
 {
     bool ret = load(ModelFile, FitSize);
     if(!ret)
-        throw std::exception();
+        std::cout << "Could not load model!";
+        //throw std::exception();
 }
 Model::~Model()
 {
