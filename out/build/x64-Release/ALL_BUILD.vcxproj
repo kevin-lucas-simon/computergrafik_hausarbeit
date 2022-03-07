@@ -71,9 +71,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\saeli\Documents\GitHub\computergrafik_hausarbeit\out\build\x64-Release\computergrafik_praktikum.vcxproj">
-      <Project>{3EA7DC7D-E3B5-319D-BF87-592402AD9673}</Project>
-      <Name>computergrafik_praktikum</Name>
+    <ProjectReference Include="C:\Users\saeli\Documents\GitHub\computergrafik_hausarbeit\out\build\x64-Release\computergrafik_projektarbeit.vcxproj">
+      <Project>{543D7234-FDD1-3D39-9981-174984DB56FA}</Project>
+      <Name>computergrafik_projektarbeit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

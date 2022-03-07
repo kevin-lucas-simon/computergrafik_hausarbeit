@@ -49,7 +49,7 @@
       <StdOutEncoding>UTF-8</StdOutEncoding>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Checking Build System</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit -BC:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit/out/build/x64-Release --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit/out/build/x64-Release/computergrafik_praktikum.sln
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit -BC:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit/out/build/x64-Release --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/saeli/Documents/GitHub/computergrafik_hausarbeit/out/build/x64-Release/computergrafik_projektarbeit.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
