@@ -10,7 +10,7 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": []
-    }
+    },
 
     {
       "name": "x64-Release",
