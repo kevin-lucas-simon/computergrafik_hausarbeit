@@ -68,7 +68,7 @@ void Application::update(float dTime)
 {
 
     // Verhalten im laufenden Spiel
-    if (deadTimer < 100) {
+    if (deadTimer < 500) {
         // User Input einlesen
         keyManager->readUserInput(false);
 
@@ -85,6 +85,7 @@ void Application::update(float dTime)
     else {
         if (!printedOnce) {
             std::cout << "Punkte in dieser Runde: " << points << std::endl;
+            std::cout << "Druecke die <Leertaste> oder <R> um ein neues Spiel zu starten!"<< std::endl;
             printedOnce = true;
         }
         

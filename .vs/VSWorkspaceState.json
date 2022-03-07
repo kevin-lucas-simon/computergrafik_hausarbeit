@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\game",
+    "\\src\\game\\player",
+    "\\src\\game\\shader",
+    "\\src\\game\\terrain",
+    "\\src\\game\\util"
   ],
-  "SelectedNode": "\\CMakeLists.txt",
+  "SelectedNode": "\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
