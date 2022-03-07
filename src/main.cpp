@@ -28,8 +28,8 @@ int main () {
     glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
 
-    const int WindowWidth = 800;
-    const int WindowHeight = 600;
+    const int WindowWidth = 1920;
+    const int WindowHeight = 1080;
 
     GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hochschule Osnabrück", NULL, NULL);
     if (!window) {
@@ -47,20 +47,27 @@ int main () {
     PrintOpenGLVersion();
 
     {
-        double lastTime=0;
-        Application App(window);
-        App.start();
-        while (!glfwWindowShouldClose (window)) {
+        double lastTime = 0;
+        Application* App = new Application(window);
+
+        App->start();
+        while (!glfwWindowShouldClose(window)) {
             double now = glfwGetTime();
             double delta = now - lastTime;
             lastTime = now;
             // once per frame
             glfwPollEvents();
-            App.update((float)delta);
-            App.draw();
-            glfwSwapBuffers (window);
+
+            App->update((float)delta);
+            App->draw();
+            glfwSwapBuffers(window);
+
+            if (App->getEndOfGame()) {
+                delete App;
+                App = new Application(window);
+            }
         }
-        App.end();
+        App->end();
     }
 
     glfwTerminate();

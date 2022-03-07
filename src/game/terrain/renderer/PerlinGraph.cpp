@@ -5,9 +5,15 @@
 #include <memory>
 #include <iostream>
 #include "PerlinGraph.h"
+#include <random>
 
 // Standardkonstruktor mit zufälligen Seed
-PerlinGraph::PerlinGraph() { PerlinGraph(rand() % RAND_MAX); }
+PerlinGraph::PerlinGraph() { 
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_int_distribution<int> distr(0, UINT_MAX);
+    PerlinGraph(distr(eng));
+}
 
 // Konstruktor mit bestimmten Seed
 PerlinGraph::PerlinGraph(unsigned int seed) {
@@ -30,8 +36,8 @@ double PerlinGraph::smoothstep(float x) {
 
 // Erzeugt eine zufällige Tangente an einem Punkt n
 double PerlinGraph::tangent(float x, int n) {
-    // Sonderfall bei x=0 für eine besser aussehende Start-Location (keine Steigung)
-    if(n == 0)  return 0;
+    // Sonderfall bei x<2 für eine besser aussehende Start-Location (keine Steigung)
+    if(n < 2)  return 0;
 
     // Zufälligen Wert aus dem Hash generieren
     float hash = hash_seed(seed + n);

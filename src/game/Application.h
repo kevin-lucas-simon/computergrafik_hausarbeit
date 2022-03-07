@@ -25,6 +25,7 @@ public:
     void update(float dtime);
     void draw();
     void end();
+    bool getEndOfGame();
 
 protected:
     BaseCamera* Cam;
@@ -37,6 +38,9 @@ protected:
     Tank* pTank;
 
     unsigned int points = 0;
+    unsigned int deadTimer = 0;
+    bool restart;
+    bool printedOnce;
 };
 
 #endif /* Application_hpp */

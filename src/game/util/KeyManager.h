@@ -23,11 +23,13 @@ class KeyManager {
 public:
     KeyManager(GLFWwindow* pWindow);
     virtual ~KeyManager();
-    void readUserInput();
+    void readUserInput(bool dead);
     float getForwardKey();
     float getBackwardKey();
     float getDebugStartKey();
     float getDebugEndKey();
+    float getRestartKey();
+  
 
 protected:
     GLFWwindow* pWindow;
@@ -43,6 +45,9 @@ protected:
 
     std::list<int> debugEndKeys;
     float debugEndValue = 0.0;
+
+    std::list<int> restartGameKeys;
+    float restartValue = 0.0;
 };
 
 

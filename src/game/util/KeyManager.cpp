@@ -22,23 +22,37 @@ KeyManager::KeyManager(GLFWwindow* pWindow) {
     // Tasten für Debug Camera
     debugStartKeys.push_back(GLFW_KEY_F3);
     debugEndKeys.push_back(GLFW_KEY_F1);
+
+    //Tasten für Spiel neu starten
+    restartGameKeys.push_back(GLFW_KEY_SPACE);
+    restartGameKeys.push_back(GLFW_KEY_R);
 }
 
 KeyManager::~KeyManager() {}
 
-void KeyManager::readUserInput() {
+void KeyManager::readUserInput(bool dead) {
     // Tasten für vorwärtsfahren
-    forwardValue = 0;
-    for (const auto &key : forwardKeys)
-        if(glfwGetKey(pWindow, key) != 0)
-            forwardValue = glfwGetKey(pWindow, key);
+    if (!dead) {
+        forwardValue = 0;
+        for (const auto& key : forwardKeys)
+            if (glfwGetKey(pWindow, key) != 0)
+                forwardValue = glfwGetKey(pWindow, key);
 
-    // Tasten für rückwärts fahren
-    backwardValue = 0;
-    for (const auto &key : backwardKeys)
-        if(glfwGetKey(pWindow, key) != 0)
-            backwardValue = glfwGetKey(pWindow, key);
-
+        // Tasten für rückwärts fahren
+        backwardValue = 0;
+        for (const auto& key : backwardKeys)
+            if (glfwGetKey(pWindow, key) != 0)
+                backwardValue = glfwGetKey(pWindow, key);
+    }
+    else {
+        forwardValue = 0;
+        backwardValue = 0;
+        restartValue = 0;
+        for (const auto& key : restartGameKeys)
+            if (glfwGetKey(pWindow, key) != 0)
+                restartValue = glfwGetKey(pWindow, key);
+    }
+   
     // Tasten für Debug Modus starten
     debugStartValue = 0;
     for (const auto &key : debugStartKeys)
@@ -50,6 +64,8 @@ void KeyManager::readUserInput() {
     for (const auto &key : debugEndKeys)
         if(glfwGetKey(pWindow, key) != 0)
             debugEndValue = glfwGetKey(pWindow, key);
+
+
 }
 
 float KeyManager::getForwardKey() {
@@ -66,4 +82,8 @@ float KeyManager::getDebugStartKey() {
 
 float KeyManager::getDebugEndKey() {
     return debugEndValue;
+}
+
+float KeyManager::getRestartKey() {
+    return restartValue;
 }

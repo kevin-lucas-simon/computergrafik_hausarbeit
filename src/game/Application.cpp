@@ -50,6 +50,9 @@ Application::Application(GLFWwindow* pWin) : pWindow(pWin)
     // Kamera und KeyManager
     keyManager = new KeyManager(pWindow);
     Cam = new GameCamera(pWin, pTank, pTerrain);
+
+    restart = false;
+    printedOnce = false;
 }
 void Application::start()
 {
@@ -63,18 +66,41 @@ void Application::start()
 
 void Application::update(float dTime)
 {
-    // User Input einlesen
-    keyManager->readUserInput();
+
+    // Verhalten im laufenden Spiel
+    if (deadTimer < 100) {
+        // User Input einlesen
+        keyManager->readUserInput(false);
+
+        //Punkte Ausgabe
+        if (points < (unsigned int)pTank->getPosition()) {
+            std::cout << "Aktuelle Punktzahl: " << this->points << std::endl;
+            points = pTank->getPosition();
+            this->deadTimer = 0;
+        }
+        else if (pTank->getPosition() != 0) {
+            deadTimer++;
+        }
+    }
+    else {
+        if (!printedOnce) {
+            std::cout << "Punkte in dieser Runde: " << points << std::endl;
+            printedOnce = true;
+        }
+        
+        //User Input für die Bewegung des Spielers sperren
+        keyManager->readUserInput(true);
+        if (keyManager->getRestartKey() == 1) {
+            restart = true;
+        }
+        
+    }
+   
 
     // Debug Modus Wechsel
     if(keyManager->getDebugStartKey()) Cam = new Camera(pWindow);
     if(keyManager->getDebugEndKey()) Cam = new GameCamera(pWindow, pTank, pTerrain);
 
-    // Punkte Ausgabe
-    if(points < (unsigned int) pTank->getPosition()) {
-        points = pTank->getPosition();
-        std::cout << "Punkte: " << points << std::endl;
-    }
 
     // Alle Objekte aktualisieren
     Cam->update();
@@ -101,4 +127,8 @@ void Application::end()
     for (const auto model : Models)
         delete model;
     Models.clear();
+}
+
+bool Application::getEndOfGame() {
+    return restart;
 }
