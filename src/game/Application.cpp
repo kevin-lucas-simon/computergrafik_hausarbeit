@@ -68,13 +68,13 @@ void Application::update(float dTime)
 {
 
     // Verhalten im laufenden Spiel
-    if (deadTimer < 500) {
+    if (deadTimer < 400) {
         // User Input einlesen
         keyManager->readUserInput(false);
 
         //Punkte Ausgabe
         if (points < (unsigned int)pTank->getPosition()) {
-            std::cout << "Aktuelle Punktzahl: " << this->points << std::endl;
+            //std::cout << "Aktuelle Punktzahl: " << this->points << std::endl;
             points = pTank->getPosition();
             this->deadTimer = 0;
         }
